@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from '@mui/material'
 import './Login.css'
 
 const Login = () => {
@@ -18,6 +19,9 @@ const Login = () => {
             </div>
 
             <div className='login-button-wrapper'>
+                <Button variant='contained' color='primary.dark'>
+                    Masuk
+                </Button>
                 <button className='login-button'>Masuk</button>
                 <div className='redirect-daftar-wrapper'>
                     <span>Belum punya akun? <a href="#" className='redirect-daftar'>Daftar disini</a></span>
