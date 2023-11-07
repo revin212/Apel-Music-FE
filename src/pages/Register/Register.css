@@ -47,7 +47,7 @@ input.input-register::placeholder {
     color:#333333;
     opacity: 1; /* Firefox */
 }
-input.register-login::-ms-register-placeholder { /* Edge 12 -18 */
+input.input-register::-ms-register-placeholder { /* Edge 12 -18 */
     font-weight: 400;
     font-size: 14px;
     line-height: 21px;
