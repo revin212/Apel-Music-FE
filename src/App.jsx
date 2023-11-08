@@ -11,8 +11,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-          <Home />
-          <Login />
           <ForgotPassword />
       </div>
     </ThemeProvider>

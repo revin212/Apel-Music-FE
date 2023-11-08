@@ -1,27 +1,33 @@
-import { Box, Button, Container, TextField  } from "@mui/material";
-import Sx from "./style"
+import { Box, Button, Stack, Typography, Input  } from "@mui/material";
+import { inputStyle, subtitleStyle, titleStyle } from "./Forgot password.style";
+
+
 const ForgotPassword = () => {
     return(
-        <Box sx={Sx.WrapperResetBox()}>
-            <div className="sub-reset-wrapper">
-                <div className="reset-title-wrapper">
-                    <h2 className="reset-title" sx={{
-                        fontWeight: 'light'
-                    }}>
+        <Box maxWidth='616px' mx='auto' mt='182px'>
+            <Box width='100%' mb='40px'>
+                <Stack gap='16px' mb='60px' direction='column'>
+                    <Typography variant='h2' sx={titleStyle}>
                         Reset Password
-                    </h2>
-                    <p className="reset-subtitle">
+                    </Typography>
+                    <Typography variant="body2" component='p' sx={subtitleStyle}>
                         Silahkan masukan terlebih dahulu email anda
-                    </p>
-                </div>
-                <div className="reset-email">
-                    <TextField variant="outlined" label="Masukkan Email" />
-                </div>
-            </div>
-            <div className="reset-button-group">
-                <Button variant="outlined">Batal</Button>
-                <Button variant="contained">Konfirmasi</Button>
-            </div>
+                    </Typography>
+                </Stack>
+                <Box display='flex' flexDirection='column' gap='1.5rem'>
+                    <Input disableUnderline type='email' sx={inputStyle} placeholder="Masukkan Email"/>
+                </Box>
+            </Box>
+            <Stack direction='row' gap='24px' mt={2}>
+                <Button variant="outlined" sx={{
+                    maxWidth: '140px',
+                    maxHeight: '43px',
+                }}>Batal</Button>
+                <Button variant="contained" sx={{
+                    maxWidth: '140px',
+                    maxHeight: '43px',
+                }}>Konfirmasi</Button>
+            </Stack>
         </Box>
     )
 }
