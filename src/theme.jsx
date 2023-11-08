@@ -5,8 +5,6 @@ const theme = createTheme({
         mode: 'light',
       primary: {
         main: "#F2C94C",
-        light: "#454545",
-        dark: "#323232"
       },
       secondary: {
         main: "#5D5FEF",
@@ -25,6 +23,24 @@ const theme = createTheme({
         n20: "#41454D",
         n10: "#2B2E33",
         black: "#000000",
+      },
+    },
+    components: {
+      MuiButton:{
+        defaultProps: {
+          color: 'secondary',
+          disableElevation: true,
+          disableFocusRipple: true,
+          disableRipple: true,
+          disableTouchRipple: true,
+          sx: {
+            textTransform: 'none',
+            borderRadius: '0.5rem',
+            padding: '10px',
+            fontSize: '15px',
+            fontWeight: '500',
+          }
+        }
       },
     },
   });
