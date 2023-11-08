@@ -28,6 +28,7 @@ const theme = createTheme({
         n20: "#41454D",
         n10: "#2B2E33",
         black: "#000000",
+        blue: "#2F80ED",
       },
     },
     components: {
@@ -38,17 +39,18 @@ const theme = createTheme({
           disableFocusRipple: true,
           disableRipple: true,
           disableTouchRipple: true,
-          sx: {
+          
+        },
+        styleOverrides: {
+          root: {
             textTransform: 'none',
             borderRadius: '0.5rem',
             padding: '10px',
             fontSize: '15px',
             fontWeight: '500',
-            maxWidth: '140px',
-            maxHeight: '43px',
-          }
-        }
-      },
+          },
+        },
+      }
     },
   });
 
