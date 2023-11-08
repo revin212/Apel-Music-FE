@@ -1,6 +1,11 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, createStyles } from "@mui/material/styles";
 
 const theme = createTheme({
+    typography: {
+      fontFamily: [
+        'Poppins', 'sans-serif'
+      ].join(','),
+    },
     palette: {
         mode: 'light',
       primary: {
@@ -39,6 +44,8 @@ const theme = createTheme({
             padding: '10px',
             fontSize: '15px',
             fontWeight: '500',
+            maxWidth: '140px',
+            maxHeight: '43px',
           }
         }
       },
