@@ -22,12 +22,14 @@ const ForgotPassword = () => {
                 <Button variant="outlined" sx={{
                     maxWidth: '140px',
                     maxHeight: '43px',
+                    width: '100%'
                 }} placeholder="Batal">
                     Batal
                 </Button>
                 <Button variant="contained" sx={{
                     maxWidth: '140px',
                     maxHeight: '43px',
+                    width: '100%'
                 }}>Konfirmasi</Button>
             </Stack>
         </Box>
