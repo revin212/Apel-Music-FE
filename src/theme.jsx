@@ -39,7 +39,7 @@ const theme = createTheme({
           disableFocusRipple: true,
           disableRipple: true,
           disableTouchRipple: true,
-            
+          
         },
         styleOverrides: {
           root: {
@@ -47,7 +47,7 @@ const theme = createTheme({
             borderRadius: '0.5rem',
             padding: '10px',
             fontSize: '15px',
-            fontWeight: '500'
+            fontWeight: '500',
           },
         },
       }
