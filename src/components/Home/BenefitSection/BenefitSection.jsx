@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, Card } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import { bodyStyle, titleStyle, wrapperStyle } from './BenefitSectionStyles'
 
 export const BenefitSection = () => {
