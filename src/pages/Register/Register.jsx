@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Register.css'
 
 const Register = () => {
-  
+    const [name, setName] = useState('')
+    const [userid, setUserid] = useState('')
+    const [pwd, setPwd] = useState('')
+    const [pwdconf, setPwdconf] = useState('')
+    //const [list, setList] = useState('')
+    const handleName = (name)=>{
+        console.log("Name : "+name) 
+    }
+    const handleUserid = (userid)=>{
+        console.log("User ID : "+userid) 
+    }
+    const handlePwd = (pwd)=>{
+        console.log("Password : "+pwd) 
+    }
+    const handlePwdconf = (pwdconf)=>{
+        console.log("Password Confirm : "+pwdconf) 
+    }
   return (
     <div className='register-wrapper'>
         <div className='register-title-wrapper'>
@@ -11,12 +27,17 @@ const Register = () => {
         </div>
 
         <form className='register-form-wrapper'>
-            <input type="text" className='input-register register-email' placeholder='Masukkan Nama Lengkap' /> 
-            <input type="email" className='input-register register-email' placeholder='Masukkan Email' />
-            <input type="password" className='input-register register-password' placeholder='Masukkan Password' />
-            <input type="password" className='input-register register-password' placeholder='Konfirmasi Password' />
+            <input type="text" value={ name } onChange={(e)=>{ setName(e.target.value) }} className='input-register register-email' placeholder='Masukkan Nama Lengkap' /> 
+            <input type="email" value={ userid } onChange={(e)=>{ setUserid(e.target.value) }} className='input-register register-email' placeholder='Masukkan Email' />
+            <input type="password" value={ pwd } onChange={(e)=>{ setPwd(e.target.value) }} className='input-register register-password' placeholder='Masukkan Password' />
+            <input type="password" value={ pwdconf } onChange={(e)=>{ setPwdconf(e.target.value) }} className='input-register register-password' placeholder='Konfirmasi Password' />
             <div className='register-button-wrapper'>
-                <button className='register-button'>Daftar</button>
+                <button onClick={()=>{
+                    handleName(name)
+                    handleUserid(userid)
+                    handlePwd(pwd)
+                    handlePwdconf(pwdconf)
+                }} className='register-button'>Daftar</button>
                 <div className='redirect-daftar-wrapper'>
                     <span>Sudah punya akun? <a href="#" className='redirect-daftar'>Login disini</a></span>
                 </div>
