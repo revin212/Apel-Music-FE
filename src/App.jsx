@@ -6,12 +6,13 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import NewPassword from "./pages/New Password/New Password";
 import theme from "./theme"
+import ForgotPassword from "./pages/Forgot Password/Forgot Password";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-          <NewPassword />
+          <ForgotPassword />
       </div>
     </ThemeProvider>
   );
