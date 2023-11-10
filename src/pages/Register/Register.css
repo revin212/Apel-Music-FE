@@ -1,6 +1,7 @@
 div.register-wrapper{
+    min-height: 460px;
     max-width: 616px;
-    margin-block: 3rem;
+    margin-block: 90px;
     margin-inline: auto;
 }
 
