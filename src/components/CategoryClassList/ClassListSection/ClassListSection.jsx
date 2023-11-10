@@ -4,17 +4,18 @@ import { categoryStyle, imageStyle, wrapperStyle, classNameStyle, priceStyle, ti
 import { dummyData } from './dummyData'
 import { Link } from 'react-router-dom'
 
+
 export const ClassListSection = () => {
   return (
     <Box sx={wrapperStyle}>
         <Typography variant='h2' sx={titleStyle}>
-            Explore kelas favorit
+            Kelas yang tersedia
         </Typography>
         <Grid container columnSpacing={3} rowSpacing={7.5}>
             {dummyData.map((item)=>{
                 return (
                     <Grid xs={12} md={4} key={item.id}>
-                        <Link href='#' underline='none' style={{textDecoration:'none'}}>
+                        <Link to='#' underline='none' style={{textDecoration:'none'}}>
                         <Stack direction='column' gap='16px'>
                             <img src={item.image} width="350" height="234" alt={item.name} style={imageStyle} />
                             <Box padding='0px, 8px, 0px, 8px'>
