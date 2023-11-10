@@ -3,18 +3,18 @@ import { Box, Stack, Button, Typography, Link, Input } from '@mui/material'
 import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle } from './LoginStyles'
 
 const Login = () => {
-  const [userid, setUserid] = useState('')
-  const [pwd, setPwd] = useState('')
+    const [userid, setUserid] = useState('')
+    const [pwd, setPwd] = useState('')
   //const [list, setList] = useState('')
-  const handleUserid = (userid)=>{
+    const handleUserid = (userid)=>{
         console.log("User ID : "+userid) 
     }
-  const handlePwd = (pwd)=>{
-    console.log("Password : "+pwd) 
+    const handlePwd = (pwd)=>{
+        console.log("Password : "+pwd) 
     }
 
 
-  return (
+    return (
     <Box maxWidth='616px' mx='auto' my='3rem'>
         <Stack direction='column' gap={2} mb='60px'>
             <Typography variant='h2' sx={titleStyle}>Selamat Datang Musikers!</Typography>
@@ -41,7 +41,7 @@ const Login = () => {
                 <Stack direction='row'>
                     <Typography component='p' variant='body1'>
                         <span>Belum punya akun? </span>
-                        <Link href="#" underline='hover' color='text.blue'>Daftar disini</Link>
+                        <Link href="/register" underline='hover' color='text.blue'>Daftar disini</Link>
                     </Typography>
                 </Stack>
             </Stack>

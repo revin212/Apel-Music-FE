@@ -40,8 +40,7 @@ const ForgotPassword = () => {
                 <Box display='flex' flexDirection='column' gap='1.5rem'>
                     <Input disableUnderline type='email' sx={inputStyle} placeholder="Masukkan Email" name="email" id="email" onChange={handleChange}/>
                 </Box>
-                {!valid ? <Typography variant="body" sx={{color: 'warning.main'}}>{message}</Typography> : <></>}
-                
+                <Typography variant="body" sx={{color: 'warning.main'}}>{message}</Typography>
             </Box>
             <Stack direction='row' gap='24px' mt={2}>
                 <Button variant="outlined" sx={{
