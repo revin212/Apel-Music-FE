@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { imageStyle, wrapperStyle, titleStyle, categoryNameStyle } from './CategoryListSectionStyles'
-import { dummyData } from './dummyData'
+import { dummyData } from '../../../utils/dummyDataCategory'
 import { Link } from 'react-router-dom'
 
 export const CategoryListSection = ({categoryData}) => {

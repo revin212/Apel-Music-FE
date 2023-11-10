@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { categoryStyle, imageStyle, wrapperStyle, classNameStyle, priceStyle, titleStyle } from './ClassListSectionStyles'
-import { dummyData } from './dummyData'
+import { dummyData } from '../../../utils/dummyData'
 import { Link } from 'react-router-dom'
 
 
@@ -15,7 +15,7 @@ export const ClassListSection = () => {
             {dummyData.map((item)=>{
                 return (
                     <Grid xs={12} md={4} key={item.id}>
-                        <Link to='#' underline='none' style={{textDecoration:'none'}}>
+                        <Link to='/class/1' underline='none' style={{textDecoration:'none'}}>
                         <Stack direction='column' gap='16px'>
                             <img src={item.image} width="350" height="234" alt={item.name} style={imageStyle} />
                             <Box padding='0px, 8px, 0px, 8px'>
