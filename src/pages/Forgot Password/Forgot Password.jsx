@@ -1,12 +1,15 @@
 import { Box, Button, Stack, Typography, Input  } from "@mui/material";
 import { inputStyle, subtitleStyle, titleStyle } from "./Forgot password.style";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('')
     const [message, setMessage] = useState('')
     const [valid, setValid] = useState(true)
+
+    const navigate = useNavigate()
 
     const handleChange = (e) => {
         setMessage('')
@@ -18,8 +21,8 @@ const ForgotPassword = () => {
     const emailValidation = () => {
         let regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
         if (regex.test(email)) {
-            alert(`(VALID) Email: ${email}`);
-            console.log('Send email to API');
+            // alert(`(VALID) Email: ${email}`);
+            navigate('/new-password')
         } else {
             setValid(false)
             setMessage('Invalid email, please try again')
@@ -27,7 +30,7 @@ const ForgotPassword = () => {
     }
 
     return(
-        <Box maxWidth='616px' mx='auto' mt='182px'>
+        <Box maxWidth='616px' mx='auto' my='90px'>
             <Box width='100%' mb='40px'>
                 <Stack gap='16px' mb='60px' direction='column'>
                     <Typography variant='h2' sx={titleStyle}>
@@ -47,7 +50,7 @@ const ForgotPassword = () => {
                     maxWidth: '140px',
                     maxHeight: '43px',
                     width: '100%'
-                }} placeholder="Batal">
+                }} placeholder="Batal" onClick={()=>{navigate('/login')}}>
                     Batal
                 </Button>
                 <Button variant="contained" onClick={emailValidation} sx={{
