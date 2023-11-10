@@ -12,6 +12,8 @@ import ForgotPassword from "./pages/Forgot Password/Forgot Password";
 import Layout from "./pages/Layout";
 import Layout2 from "./pages/Layout2";
 import CategoryClassList from "./pages/CategoryClassList/CategoryClassList";
+import { DetailClass } from "./pages/DetailClass/DetailClass";
+import ScrollToTop from "./utils/scrollToTop";
 
 
 function App() {
@@ -19,11 +21,13 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               <Route>
                   <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="/category/drum" element={<CategoryClassList />} />
+                    <Route path="/class/1" element={<DetailClass />} />
                   </Route>
                   <Route path="/" element={<Layout2 />}>
                     <Route path="/login" element={<Login />} />
