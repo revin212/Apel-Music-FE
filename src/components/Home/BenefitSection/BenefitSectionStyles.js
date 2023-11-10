@@ -2,7 +2,7 @@ export const wrapperStyle = {
     paddingInline: {xs: '30px',md:'132px'},
     paddingBlock:'80px',
     position: 'relative',
-    marginTop: '5rem'
+    marginTop: '2rem'
 }
 
 export const titleStyle = {

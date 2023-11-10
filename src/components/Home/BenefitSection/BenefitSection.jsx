@@ -5,10 +5,10 @@ export const BenefitSection = () => {
   return (
     <Box sx={wrapperStyle}>
         <Box sx={{position:'absolute', left:{xs:'0',md:'24px'}, maxWidth:{xs:'2000px', md:'363px'}, top:'40px', zIndex:'-100'}}>
-            <img src="https://revinramadhan21.sirv.com/Images/Apel%20Music%20Image/Group%201.png" width="363" height="413" alt="circle" style={{width:'100%', height:'auto'}}/>
+            <img src="/images/Group 1.png" width="363" height="413" alt="circle" style={{width:'100%', height:'auto'}}/>
         </Box>
         <Stack direction={{xs:'column', md:'row'}} gap={{xs:'100px', md:'24px'}} alignItems='center'>
-            <img src="https://revinramadhan21.sirv.com/Images/Apel%20Music%20Image/image%204.png" width="280" height="302" alt="guitarist" />
+            <img src="/images/image 4.png" width="280" height="302" alt="guitarist" />
             <Stack direction='column' gap='24px'>
                 <Typography variant='h3' sx={titleStyle}>
                     Benefit ikut Apel Course
