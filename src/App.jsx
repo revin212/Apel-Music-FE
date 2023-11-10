@@ -10,6 +10,7 @@ import NewPassword from "./pages/New Password/New Password";
 import theme from "./theme"
 import ForgotPassword from "./pages/Forgot Password/Forgot Password";
 import Layout from "./pages/Layout";
+import Layout2 from "./pages/Layout2";
 
 
 function App() {
@@ -18,12 +19,16 @@ function App() {
       <div className="App">
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Layout />}>
-                  <Route index element={<Home />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/forgot-password" element={<ForgotPassword />} />
-                  <Route path="/new-password" element={<NewPassword />} />
+              <Route>
+                  <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                  </Route>
+                  <Route path="/" element={<Layout2 />}>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/new-password" element={<NewPassword />} />
+                  </Route>
                   {/* <Route path="*" element={<NoMatch />} /> */}
               </Route>
             </Routes>
