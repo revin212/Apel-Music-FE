@@ -40,7 +40,7 @@ const Register = () => {
                     handlePwdconf(pwdconf)
                 }} className='register-button'>Daftar</button>
                 <div className='redirect-daftar-wrapper'>
-                    <span>Sudah punya akun? <Link to='/login'>Login disini</Link></span>
+                    <span>Sudah punya akun? <Link to='/login' style={{textDecoration:'none', color:'#2F80ED'}}>Login disini</Link></span>
                 </div>
             </div>
 

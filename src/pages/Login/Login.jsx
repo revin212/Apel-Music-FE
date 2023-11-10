@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Box, Stack, Button, Typography, Link, Input } from '@mui/material'
+import { Box, Stack, Button, Typography, Input } from '@mui/material'
 import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle } from './LoginStyles'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
     const [userid, setUserid] = useState('')
@@ -26,7 +27,7 @@ const Login = () => {
                     <Input disableUnderline value={ userid } onChange={(e)=>{ setUserid(e.target.value) }} id='email-input' type="email" placeholder="Masukkan Email" sx={inputStyle}/>
                     <Input disableUnderline value={ pwd } onChange={(e)=>{ setPwd(e.target.value) }} id='password-input' type="password" placeholder="Masukkan Password" sx={inputStyle}/>
                     <Box textAlign='end' sx={forgotPassStyle}>
-                        <Link underline='none' color='text.gray2' href="/forgot-password" >Lupa kata sandi</Link>
+                        <Link to="/forgot-password" style={{textDecoration:'none', color:'#4F4F4F'}} >Lupa kata sandi</Link>
                     </Box>
 
                     <Stack direction='column' gap='24px' mt={2} >
@@ -42,7 +43,7 @@ const Login = () => {
                         <Stack direction='row'>
                             <Typography component='p' variant='body1'>
                                 <span>Belum punya akun? </span>
-                                <Link href="/register" underline='hover' color='text.blue'>Daftar disini</Link>
+                                <Link to="/register" style={{textDecoration:'none', color:'#2F80ED'}} >Daftar disini</Link>
                             </Typography>
                         </Stack>
                     </Stack>
