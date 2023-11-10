@@ -1,21 +1,20 @@
 import { Box, Stack, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
-import { categoryStyle, imageStyle, wrapperStyle, classNameStyle, priceStyle, titleStyle } from './ClassListSectionStyles'
-import { dummyData } from '../../../utils/dummyData'
+import { dummyData } from '../../../utils/dummyDataRecommended'
 import { Link } from 'react-router-dom'
+import { categoryStyle, imageStyle, wrapperStyle, classNameStyle, priceStyle, titleStyle } from './RecommendedClassesStyles'
 
-
-export const ClassListSection = () => {
+export const RecommendedClasses = ({classData}) => {
   return (
     <Box sx={wrapperStyle}>
         <Typography variant='h2' sx={titleStyle}>
-            Kelas yang tersedia
+            Kelas lain yang mungkin kamu suka
         </Typography>
         <Grid container columnSpacing={3} rowSpacing={7.5}>
-            {dummyData.map((item)=>{
+                {dummyData.map((item)=>{
                 return (
                     <Grid xs={12} md={4} key={item.id}>
-                        <Link to='/class/1' underline='none' style={{textDecoration:'none'}}>
+                        <Link href='#' underline='none' style={{textDecoration:'none'}}>
                         <Stack direction='column' gap='16px'>
                             <img src={item.image} width="350" height="234" alt={item.name} style={imageStyle} />
                             <Box padding='0px, 8px, 0px, 8px'>
@@ -34,8 +33,8 @@ export const ClassListSection = () => {
                         </Stack>
                         </Link>
                     </Grid>
-                )
-            })}
+                    )}
+                )}
         </Grid>
     </Box>
   )
