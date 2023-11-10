@@ -11,6 +11,7 @@ import theme from "./theme"
 import ForgotPassword from "./pages/Forgot Password/Forgot Password";
 import Layout from "./pages/Layout";
 import Layout2 from "./pages/Layout2";
+import CategoryClassList from "./pages/CategoryClassList/CategoryClassList";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
               <Route>
                   <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
+                    <Route path="/category/drum" element={<CategoryClassList />} />
                   </Route>
                   <Route path="/" element={<Layout2 />}>
                     <Route path="/login" element={<Login />} />

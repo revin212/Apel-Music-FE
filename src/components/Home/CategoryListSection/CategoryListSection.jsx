@@ -1,7 +1,8 @@
-import { Box, Stack, Typography, Link } from '@mui/material'
+import { Box, Stack, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { imageStyle, wrapperStyle, titleStyle, categoryNameStyle } from './CategoryListSectionStyles'
 import { dummyData } from './dummyData'
+import { Link } from 'react-router-dom'
 
 export const CategoryListSection = () => {
   return (
@@ -13,7 +14,7 @@ export const CategoryListSection = () => {
             {dummyData.map((item)=>{
                 return (
                     <Grid xs={6} md={3} key={item.id}>
-                        <Link href='#' underline='none'>
+                        <Link to='/category/drum/' underline='none' style={{textDecoration:'none'}}>
                         <Stack direction='column' gap='24px' alignItems='center'>
                             <img src={item.image} width="350" height="234" alt={item.category} style={imageStyle} />
                             <Typography variant='h4' sx={categoryNameStyle}>

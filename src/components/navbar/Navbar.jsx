@@ -20,7 +20,7 @@ const Navbar = () => {
           my: 'auto'
         }}>
           <Link to='/' style={{padding: '10px', display: 'flex', alignContent:'center'}}>
-            <img src="apel-music-logo.png" alt="logo" style={{objectFit:'contain'}}/>
+            <img src="/apel-music-logo.png" alt="logo" style={{objectFit:'contain'}}/>
           </Link>
           <ul style={{listStyleType:'none', display: 'flex', flexDirection: 'row', gap:'40px'}}>
             <li style={{display: 'flex', alignContent:'center'}}>
