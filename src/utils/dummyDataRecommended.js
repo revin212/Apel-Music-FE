@@ -19,26 +19,5 @@ export const dummyData = [
         category: 'Drum',
         price: 8500000,
         image: '/images/Rectangle 12-7.png'
-    },
-    {
-        id: 4,
-        name: 'Kursus Drummer Special Coach (Eno Netral)',
-        category: 'Drum',
-        price: 8500000,
-        image: '/images/Rectangle 12-7.png'
-    },
-    {
-        id: 5,
-        name: 'Kursus Drummer Special Coach (Eno Netral)',
-        category: 'Drum',
-        price: 8500000,
-        image: '/images/Rectangle 12-7.png'
-    },
-    {
-        id: 6,
-        name: 'Kursus Drummer Special Coach (Eno Netral)',
-        category: 'Drum',
-        price: 8500000,
-        image: '/images/Rectangle 12-7.png'
-    },
+    }
 ]
