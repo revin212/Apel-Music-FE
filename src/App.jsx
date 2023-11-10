@@ -12,6 +12,7 @@ import ForgotPassword from "./pages/Forgot Password/Forgot Password";
 import Layout from "./pages/Layout";
 import Layout2 from "./pages/Layout2";
 import CategoryClassList from "./pages/CategoryClassList/CategoryClassList";
+import Checkout from "./pages/Checkout";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                   <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="/category/drum" element={<CategoryClassList />} />
+                    <Route path="/checkout" element={<Checkout />} />
                   </Route>
                   <Route path="/" element={<Layout2 />}>
                     <Route path="/login" element={<Login />} />
