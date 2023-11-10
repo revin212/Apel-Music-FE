@@ -33,6 +33,12 @@ export const bodyStyle = {
     color: 'text.gray1',             
 }
 
+export const imageWrapperStyle = {
+    width:'100%',
+    maxWidth:{xs:'100%', md:'400px'}, 
+    height:'min-content'
+}
+
 export const imageStyle = {
     width:'100%', 
     maxWidth:'400px', 
