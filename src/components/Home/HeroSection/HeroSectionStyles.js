@@ -1,7 +1,7 @@
 export const wrapperStyle = {
     paddingInline: {xs: '30px',md:'114px'},
     paddingBlock:'59px',
-    backgroundImage: "url('https://revinramadhan21.sirv.com/Images/Apel%20Music%20Image/image%203.png')",
+    backgroundImage: "url('/images/image 3.png')",
     backgroundSize: 'cover',
 }
 
