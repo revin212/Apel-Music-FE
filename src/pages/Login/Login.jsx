@@ -1,15 +1,11 @@
 import React, { useState } from 'react'
 import { Box, Stack, Button, Typography, Link, Input } from '@mui/material'
 import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle } from './LoginStyles'
-import SimpleSnackbar from "../../components/Snackbar";
-import { useParams } from 'react-router-dom';
 
 const Login = () => {
     const [userid, setUserid] = useState('')
     const [pwd, setPwd] = useState('')
   //const [list, setList] = useState('')
-
-    const message = useParams()
 
     const handleUserid = (userid)=>{
         console.log("User ID : "+userid) 
