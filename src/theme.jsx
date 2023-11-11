@@ -50,6 +50,11 @@ const theme = createTheme({
             fontWeight: '500',
           },
         },
+      },
+      MuiCheckbox:{
+        defaultProps: {
+          color: 'secondary'
+        }
       }
     },
   });
