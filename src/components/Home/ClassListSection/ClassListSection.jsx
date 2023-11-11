@@ -37,9 +37,9 @@ export const ClassListSection = ({classData}) => {
                 {classData.map((item)=>{
                 return (
                     <Grid xs={12} md={4} key={item.id_menu}>
-                        <Link to='/class/1' underline='none' style={{textDecoration:'none'}}>
+                        <Link to={`/class/${item.id_menu}`} underline='none' style={{textDecoration:'none'}}>
                         <Stack direction='column' gap='16px'>
-                            <img src='https://placehold.co/600x400' width="350" height="234" alt={item.title} style={imageStyle} />
+                            <img src={`data:image/jpeg;base64,${item.image}`} width="350" height="234" alt={item.title} style={imageStyle} />
                             <Box padding='0px, 8px, 0px, 8px'>
                                 <Box minHeight='113px' maxWidth='292px'>
                                     <Typography variant='body1' sx={categoryStyle}>

@@ -14,7 +14,7 @@ import Layout2 from "./pages/Layout2";
 import CategoryClassList from "./pages/CategoryClassList/CategoryClassList";
 import { DetailClass } from "./pages/DetailClass/DetailClass";
 import ScrollToTop from "./utils/scrollToTop";
-
+import { ClassListSection } from "./components/Home/ClassListSection/ClassListSection";
 
 function App() {
   return (
@@ -26,8 +26,8 @@ function App() {
               <Route>
                   <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
-                    <Route path="/category/drum" element={<CategoryClassList />} />
-                    <Route path="/class/1" element={<DetailClass />} />
+                    <Route path="/category/:type_name" element={<CategoryClassList />} />
+                    <Route path="/class/:id" element={<ClassListSection />}/>
                   </Route>
                   <Route path="/" element={<Layout2 />}>
                     <Route path="/login" element={<Login />} />
