@@ -1,5 +1,5 @@
 export const wrapperStyle = {
-    paddingInline: {xs: '30px',sm:'80px',md:'120px'},
+    paddingInline: {xs: '30px',sm:'60px',md:'90px'},
     paddingBlock:'80px',
 }
 

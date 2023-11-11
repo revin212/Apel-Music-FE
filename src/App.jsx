@@ -16,7 +16,6 @@ import { DetailClass } from "./pages/DetailClass/DetailClass";
 import ScrollToTop from "./utils/scrollToTop";
 import Checkout from "./pages/Checkout";
 
-
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -27,9 +26,9 @@ function App() {
               <Route>
                   <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
-                    <Route path="/category/drum" element={<CategoryClassList />} />
+                    <Route path="/category/:type_name" element={<CategoryClassList />} />
                     <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/class/1" element={<DetailClass />} />
+                    <Route path="/class/:id" element={<DetailClass />}/>
                   </Route>
                   <Route path="/" element={<Layout2 />}>
                     <Route path="/login" element={<Login />} />
