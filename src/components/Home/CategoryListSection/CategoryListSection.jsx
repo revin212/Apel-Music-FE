@@ -28,9 +28,9 @@ export const CategoryListSection = ({categoryData}) => {
             {categoryData.map((item)=>{
                 return (
                     <Grid xs={6} md={3} key={item.id_type}>
-                        <Link to='/category/drum/' underline='none' style={{textDecoration:'none'}}>
+                        <Link to={`/category/${item.type_name}`} underline='none' style={{textDecoration:'none'}}>
                         <Stack direction='column' gap='24px' alignItems='center'>
-                            <img src='https://placehold.co/600x400' width="350" height="234" alt={item.type_name} style={imageStyle} />
+                            <img src={`data:image/jpeg;base64,${item.image}`} width="350" height="234" alt={item.type_name} style={imageStyle} />
                             <Typography variant='h4' sx={categoryNameStyle}>
                                 {item.type_name}
                             </Typography>
