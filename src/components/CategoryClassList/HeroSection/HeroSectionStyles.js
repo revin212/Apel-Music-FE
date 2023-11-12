@@ -16,3 +16,12 @@ export const bodyStyle = {
     lineHeight: '24px',
     color: 'text.gray1',             
 }
+
+export const bannerWrapperStyle ={
+    height: '334px',
+    position: 'relative'
+}
+
+export const backdropStyle= {
+    position: 'absolute'
+}
