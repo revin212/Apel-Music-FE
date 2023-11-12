@@ -34,7 +34,7 @@ export const HeroSection = ({categoryName}) => {
 
   return (
     
-    <Box sx={wrapperStyle} container minHeight={'334px'}>
+    <Box sx={wrapperStyle} minHeight={'334px'}>
           <Box sx={bannerWrapperStyle}>
               <Backdrop sx={backdropStyle} open={loading} >
                   <CircularProgress color="primary"/>
