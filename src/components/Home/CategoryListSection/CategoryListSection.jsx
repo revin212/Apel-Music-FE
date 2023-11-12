@@ -1,16 +1,63 @@
-import { Box, Stack, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Box, Stack, Typography, CircularProgress, Backdrop, Alert } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
-import { imageStyle, wrapperStyle, titleStyle, categoryNameStyle } from './CategoryListSectionStyles'
+import { imageStyle, wrapperStyle, titleStyle, categoryNameStyle, backdropStyle } from './CategoryListSectionStyles'
 import { dummyData } from '../../../utils/dummyDataCategory'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
-export const CategoryListSection = ({categoryData}) => {
-  return (
+export const CategoryListSection = () => {
+    const [categoryData, setCategoryData] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [errorState, setErrorState] = useState(false)
+    //console.log('loading = ', loading)
+    useEffect(()=> {
+        setLoading(true)
+        setErrorState(false)
+        axios.get('http://52.237.194.35:2024/api/Type/GetActiveType')
+            .then((response) => {
+            // handle success
+               setCategoryData(response.data)
+               setLoading(false)
+            })
+            .catch((error) => {
+            // handle error
+               //console.log(error)
+               setLoading(false)
+               setErrorState(true)
+               return(
+                <Box sx={wrapperStyle}>
+                    <Alert variant="filled" severity="error">
+                        Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+                    </Alert>
+                </Box>
+               )
+               
+            })
+    }, [])
+
+    const handleError =
+    (
     <Box sx={wrapperStyle}>
         <Typography variant='h2' sx={titleStyle}>
             Pilih kelas impian kamu
         </Typography>
-        <Grid container columnSpacing={3} rowSpacing={7.5}>
+        <Alert variant="filled" severity="error">
+            Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+        </Alert>
+    </Box>
+    )
+
+    const handleSuccess = 
+    (
+    <Box sx={wrapperStyle}>
+        <Typography variant='h2' sx={titleStyle}>
+            Pilih kelas impian kamu
+        </Typography>
+        <Grid container minHeight={'300px'} columnSpacing={3} rowSpacing={7.5} position={'relative'}>
+            <Backdrop sx={backdropStyle} open={loading} >
+                <CircularProgress color="primary" />
+            </Backdrop>
             {/* {dummyData.map((item)=>{
                 return (
                     <Grid xs={6} md={3} key={item.id}>
@@ -41,5 +88,8 @@ export const CategoryListSection = ({categoryData}) => {
             })} 
         </Grid>
     </Box>
-  )
+    )
+
+    if(errorState) return handleError
+    else return handleSuccess
 }

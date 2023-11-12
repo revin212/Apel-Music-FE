@@ -1,16 +1,54 @@
-import { Box, Stack, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Box, Stack, Typography, CircularProgress, Backdrop, Alert } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
-import { categoryStyle, imageStyle, wrapperStyle, classNameStyle, priceStyle, titleStyle } from './ClassListSectionStyles'
+import { categoryStyle, imageStyle, wrapperStyle, classNameStyle, priceStyle, titleStyle, backdropStyle } from './ClassListSectionStyles'
 import { dummyData } from '../../../utils/dummyData'
 import { Link } from 'react-router-dom'
+import axios from 'axios' 
 
-export const ClassListSection = ({classData}) => {
-  return (
+export const ClassListSection = () => {
+    const [classData, setClassData] = useState([])
+    const [loading, setLoading] = useState(false)
+    const [errorState, setErrorState] = useState(false)
+    useEffect(()=> {
+        setLoading(true)
+        setErrorState(false)
+        axios.get('http://52.237.194.35:2024/api/Menu/GetMenuLimit')
+          .then((response) => {
+            // handle success
+            setClassData(response.data)
+            setLoading(false)
+          })
+          .catch((error) => {
+            // handle error
+            //console.log(error);
+            setLoading(false)
+            setErrorState(true)
+          })
+        }, [])
+
+    const handleError = 
+    (
+    <Box sx={wrapperStyle}>
+        <Typography variant='h2' sx={titleStyle}>
+            Pilih kelas impian kamu
+        </Typography>
+        <Alert variant="filled" severity="error">
+            Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+        </Alert>
+    </Box>
+    )
+
+    const handleSuccess =
+    (
     <Box sx={wrapperStyle}>
         <Typography variant='h2' sx={titleStyle}>
             Explore kelas favorit
         </Typography>
-        <Grid container columnSpacing={3} rowSpacing={7.5}>
+        <Grid container minHeight={'300px'} columnSpacing={3} rowSpacing={7.5} position={'relative'}>
+            <Backdrop sx={backdropStyle} open={loading}>
+                <CircularProgress color="primary" />
+            </Backdrop>
             {/* {dummyData.map((item)=>{
                 return (
                     <Grid xs={12} md={4} key={item.id}>
@@ -60,5 +98,8 @@ export const ClassListSection = ({classData}) => {
             })}
         </Grid>
     </Box>
-  )
+    )
+
+    if(errorState) return handleError
+    else return handleSuccess
 }
