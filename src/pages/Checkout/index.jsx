@@ -1,6 +1,7 @@
 import { Delete, DeleteForever } from "@mui/icons-material"
 import { Box, Checkbox, Container, FormControlLabel, Grid, Input, Typography, Button } from "@mui/material"
 import { useState } from "react"
+import { ModalPaymentMethod } from "../../components/ModalPaymentMethod/ModalPaymentMethod"
 
 const Checkout = (/*{ data }*/) => {
     const [cart, setCart] = useState([
@@ -169,6 +170,7 @@ const Checkout = (/*{ data }*/) => {
                 </Typography>
                 <Button variant="contained" onClick={handleOpenModal}>Bayar Sekarang</Button>
             </Box>
+            <ModalPaymentMethod setModalOpen={setOpenModal} modalOpen={openModal}/>
         </>
     )
 }
