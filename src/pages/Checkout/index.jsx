@@ -1,6 +1,6 @@
 import { Delete, DeleteForever } from "@mui/icons-material"
 import { Box, Checkbox, Container, FormControlLabel, Grid, Input, Typography, Button } from "@mui/material"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ModalPaymentMethod } from "../../components/ModalPaymentMethod/ModalPaymentMethod"
 
 const Checkout = (/*{ data }*/) => {
@@ -10,33 +10,36 @@ const Checkout = (/*{ data }*/) => {
             title: 'Kursus Drummer Special Coach (Eno Netral)',
             jadwal: 'Senin, 25 Juli 2022',
             price: 850000,
-            thumbnail: '/images/Rectangle 12-7.png'
+            thumbnail: '/images/Rectangle 12-7.png',
+            selected: false
         },
         {
             type: 'Biola',
             title: 'Biola Mid-Level Course',
             jadwal: 'Senin, 25 Juli 2022',
             price: 850000,
-            thumbnail: '/images/Rectangle 12-7.png'
+            thumbnail: '/images/Rectangle 12-7.png',
+            selected: false
         },
         {
             type: 'Drum',
             title: 'Kursus Drummer Special Coach (Eno Netral)',
             jadwal: 'Senin, 25 Juli 2022',
             price: 850000,
-            thumbnail: '/images/Rectangle 12-7.png'
+            thumbnail: '/images/Rectangle 12-7.png',
+            selected: false
         },
         {
             type: 'Drum',
             title: 'Kursus Drummer Special Coach (Eno Netral)',
             jadwal: 'Senin, 25 Juli 2022',
             price: 850000,
-            thumbnail: '/images/Rectangle 12-7.png'
+            thumbnail: '/images/Rectangle 12-7.png',
+            selected: false
         }
     ])
-
-    const [checked, setChecked] = useState([]) //{select: bool, title: string}
     const [openModal, setOpenModal] = useState(false)
+    const [total, setTotal] = useState(0)
 
     // const selectAll = () => {
     //     if(checked!==null){
@@ -54,18 +57,23 @@ const Checkout = (/*{ data }*/) => {
     // //         item
     // //     }))
     // // }
+    const handleSelect = (e) => {
+        console.log('before' + cart[e.target.id].selected);
+        cart[e.target.id].selected = !cart[e.target.id].selected;
+        console.log('after' + cart[e.target.id].selected);
+    }
 
-    const total = () => {
-        let sum = 0
-        try {
-            cart.forEach((e, i)=>{
-                /* if(checked[i].select) */ sum += e.price
+    useEffect(() => {
+        setTotal(()=>{
+            let sum = 0
+            cart.forEach((e)=>{
+                sum += e.price
+                if(!e.selected) sum -= e.price
             })
             return sum
-        } catch (error) {
-            console.log(error);
-        }
-    }
+        })
+        console.log(total)
+    }, [cart[0].selected]);
 
     const handleOpenModal = () => {
         setOpenModal(true)
@@ -103,7 +111,6 @@ const Checkout = (/*{ data }*/) => {
                     <Checkbox /> Pilih Semua
                 </Box>
                 {cart.map((e, i)=>{
-                    // {console.log(e)}
                     return(
                         <Box key={i} sx={{
                             py: '24px',
@@ -111,7 +118,7 @@ const Checkout = (/*{ data }*/) => {
                         }}>
                             <Grid key={i} direction='row' container gap='24px' alignItems='center'>
                                 <Grid item xs={0.5} height='100%'>
-                                    <Checkbox />
+                                    <Checkbox onChange={handleSelect} id={`${i}`} />
                                 </Grid>
                                 <Grid item xs={2}>
                                     <img width='200px' height='133px' src={e.thumbnail} />
@@ -122,7 +129,6 @@ const Checkout = (/*{ data }*/) => {
                                         flexDirection: 'column',
                                         gap: '4px'
                                     }}>
-                                        {console.log(e.type, e.title, e.jadwal, e.price)}
                                         <Typography fontWeight={400} fontSize={16} sx={{color:'text.gray3'}}>{e.type}</Typography>
                                         <Typography fontWeight={600} fontSize={24} sx={{color:'text.gray1'}}>{e.title}</Typography>
                                         <Typography fontWeight={400} fontSize={16} my='4px' sx={{color:'text.gray2'}}>Jadwal: {e.jadwal}</Typography>
@@ -166,7 +172,7 @@ const Checkout = (/*{ data }*/) => {
                         fontSize: '24px',
                         color: 'secondary.main',
 
-                    }}>{formatPrice(total())}</Typography>
+                    }}>{formatPrice(total)}</Typography>
                 </Typography>
                 <Button variant="contained" onClick={handleOpenModal}>Bayar Sekarang</Button>
             </Box>
