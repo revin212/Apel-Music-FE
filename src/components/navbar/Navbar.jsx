@@ -66,7 +66,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li style={{display: 'flex', alignContent:'center'}}>
-                <Link to='#' style={{padding: '10px', textDecoration:'none',}}>
+                <Link to='/invoice' style={{padding: '10px', textDecoration:'none',}}>
                   <Typography variant='p' sx={{
                     fontWeight: '500',
                     color: 'text.black'
