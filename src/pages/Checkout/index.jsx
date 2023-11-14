@@ -2,6 +2,7 @@ import { Delete, DeleteForever } from "@mui/icons-material"
 import { Box, Checkbox, Container, FormControlLabel, Grid, Input, Typography, Button } from "@mui/material"
 import { useState, useEffect } from "react"
 import { ModalPaymentMethod } from "../../components/ModalPaymentMethod/ModalPaymentMethod"
+import { dateToStringInvoice } from "../../utils/DateUtils"
 
 const Checkout = (/*{ data }*/) => {
     const [cart, setCart] = useState([
@@ -40,6 +41,7 @@ const Checkout = (/*{ data }*/) => {
     ])
     const [openModal, setOpenModal] = useState(false)
     const [total, setTotal] = useState(0)
+    const [allChecked, setAllChecked] = useState(false)
 
     // const selectAll = () => {
     //     if(checked!==null){
@@ -58,9 +60,44 @@ const Checkout = (/*{ data }*/) => {
     // //     }))
     // // }
     const handleSelect = (e) => {
-        console.log('before' + cart[e.target.id].selected);
-        cart[e.target.id].selected = !cart[e.target.id].selected;
-        console.log('after' + cart[e.target.id].selected);
+        // console.log('before' + cart[e.target.id].selected);
+        setCart(cart.map((item, index)=>{
+            return index == e.target.id ? {...item, selected: !item.selected} : item
+        }))
+        // cart[e.target.id].selected = !cart[e.target.id].selected;
+        // console.log('after' + cart[e.target.id].selected);
+    }
+
+    const isSelectedAll = () => {
+        for (let i=0; i<cart.length; i++) {
+            if(!cart[i].selected) return false
+        }
+        return true
+    }
+
+    const handleSelectAll = () => {
+        if(!isSelectedAll()) {
+            setCart(cart.map((item, index)=>{
+                return {...item, selected: true}
+            }))
+            setAllChecked(true)
+            return
+        } else {
+            setCart(cart.map((item, index)=>{
+                return {...item, selected: false}
+            }))
+            setAllChecked(false)
+        }
+    }
+
+    const handleDelete = (e) => {
+        const deleteTarget = e.target.id.split(',')
+        setCart(cart.filter(item=>{
+            if(item.title == deleteTarget[0] && dateToStringInvoice(new Date(item.jadwal)) == deleteTarget[1]){
+                return false
+            }
+            return true
+        }))
     }
 
     useEffect(() => {
@@ -72,8 +109,8 @@ const Checkout = (/*{ data }*/) => {
             })
             return sum
         })
-        console.log(total)
-    }, [cart[0].selected]);
+        // console.log(total)
+    }, [cart]);
 
     const handleOpenModal = () => {
         setOpenModal(true)
@@ -108,7 +145,7 @@ const Checkout = (/*{ data }*/) => {
                     borderColor: 'text.gray4',
                     boxSizing: 'border-box',
                 }}>
-                    <Checkbox /> Pilih Semua
+                    <Checkbox onChange={handleSelectAll} checked={allChecked} /> Pilih Semua
                 </Box>
                 {cart.map((e, i)=>{
                     return(
@@ -118,7 +155,7 @@ const Checkout = (/*{ data }*/) => {
                         }}>
                             <Grid key={i} direction='row' container gap='24px' alignItems='center'>
                                 <Grid item xs={0.5} height='100%'>
-                                    <Checkbox onChange={handleSelect} id={`${i}`} />
+                                    <Checkbox checked={e.selected} onChange={handleSelect} id={`${i}`} />
                                 </Grid>
                                 <Grid item xs={2}>
                                     <img width='200px' height='133px' src={e.thumbnail} />
@@ -136,7 +173,7 @@ const Checkout = (/*{ data }*/) => {
                                     </Box>
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <Button variant="text" sx={{
+                                    <Button onClick={handleDelete} id={e.title+','+dateToStringInvoice(new Date(e.jadwal))} variant="text" sx={{
                                         color: 'text.gray1',
                                         fontWeight: '500',
                                         fontSize: '16px'
@@ -166,14 +203,15 @@ const Checkout = (/*{ data }*/) => {
                 borderTop: 'solid 1px #BDBDBD',
                 boxShadow: '0 -2px 3px #CFD6E5'
             }}>
-                <Typography sx={{display: 'flex', gap:'24px', alignItems:'center'}}>
-                    Total biaya <Typography sx={{
+                <Box sx={{display: 'flex', gap:'24px', alignItems:'center'}}>
+                    <Typography>Total biaya</Typography> 
+                    <Typography sx={{
                         fontWeight: '500',
                         fontSize: '24px',
                         color: 'secondary.main',
 
                     }}>{formatPrice(total)}</Typography>
-                </Typography>
+                </Box>
                 <Button variant="contained" onClick={handleOpenModal}>Bayar Sekarang</Button>
             </Box>
             <ModalPaymentMethod setModalOpen={setOpenModal} modalOpen={openModal}/>
