@@ -7,10 +7,9 @@ import TablePagination from '@mui/material/TablePagination';
 import { styled } from '@mui/material/styles';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Box, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { dateToStringInvoice } from '../../utils/DateUtils';
+import { dateToString } from '../../../utils/DateUtils';
 import { useState, useMemo } from 'react';
+import { Box } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -48,21 +47,17 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-function createData(no, no_invoice, buy_date, course_count, total_price, detail_url ) {
-    return { no, no_invoice, buy_date, course_count, total_price, detail_url };
+function createData(no, course_name, category, course_date, price ) {
+    return { no, course_name, category, course_date, price };
 }
 
 const rows = [
-    createData(1,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
-    createData(2,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
-    createData(3,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
-    createData(4,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
-    createData(5,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
-    createData(6,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
+    createData(1,'Kursus Drummer Special Coach (Eno Netral)', 'Drum',new Date('2022-07-25'), 8500000),
+    createData(2,'Biola Mid-Level Course', 'Biola',new Date('2022-07-23'), 3000000),
 ];
   
 
-export const InvoiceTable = () => {
+export const InvoiceDetailTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -92,31 +87,23 @@ export const InvoiceTable = () => {
         <TableHead>
           <TableRow>
             <StyledTableCell>No</StyledTableCell>
-            <StyledTableCell>No. Invoice</StyledTableCell>
-            <StyledTableCell>Tanggal Beli</StyledTableCell>
-            <StyledTableCell>Jumlah Kursus</StyledTableCell>
-            <StyledTableCell>Total Harga</StyledTableCell>
-            <StyledTableCell sx={{width:{xs:'100px', md:'180px'}}}>Action</StyledTableCell>
+            <StyledTableCell>Nama Course</StyledTableCell>
+            <StyledTableCell>Kategori</StyledTableCell>
+            <StyledTableCell>Jadwal</StyledTableCell>
+            <StyledTableCell>Harga</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {visibleRows.map((row, index) => (
+          {visibleRows.map((row) => (
             <StyledTableRow key={row.no}>
               <StyledTableCell component="th" scope="row">
                 {row.no}
               </StyledTableCell>
-              <StyledTableCell>{row.no_invoice}</StyledTableCell>
-              <StyledTableCell>{dateToStringInvoice(new Date(row.buy_date))}</StyledTableCell>
-              <StyledTableCell>{row.course_count}</StyledTableCell>
+              <StyledTableCell>{row.course_name}</StyledTableCell>
+              <StyledTableCell>{row.category}</StyledTableCell>
+              <StyledTableCell>{dateToString(new Date(row.course_date))}</StyledTableCell>
               <StyledTableCell>
-                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.total_price)}
-              </StyledTableCell>
-              <StyledTableCell>
-                <Link to={row.detail_url}>
-                <Button variant='contained' sx={{width:'100%', maxWidth:'180px'}}>
-                    Rincian 
-                </Button>
-                </Link>
+                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.price)}
               </StyledTableCell>
             </StyledTableRow>
           ))}

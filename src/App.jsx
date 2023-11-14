@@ -15,6 +15,7 @@ import CategoryClassList from "./pages/CategoryClassList/CategoryClassList";
 import { DetailClass } from "./pages/DetailClass/DetailClass";
 import ScrollToTop from "./utils/scrollToTop";
 import { Invoice } from "./pages/Invoice/Invoice";
+import { InvoiceDetail } from "./pages/InvoiceDetail/InvoiceDetail";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                     <Route path="/category/:type_name" element={<CategoryClassList />} />
                     <Route path="/class/:id" element={<DetailClass />}/>
                     <Route path="/invoice" element={<Invoice />}/>
+                    <Route path="/invoice/:id" element={<InvoiceDetail />}/>
                   </Route>
                   <Route path="/" element={<Layout2 />}>
                     <Route path="/login" element={<Login />} />

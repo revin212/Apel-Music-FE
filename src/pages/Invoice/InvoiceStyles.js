@@ -6,7 +6,7 @@ export const wrapperStyle = {
 
 export const titleStyle = {
     fontSize: '20px',
-    fontWeight: '600',
+    fontWeight: '700',
     lineHeight: '30px',
     letterSpacing: '0em',
     color: 'text.gray2',            
