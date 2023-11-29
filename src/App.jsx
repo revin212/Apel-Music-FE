@@ -27,7 +27,6 @@ function App() {
                   <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="/category/:type_name" element={<CategoryClassList />} />
-                    <Route path="/checkout" element={<Checkout />} />
                     <Route path="/class/:id" element={<DetailClass />}/>
                   </Route>
                   <Route path="/" element={<Layout2 />}>
@@ -35,6 +34,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/new-password" element={<NewPassword />} />
+                    <Route path="/checkout" element={<Checkout />} />
                   </Route>
                   {/* <Route path="*" element={<NoMatch />} /> */}
               </Route>
