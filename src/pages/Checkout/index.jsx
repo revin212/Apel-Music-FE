@@ -2,7 +2,7 @@ import { Delete, DeleteForever } from "@mui/icons-material"
 import { Box, Checkbox, Container, FormControlLabel, Grid, Input, Typography, Button } from "@mui/material"
 import { useState, useEffect } from "react"
 import { ModalPaymentMethod } from "../../components/ModalPaymentMethod/ModalPaymentMethod"
-import { dateToStringInvoice } from "../../utils/DateUtils"
+import { dateToString } from "../../utils/DateUtils"
 import { cartItemStyle, containerStyle, deleteBtnStyle, footerStyle, selectAllStyle, totalBiayaStyle, totalBiayaWrapperStyle } from "./checkoutStyles"
 import { dummyDataCheckout } from "../../utils/dummyDataCheckout"
 
@@ -89,7 +89,7 @@ const Checkout = (/*{ data }*/) => {
                                     }}>
                                         <Typography fontWeight={400} fontSize={16} sx={{color:'text.gray3'}}>{e.type}</Typography>
                                         <Typography fontWeight={600} fontSize={24} sx={{color:'text.gray1'}}>{e.title}</Typography>
-                                        <Typography fontWeight={400} fontSize={16} my='4px' sx={{color:'text.gray2'}}>Jadwal : {e.jadwal}</Typography>
+                                        <Typography fontWeight={400} fontSize={16} my='4px' sx={{color:'text.gray2'}}>Jadwal : {dateToString(e.jadwal)}</Typography>
                                         <Typography fontWeight={600} fontSize={20} sx={{color: 'secondary.main'}}>
                                             IDR {new Intl.NumberFormat(["ban", "id"]).format(e.price)}
                                         </Typography>
