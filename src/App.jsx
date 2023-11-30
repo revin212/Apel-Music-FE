@@ -16,6 +16,7 @@ import { DetailClass } from "./pages/DetailClass/DetailClass";
 import ScrollToTop from "./utils/scrollToTop";
 import { Invoice } from "./pages/Invoice/Invoice";
 import { InvoiceDetail } from "./pages/InvoiceDetail/InvoiceDetail";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/new-password" element={<NewPassword />} />
+                    <Route path="/checkout" element={<Checkout />} />
                   </Route>
                   {/* <Route path="*" element={<NoMatch />} /> */}
               </Route>
