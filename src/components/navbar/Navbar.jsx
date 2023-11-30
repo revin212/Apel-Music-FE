@@ -56,7 +56,7 @@ const Navbar = () => {
                   </Link>
               </li>
               <li style={{display: 'flex', alignContent:'center'}}>
-                <Link to='#' style={{padding: '10px', textDecoration:'none',}}>
+                <Link to='/myclass' style={{padding: '10px', textDecoration:'none',}}>
                   <Typography variant='p' sx={{
                     fontWeight: '500',
                     color: 'text.black'
@@ -85,7 +85,7 @@ const Navbar = () => {
                   </Typography>
               </li>
               <li>
-                  <Link to='/profile' style={{padding: '10px', display: 'flex', alignContent:'center'}}>
+                  <Link to='/myclass' style={{padding: '10px', display: 'flex', alignContent:'center'}}>
                     <Person sx={{color: 'text.gray0'}} />
                   </Link>
               </li>
