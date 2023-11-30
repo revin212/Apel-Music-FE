@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { buttonStyle, itemButtonStyle, methodListStyle, modalContentStyle, paymentMethodList, titleStyle } from './ModalPaymentMethodStyle';
 
 
-export const ModalPaymentMethod = ([modalOpen, setModalOpen]) => {
+export const ModalPaymentMethod = ({ modalOpen, setModalOpen }) => {
   const [selectedMethod, setSelectedMethod] = useState(null);
   const handleListItemClick = (method) => {setSelectedMethod(method)}
 
