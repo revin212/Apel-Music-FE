@@ -1,18 +1,31 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Box, Stack, Button, Typography, Input } from '@mui/material'
 import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle } from './LoginStyles'
 import { Link } from 'react-router-dom'
+import useLogin from '../../hooks/useLogin'
+import axios from 'axios'; 
+
+
+
 
 const Login = () => {
     const [userid, setUserid] = useState('')
     const [pwd, setPwd] = useState('')
+    const loginUrl = import.meta.env.VITE_API_URL + "/MsUser/Login"
+    const { data, login } = useLogin();
+    
+    
   //const [list, setList] = useState('')
 
-    const handleUserid = (userid)=>{
-        console.log("User ID : "+userid) 
-    }
-    const handlePwd = (pwd)=>{
-        console.log("Password : "+pwd) 
+    // const handleUserid = (userid)=>{
+    //     console.log("User ID : "+userid) 
+    // }
+    // const handlePwd = (pwd)=>{
+    //     console.log("Password : "+pwd) 
+    // }
+    const handleLogin = (e) => {
+        e.preventDefault();
+        login(loginUrl, {email:userid, password:pwd})
     }
 
     return (
@@ -31,9 +44,8 @@ const Login = () => {
                     </Box>
 
                     <Stack direction='column' gap='24px' mt={2} >
-                        <Button onClick={()=>{
-                            handleUserid(userid)
-                            handlePwd(pwd)
+                        <Button onClick={(e)=>{
+                            handleLogin(e);
                         }} variant='contained' type='submit' sx={{
                             maxWidth: '140px',
                             maxHeight: '43px',
