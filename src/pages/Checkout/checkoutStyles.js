@@ -1,7 +1,7 @@
 export const containerStyle = {
     px: 0,
     pb: '10rem',
-    mx: 'auto',
+    mx: {xs:"16px" ,md:'auto'},
     mt: '40px',
 }
 
@@ -24,10 +24,17 @@ export const cartItemStyle = {
     borderColor: 'text.gray4'
 }
 
+export const classDescStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px'
+}
+
 export const deleteBtnStyle = {
     color: 'text.gray1',
     fontWeight: '500',
-    fontSize: '16px'
+    fontSize: '16px',
+    padding: {xs:"16px", md:'0'}
     }
 
 export const footerStyle ={
@@ -58,4 +65,18 @@ export const totalBiayaStyle = {
     fontSize: '24px',
     color: 'secondary.main',
 
+}
+
+export const imageWrapperStyle = {
+    width:'100%',
+    maxWidth:{xs:'100%', md:'200px'}, 
+    height:'min-content'
+}
+
+export const imageStyle = {
+    width:'100%', 
+    maxWidth:'200px', 
+    height:'auto', 
+    border:'1px solid #BDBDBD', 
+    borderRadius:'16px'
 }

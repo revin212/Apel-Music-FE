@@ -17,6 +17,7 @@ import ScrollToTop from "./utils/scrollToTop";
 import { Invoice } from "./pages/Invoice/Invoice";
 import { InvoiceDetail } from "./pages/InvoiceDetail/InvoiceDetail";
 import Checkout from "./pages/Checkout";
+import { MyClass } from "./pages/MyClass/MyClass";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                     <Route path="/class/:id" element={<DetailClass />}/>
                     <Route path="/invoice" element={<Invoice />}/>
                     <Route path="/invoice/:id" element={<InvoiceDetail />}/>
+                    <Route path="/myclass" element={<MyClass />}/>
                   </Route>
                   <Route path="/" element={<Layout2 />}>
                     <Route path="/login" element={<Login />} />

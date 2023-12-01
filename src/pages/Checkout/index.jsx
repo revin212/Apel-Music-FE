@@ -1,9 +1,9 @@
 import { Delete, DeleteForever } from "@mui/icons-material"
-import { Box, Checkbox, Container, FormControlLabel, Grid, Input, Typography, Button } from "@mui/material"
+import { Box, Checkbox, Container, FormControlLabel, Stack, Input, Typography, Button } from "@mui/material"
 import { useState, useEffect } from "react"
 import { ModalPaymentMethod } from "../../components/ModalPaymentMethod/ModalPaymentMethod"
 import { dateToString } from "../../utils/DateUtils"
-import { cartItemStyle, containerStyle, deleteBtnStyle, footerStyle, selectAllStyle, totalBiayaStyle, totalBiayaWrapperStyle } from "./checkoutStyles"
+import { cartItemStyle, classDescStyle, containerStyle, deleteBtnStyle, footerStyle, imageStyle, imageWrapperStyle, selectAllStyle, totalBiayaStyle, totalBiayaWrapperStyle } from "./checkoutStyles"
 import { dummyDataCheckout } from "../../utils/dummyDataCheckout"
 
 const Checkout = (/*{ data }*/) => {
@@ -73,20 +73,17 @@ const Checkout = (/*{ data }*/) => {
                 </Box>
                 {cart.map((e, i)=>{
                     return(
-                        <Box key={i} sx={cartItemStyle}>
-                            <Grid key={i} direction='row' container gap='24px' alignItems='center'>
-                                <Grid item xs={0.5} height='100%'>
+                        <Stack direction='row' justifyContent={'space-between'} alignItems='center'  key={i} sx={cartItemStyle}>
+                            <Stack direction='row' gap='24px' alignItems='center'>
+                                <Stack height='100%'>
                                     <Checkbox checked={e.selected} onChange={handleSelect} id={`${i}`} />
-                                </Grid>
-                                <Grid item xs={2}>
-                                    <img width='200px' height='133px' src={e.thumbnail} />
-                                </Grid>
-                                <Grid item xs={7}>
-                                    <Box sx={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        gap: '4px'
-                                    }}>
+                                </Stack>
+                                <Stack direction={{xs:"column", md:"row"}} gap="24px" >
+                                <Stack sx={imageWrapperStyle}>
+                                    <img src={e.thumbnail} style={imageStyle} />
+                                </Stack>
+                                <Stack>
+                                    <Box sx={classDescStyle}>
                                         <Typography fontWeight={400} fontSize={16} sx={{color:'text.gray3'}}>{e.type}</Typography>
                                         <Typography fontWeight={600} fontSize={24} sx={{color:'text.gray1'}}>{e.title}</Typography>
                                         <Typography fontWeight={400} fontSize={16} my='4px' sx={{color:'text.gray2'}}>Jadwal : {dateToString(e.jadwal)}</Typography>
@@ -94,15 +91,16 @@ const Checkout = (/*{ data }*/) => {
                                             IDR {new Intl.NumberFormat(["ban", "id"]).format(e.price)}
                                         </Typography>
                                     </Box>
-                                </Grid>
-                                <Grid item xs={1}>
-                                    <Button onClick={handleDelete} id={e.id} variant="text" sx={deleteBtnStyle}>
-                                        <DeleteForever sx={{color: 'warning.main'}}/>
-                                        Delete
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Box>
+                                </Stack>
+                                </Stack>
+                            </Stack>
+                            <Stack>
+                                <Button onClick={(e)=>handleDelete(e)} id={e.id} variant="text" sx={deleteBtnStyle}>
+                                    <DeleteForever id={e.id} sx={{color: 'warning.main'}}/>
+                                    <Typography id={e.id} display={{xs:"none", md:"block"}}>Delete</Typography>
+                                </Button>
+                            </Stack>
+                        </Stack>
                     )
                 })}
             </Container>
