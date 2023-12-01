@@ -1,26 +1,23 @@
 import { useContext } from 'react';
 import axios from 'axios'; 
 import { AuthContext } from '../components/AuthContext/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
-const useLogin = () => {
-    const navigate = useNavigate();
+const useRefreshToken = () => {
 
     const [token, tokenExpires, newToken, auth, setAuth] = useContext(AuthContext);
 
-    const login = async (url, loginCredential) => {
+    const refreshToken = async (url) => {
         try {
             const instance = axios.create({withCredentials: true});
-            const response = await instance.post(url, loginCredential);
+            const response = await instance.post(url);
             await newToken(response.data);
             await setAuth(true);
-            navigate("/")
         } catch (error) {
-            console.error("Error during login:", error);
+            console.error("Error refreshing token:", error);
         }
     }
 
-    return { token, tokenExpires, login }
+    return refreshToken
 }
 
-export default useLogin
+export default useRefreshToken

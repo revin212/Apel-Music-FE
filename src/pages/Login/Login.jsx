@@ -9,10 +9,10 @@ import axios from 'axios';
 
 
 const Login = () => {
-    const [userid, setUserid] = useState('')
+    const [email, setEmail] = useState('')
     const [pwd, setPwd] = useState('')
     const loginUrl = import.meta.env.VITE_API_URL + "/MsUser/Login"
-    const { token, tokenExpires, login } = useLogin();
+    const { login } = useLogin();
     
     
   //const [list, setList] = useState('')
@@ -25,7 +25,7 @@ const Login = () => {
     // }
     const handleLogin = (e) => {
         e.preventDefault();
-        login(loginUrl, {email:userid, password:pwd})
+        login(loginUrl, {email:email, password:pwd})
     }
 
     return (
@@ -37,8 +37,8 @@ const Login = () => {
                 </Stack>
 
                 <Typography component='form' sx={formStyle}>
-                    <Input disableUnderline value={ userid } onChange={(e)=>{ setUserid(e.target.value) }} id='email-input' type="email" placeholder="Masukkan Email" sx={inputStyle}/>
-                    <Input disableUnderline value={ pwd } onChange={(e)=>{ setPwd(e.target.value) }} id='password-input' type="password" placeholder="Masukkan Password" sx={inputStyle}/>
+                    <Input disableUnderline name={"Email"} autoComplete='email' value={ email } onChange={(e)=>{ setEmail(e.target.value) }} id='email-input' type="email" placeholder="Masukkan Email" sx={inputStyle}/>
+                    <Input disableUnderline name={"Password"} value={ pwd } onChange={(e)=>{ setPwd(e.target.value) }} id='password-input' type="password" placeholder="Masukkan Password" sx={inputStyle}/>
                     <Box textAlign='end' sx={forgotPassStyle}>
                         <Link to="/forgot-password" style={{textDecoration:'none', color:'#4F4F4F'}} >Lupa kata sandi</Link>
                     </Box>
