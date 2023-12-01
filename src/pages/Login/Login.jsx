@@ -12,7 +12,7 @@ const Login = () => {
     const [userid, setUserid] = useState('')
     const [pwd, setPwd] = useState('')
     const loginUrl = import.meta.env.VITE_API_URL + "/MsUser/Login"
-    const { data, login } = useLogin();
+    const { token, tokenExpires, login } = useLogin();
     
     
   //const [list, setList] = useState('')

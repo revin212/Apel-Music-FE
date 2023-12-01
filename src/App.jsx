@@ -1,6 +1,6 @@
 // Import library
 import { ThemeProvider } from "@mui/material/styles";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 // Import components and pages
 import Home from "./pages/Home/Home";
@@ -42,6 +42,7 @@ function App() {
                     <Route path="/new-password" element={<NewPassword />} />
                     <Route path="/checkout" element={<Checkout />} />
                   </Route>
+                  <Route path="/logout" element={<Navigate to="/" />} />
                   {/* <Route path="*" element={<NoMatch />} /> */}
               </Route>
             </Routes>

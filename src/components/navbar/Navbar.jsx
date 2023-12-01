@@ -1,10 +1,24 @@
 import { Box, Typography, Button } from '@mui/material'
 import { Logout, Person, ShoppingCart } from "@mui/icons-material";
-import { useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../AuthContext/AuthContext';
+import useLogout from '../../hooks/useLogout';
 
 const Navbar = () => {
   const [auth, setAuth] = useState(false)
+  // const [token, tokenExpires, newToken] = useContext(AuthContext);
+  // const logout = useLogout();
+
+  // useEffect(()=>{
+  //   if(token != "" && Date.now() < new Date(tokenExpires)){
+  //     setAuth(true)
+  //   } else setAuth(false)
+  // }, [token, tokenExpires])
+
+  // const handleLogout = () => {
+  //   logout(import.meta.env.VITE_API_URL + "/MsUser/Logout");
+  // }
 
   return (
     <Box sx={{
@@ -26,8 +40,7 @@ const Navbar = () => {
           <Link to='/' style={{padding: '10px', display: 'flex', alignContent:'center'}}>
             <img src="/apel-music-logo.png" alt="logo" style={{objectFit:'contain'}}/>
           </Link>
-          <Button onClick={()=>{setAuth(!auth)}}>FOR DEV PURPOSE: set auth</Button>
-           {/*remove this button after adding auth  */}
+
           {!auth
           ? <ul style={{listStyleType:'none', display: 'flex', flexDirection: 'row', gap:'40px'}}>
               <li style={{display: 'flex', alignContent:'center'}}>
