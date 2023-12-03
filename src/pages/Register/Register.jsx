@@ -28,10 +28,10 @@ const Register = () => {
         </div>
 
         <form className='register-form-wrapper'>
-            <input type="text" value={ name } onChange={(e)=>{ setName(e.target.value) }} className='input-register register-email' placeholder='Masukkan Nama Lengkap' /> 
-            <input type="email" value={ userid } onChange={(e)=>{ setUserid(e.target.value) }} className='input-register register-email' placeholder='Masukkan Email' />
-            <input type="password" value={ pwd } onChange={(e)=>{ setPwd(e.target.value) }} className='input-register register-password' placeholder='Masukkan Password' />
-            <input type="password" value={ pwdconf } onChange={(e)=>{ setPwdconf(e.target.value) }} className='input-register register-password' placeholder='Konfirmasi Password' />
+            <input name={"nama"} type="text" value={ name } onChange={(e)=>{ setName(e.target.value) }} className='input-register register-email' placeholder='Masukkan Nama Lengkap' /> 
+            <input name={"email"} autoComplete='email' type="email" value={ userid } onChange={(e)=>{ setUserid(e.target.value) }} className='input-register register-email' placeholder='Masukkan Email' />
+            <input name={"password"} type="password" value={ pwd } onChange={(e)=>{ setPwd(e.target.value) }} className='input-register register-password' placeholder='Masukkan Password' />
+            <input name={"confirm-password"} type="password" value={ pwdconf } onChange={(e)=>{ setPwdconf(e.target.value) }} className='input-register register-password' placeholder='Konfirmasi Password' />
             <div className='register-button-wrapper'>
                 <button onClick={()=>{
                     handleName(name)

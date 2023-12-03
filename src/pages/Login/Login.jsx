@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Box, Stack, Button, Typography, Input } from '@mui/material'
-import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle } from './LoginStyles'
+import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle, errorMsgStyle } from './LoginStyles'
 import { Link } from 'react-router-dom'
 import useLogin from '../../hooks/useLogin'
 import axios from 'axios'; 
@@ -9,23 +9,14 @@ import axios from 'axios';
 
 
 const Login = () => {
-    const [userid, setUserid] = useState('')
+    const [email, setEmail] = useState('')
     const [pwd, setPwd] = useState('')
     const loginUrl = import.meta.env.VITE_API_URL + "/MsUser/Login"
-    const { data, login } = useLogin();
+    const { login, isLoading, error } = useLogin();
     
-    
-  //const [list, setList] = useState('')
-
-    // const handleUserid = (userid)=>{
-    //     console.log("User ID : "+userid) 
-    // }
-    // const handlePwd = (pwd)=>{
-    //     console.log("Password : "+pwd) 
-    // }
     const handleLogin = (e) => {
         e.preventDefault();
-        login(loginUrl, {email:userid, password:pwd})
+        login(loginUrl, {email:email, password:pwd})
     }
 
     return (
@@ -36,9 +27,11 @@ const Login = () => {
                     <Typography variant='body2' component='p' sx={subtitleStyle}>Login dulu yuk</Typography>
                 </Stack>
 
+                {error && <Typography variant='body2' sx={errorMsgStyle} >{error}</Typography>}
+
                 <Typography component='form' sx={formStyle}>
-                    <Input disableUnderline value={ userid } onChange={(e)=>{ setUserid(e.target.value) }} id='email-input' type="email" placeholder="Masukkan Email" sx={inputStyle}/>
-                    <Input disableUnderline value={ pwd } onChange={(e)=>{ setPwd(e.target.value) }} id='password-input' type="password" placeholder="Masukkan Password" sx={inputStyle}/>
+                    <Input disableUnderline name={"Email"} autoComplete='email' value={ email } onChange={(e)=>{ setEmail(e.target.value) }} id='email-input' type="email" placeholder="Masukkan Email" sx={inputStyle}/>
+                    <Input disableUnderline name={"Password"} value={ pwd } onChange={(e)=>{ setPwd(e.target.value) }} id='password-input' type="password" placeholder="Masukkan Password" sx={inputStyle}/>
                     <Box textAlign='end' sx={forgotPassStyle}>
                         <Link to="/forgot-password" style={{textDecoration:'none', color:'#4F4F4F'}} >Lupa kata sandi</Link>
                     </Box>
@@ -49,7 +42,7 @@ const Login = () => {
                         }} variant='contained' type='submit' sx={{
                             maxWidth: '140px',
                             maxHeight: '43px',
-                        }}>
+                        }} disabled={isLoading}>
                             Masuk
                         </Button>
                         <Stack direction='row'>

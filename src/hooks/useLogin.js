@@ -1,17 +1,31 @@
-import {useState, useEffect} from 'react';
+import { useContext, useState } from 'react';
 import axios from 'axios'; 
+import { AuthContext } from '../components/AuthContext/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const useLogin = () => {
-    const [data, setData] = useState({})
-    const now = Date.now();
-    const login = (url, loginCredential) => {
-        axios.post(url, loginCredential)
-        .then(data => setData(data.data))
-        .then(console.log(data))
-        .then(console.log(now < new Date(data.tokenExpires)))
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(false);
+
+    const [token, tokenExpires, newToken, auth, setAuth] = useContext(AuthContext);
+
+    const login = async (url, loginCredential) => {
+        try {
+            setIsLoading(true);
+            const instance = axios.create({withCredentials: true});
+            const response = await instance.post(url, loginCredential);
+            await newToken(response.data);
+            await setAuth(true);
+            navigate("/")
+        } catch (error) {
+            if(error.response){
+                setError(error.response.data)
+            } else { setError("Server error, please try again") }
+        } finally { setIsLoading(false) }
     }
 
-    return { data, login }
+    return { login, isLoading, error }
 }
 
 export default useLogin
