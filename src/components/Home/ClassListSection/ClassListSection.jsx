@@ -6,6 +6,7 @@ import { dummyData } from '../../../utils/dummyData'
 import { Link } from 'react-router-dom'
 import axios from 'axios' 
 import useGetData from '../../../hooks/useGetData'
+import { SkeletonCourse } from '../../Skeleton/SkeletonCourse'
 
 export const ClassListSection = () => {
     // const [classData, setClassData] = useState([])
@@ -42,7 +43,7 @@ export const ClassListSection = () => {
         <Typography variant='h2' sx={titleStyle}>
             Pilih kelas impian kamu
         </Typography>
-        <Alert variant="filled" severity="error">
+        <Alert variant="outlined" severity="error" sx={{color:'warning.main'}}>
             Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
         </Alert>
     </Box>
@@ -55,9 +56,16 @@ export const ClassListSection = () => {
             Explore kelas favorit
         </Typography>
         <Grid container minHeight={'300px'} columnSpacing={3} rowSpacing={7.5} position={'relative'}>
-            <Backdrop sx={backdropStyle} open={loading}>
+            {loading && [...Array(6)].map((item, i)=>{
+                return(
+                    <Grid xs={12} md={4} key={i}>
+                        <SkeletonCourse />
+                    </Grid>
+                )
+            })}
+            {/* <Backdrop sx={backdropStyle} open={loading}>
                 <CircularProgress color="primary" />
-            </Backdrop>
+            </Backdrop> */}
             {/* {dummyData.map((item)=>{
                 return (
                     <Grid xs={12} md={4} key={item.id}>

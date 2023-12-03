@@ -18,6 +18,9 @@ import { Invoice } from "./pages/Invoice/Invoice";
 import { InvoiceDetail } from "./pages/InvoiceDetail/InvoiceDetail";
 import Checkout from "./pages/Checkout";
 import { MyClass } from "./pages/MyClass/MyClass";
+import { EmailConfirm } from "./pages/EmailConfirm/EmailConfirm";
+import { CheckoutSuccess } from "./pages/CheckoutSuccess/CheckoutSuccess";
+import { NotFound } from "./pages/NotFound/NotFound";
 
 function App() {
   return (
@@ -42,8 +45,10 @@ function App() {
                     <Route path="/new-password" element={<NewPassword />} />
                     <Route path="/checkout" element={<Checkout />} />
                   </Route>
+                  <Route path="/email-confirm" element={<EmailConfirm />} />
+                  <Route path="/checkout-success" element={<CheckoutSuccess />} />
                   <Route path="/logout" element={<Navigate to="/" />} />
-                  {/* <Route path="*" element={<NoMatch />} /> */}
+                  <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
           </BrowserRouter>

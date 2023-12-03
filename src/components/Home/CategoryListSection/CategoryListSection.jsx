@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 import useGetData from '../../../hooks/useGetData'
+import { SkeletonCategory } from '../../Skeleton/SkeletonCategory'
 
 export const CategoryListSection = () => {
     // const [categoryData, setCategoryData] = useState([])
@@ -51,7 +52,7 @@ export const CategoryListSection = () => {
         <Typography variant='h2' sx={titleStyle}>
             Pilih kelas impian kamu
         </Typography>
-        <Alert variant="filled" severity="error">
+        <Alert variant="outlined" severity="error" sx={{color:'warning.main'}}>
             Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
         </Alert>
     </Box>
@@ -64,9 +65,16 @@ export const CategoryListSection = () => {
             Pilih kelas impian kamu
         </Typography>
         <Grid container minHeight={'300px'} columnSpacing={3} rowSpacing={7.5} position={'relative'}>
-            <Backdrop sx={backdropStyle} open={loading} >
+            {loading && [...Array(8)].map((item, i)=>{
+                return(
+                    <Grid xs={6} md={3} key={i} sx={{display:'flex', justifyContent:'center'}}>
+                        <SkeletonCategory />
+                    </Grid>
+                )
+            })}
+            {/* <Backdrop sx={backdropStyle} open={loading} >
                 <CircularProgress color="primary" />
-            </Backdrop>
+            </Backdrop> */}
             {/* {dummyData.map((item)=>{
                 return (
                     <Grid xs={6} md={3} key={item.id}>
