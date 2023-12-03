@@ -8,7 +8,7 @@ const useLogin = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const [token, tokenExpires, newToken, auth, setAuth] = useContext(AuthContext);
+    const [token, tokenExpires, newToken] = useContext(AuthContext);
 
     const login = async (url, loginCredential) => {
         try {
@@ -16,7 +16,6 @@ const useLogin = () => {
             const instance = axios.create({withCredentials: true});
             const response = await instance.post(url, loginCredential);
             await newToken(response.data);
-            await setAuth(true);
             navigate("/")
         } catch (err) {
             if(err.response){
