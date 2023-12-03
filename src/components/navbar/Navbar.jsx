@@ -8,12 +8,13 @@ import useRefreshToken from '../../hooks/useRefreshToken';
 import { homeButtonStyle, loggedInMenuListStyle, navbarMenuListStyle, navbarWrapperStyle, notLoginMenuListStyle } from './NavbarStyles';
 
 const Navbar = () => {
-  const [token, tokenExpires, newToken, auth, setAuth] = useContext(AuthContext);
+  const [token, tokenExpires, newToken] = useContext(AuthContext);
   const logout = useLogout();
   const refreshToken = useRefreshToken();
 
   useEffect(()=>{
     //cek apakah token expires 1 menit lagi
+    console.log(new Date(tokenExpires) - Date.now())
     if(new Date(tokenExpires) - Date.now() < 60000){
       refreshToken(import.meta.env.VITE_API_URL + "/MsUser/RefreshToken")
     }
@@ -30,28 +31,9 @@ const Navbar = () => {
             <img src="/apel-music-logo.png" alt="logo" style={{objectFit:'contain'}}/>
           </Link>
 
-          {!auth
-          ? <ul style={notLoginMenuListStyle}>
-              <li style={{display: 'flex', alignContent:'center'}}>
-                <Link to='/register' style={{padding: '10px', textDecoration:'none',}}>
-                  <Typography variant='p' sx={{
-                    fontWeight: '500',
-                    color: 'text.black'
-                  }}>
-                    Daftar Sekarang
-                  </Typography>
-                </Link>
-              </li>
-              <li>
-                <Link to='/login'>
-                  <Button variant='contained' sx={{
-                    minWidth: '93px',
-                    maxHeight: '44px',
-                  }}>Masuk</Button>
-                </Link>
-              </li>
-            </ul>
-          : <ul style={loggedInMenuListStyle}>
+          {token
+          ?
+          <ul style={loggedInMenuListStyle}>
               <li>
                   <Link to='/checkout' style={{padding: '10px', display: 'flex', alignContent:'center'}}>
                     <ShoppingCart sx={{color: 'text.gray0'}} />
@@ -96,7 +78,28 @@ const Navbar = () => {
                     <Logout sx={{color: 'text.gray0'}} />
                   </Link>
               </li>
-            </ul>}
+            </ul>
+          : <ul style={notLoginMenuListStyle}>
+              <li style={{display: 'flex', alignContent:'center'}}>
+                <Link to='/register' style={{padding: '10px', textDecoration:'none',}}>
+                  <Typography variant='p' sx={{
+                    fontWeight: '500',
+                    color: 'text.black'
+                  }}>
+                    Daftar Sekarang
+                  </Typography>
+                </Link>
+              </li>
+              <li>
+                <Link to='/login'>
+                  <Button variant='contained' sx={{
+                    minWidth: '93px',
+                    maxHeight: '44px',
+                  }}>Masuk</Button>
+                </Link>
+              </li>
+            </ul>
+          }
         </Box>
     </Box>
     
