@@ -14,6 +14,7 @@ const useLogin = () => {
             setIsLoading(true);
             const instance = axios.create({withCredentials: true});
             const response = await instance.post(url, registerCredential);
+            setMsg("Register success, please check your email for account activation");
             // navigate("/login")
         } catch (err) {
             if(err.response){

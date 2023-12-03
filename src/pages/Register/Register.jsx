@@ -12,14 +12,11 @@ const Register = () => {
     const registerUrl = import.meta.env.VITE_API_URL + "/MsUser/Register"
     const { register, isLoading, error, setError, msg, succesMessage } = useRegister();
 
-    const resetForm = async () => {
-        await setTimeout(() => {
-        if(error == ''){
-            setName('');
-            setEmail('');
-            setPwd('');
-            setPwdconf('');
-        }}, 3000);
+    const resetForm = () => {
+        setName('');
+        setEmail('');
+        setPwd('');
+        setPwdconf('');
     }
 
     const handleRegister = (e) => {
@@ -39,7 +36,7 @@ const Register = () => {
             password:pwd, 
             confirmPassword: pwdconf
         });
-        succesMessage();
+        // succesMessage();
         resetForm();
     }
 
