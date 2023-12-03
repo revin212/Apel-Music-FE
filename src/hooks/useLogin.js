@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const useLogin = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState('');
 
     const [token, tokenExpires, newToken, auth, setAuth] = useContext(AuthContext);
 
@@ -18,9 +18,9 @@ const useLogin = () => {
             await newToken(response.data);
             await setAuth(true);
             navigate("/")
-        } catch (error) {
-            if(error.response){
-                setError(error.response.data)
+        } catch (err) {
+            if(err.response){
+                setError(err.response.data)
             } else { setError("Server error, please try again") }
         } finally { setIsLoading(false) }
     }

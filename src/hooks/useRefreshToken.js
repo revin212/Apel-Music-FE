@@ -8,12 +8,12 @@ const useRefreshToken = () => {
 
     const refreshToken = async (url) => {
         try {
-            const instance = axios.create({withCredentials: true});
+            const instance = axios.create({withCredentials: true, validateStatus: () => true});
             const response = await instance.post(url);
             await newToken(response.data);
-            await setAuth(true);
-        } catch (error) {
-            console.error("Error refreshing token:", error);
+            if(token != '') setAuth(true);
+        } catch {
+            return
         }
     }
 
