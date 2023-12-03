@@ -24,6 +24,7 @@ const Register = () => {
 
     const handleRegister = (e) => {
         e.preventDefault();
+        setError('');
         if(name == '' || email == '' || pwd == '' || pwdconf == '' ) {
             setError("Please fill all the field")
             return

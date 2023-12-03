@@ -24,9 +24,11 @@ const useLogin = () => {
     }
 
     const succesMessage = async () => {
-        const registerTimeout = await setTimeout(() => {
+        const registerTimeout = setTimeout(() => {
             if(error == ''){
                 setMsg("Register success, please check your email for account activation");
+            } else {
+                setMsg("");
             }
         }, 3000)
     }
