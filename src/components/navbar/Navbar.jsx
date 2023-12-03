@@ -12,15 +12,9 @@ const Navbar = () => {
   const logout = useLogout();
   const refreshToken = useRefreshToken();
 
-  // useEffect(()=>{
-  //   if(token != "" && Date.now() < new Date(tokenExpires)){
-  //     setAuth(true)
-  //   }
-  // }, [token, tokenExpires])
-
   useEffect(()=>{
     //cek apakah token expires 1 menit lagi
-    if(token != "" && new Date(tokenExpires) - Date.now() < 60000){
+    if(new Date(tokenExpires) - Date.now() < 60000){
       refreshToken(import.meta.env.VITE_API_URL + "/MsUser/RefreshToken")
     }
   }, [token, tokenExpires])

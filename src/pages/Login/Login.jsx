@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Box, Stack, Button, Typography, Input } from '@mui/material'
-import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle } from './LoginStyles'
+import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle, errorMsgStyle } from './LoginStyles'
 import { Link } from 'react-router-dom'
 import useLogin from '../../hooks/useLogin'
 import axios from 'axios'; 
@@ -12,17 +12,8 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [pwd, setPwd] = useState('')
     const loginUrl = import.meta.env.VITE_API_URL + "/MsUser/Login"
-    const { login } = useLogin();
+    const { login, isLoading, error } = useLogin();
     
-    
-  //const [list, setList] = useState('')
-
-    // const handleUserid = (userid)=>{
-    //     console.log("User ID : "+userid) 
-    // }
-    // const handlePwd = (pwd)=>{
-    //     console.log("Password : "+pwd) 
-    // }
     const handleLogin = (e) => {
         e.preventDefault();
         login(loginUrl, {email:email, password:pwd})
@@ -35,6 +26,8 @@ const Login = () => {
                     <Typography variant='h2' sx={titleStyle}>Selamat Datang Musikers!</Typography>
                     <Typography variant='body2' component='p' sx={subtitleStyle}>Login dulu yuk</Typography>
                 </Stack>
+
+                {error && <Typography variant='body2' sx={errorMsgStyle} >{error}</Typography>}
 
                 <Typography component='form' sx={formStyle}>
                     <Input disableUnderline name={"Email"} autoComplete='email' value={ email } onChange={(e)=>{ setEmail(e.target.value) }} id='email-input' type="email" placeholder="Masukkan Email" sx={inputStyle}/>
@@ -49,7 +42,7 @@ const Login = () => {
                         }} variant='contained' type='submit' sx={{
                             maxWidth: '140px',
                             maxHeight: '43px',
-                        }}>
+                        }} disabled={isLoading}>
                             Masuk
                         </Button>
                         <Stack direction='row'>

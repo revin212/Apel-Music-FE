@@ -44,3 +44,14 @@ export const formStyle = {
     flexDirection: 'column',
     gap: '1.5rem'
 }
+
+export const errorMsgStyle = {
+    width : '100%',
+    marginBottom: '32px',
+    paddingBlock: '8px',
+    paddingInline: '16px',
+    border: '1px solid',
+    borderRadius: '4px',
+    borderColor: 'warning.main',
+    color: 'warning.main',
+}
