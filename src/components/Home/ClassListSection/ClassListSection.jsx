@@ -5,27 +5,36 @@ import { categoryStyle, imageStyle, wrapperStyle, classNameStyle, priceStyle, ti
 import { dummyData } from '../../../utils/dummyData'
 import { Link } from 'react-router-dom'
 import axios from 'axios' 
+import useGetData from '../../../hooks/useGetData'
 
 export const ClassListSection = () => {
-    const [classData, setClassData] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [errorState, setErrorState] = useState(false)
-    useEffect(()=> {
-        setLoading(true)
-        setErrorState(false)
-        axios.get('http://52.237.194.35:2024/api/Menu/GetMenuLimit')
-          .then((response) => {
-            // handle success
-            setClassData(response.data)
-            setLoading(false)
-          })
-          .catch((error) => {
-            // handle error
-            //console.log(error);
-            setLoading(false)
-            setErrorState(true)
-          })
-        }, [])
+    // const [classData, setClassData] = useState([])
+    // const [loading, setLoading] = useState(false)
+    // const [errorState, setErrorState] = useState(false)
+    // useEffect(()=> {
+    //     setLoading(true)
+    //     setErrorState(false)
+    //     axios.get('http://52.237.194.35:2024/api/Menu/GetMenuLimit')
+    //       .then((response) => {
+    //         // handle success
+    //         setClassData(response.data)
+    //         setLoading(false)
+    //       })
+    //       .catch((error) => {
+    //         // handle error
+    //         //console.log(error);
+    //         setLoading(false)
+    //         setErrorState(true)
+    //       })
+    //     }, [])
+    
+
+    const url = `/Menu/GetMenuLimit`  
+    const { data: classData, loading, errorState, getData } = useGetData()
+
+    useEffect(() => {
+        getData(url)
+    }, [])
 
     const handleError = 
     (

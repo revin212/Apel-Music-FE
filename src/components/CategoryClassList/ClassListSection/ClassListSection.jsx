@@ -5,32 +5,40 @@ import { dummyData } from '../../../utils/dummyData'
 import { Link } from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-
+import useGetData from '../../../hooks/useGetData'
 
 export const ClassListSection = ({categoryName}) => {
     //const { id } = categoryName
-    const [classData, setClassData] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [errorState, setErrorState] = useState(false)
+    // const [classData, setClassData] = useState([])
+    // const [loading, setLoading] = useState(false)
+    // const [errorState, setErrorState] = useState(false)
     
-    useEffect(() => {
-        setErrorState(false)
-        setLoading(true)
-        axios.get(`http://52.237.194.35:2024/api/Menu/GetMenuByTypeName?type_name=${categoryName}`)
-        .then((response) => {
-          // handle success
-          //console.log(response.data)
-          setClassData(response.data)
-          setLoading(false)
-        })
-        .catch((error) => {
-          // handle error
-          //console.log(error);
-          setLoading(false)
-          setErrorState(true)
-        })
+    // useEffect(() => {
+    //     setErrorState(false)
+    //     setLoading(true)
+    //     axios.get(`http://52.237.194.35:2024/api/Menu/GetMenuByTypeName?type_name=${categoryName}`)
+    //     .then((response) => {
+    //       // handle success
+    //       //console.log(response.data)
+    //       setClassData(response.data)
+    //       setLoading(false)
+    //     })
+    //     .catch((error) => {
+    //       // handle error
+    //       //console.log(error);
+    //       setLoading(false)
+    //       setErrorState(true)
+    //     })
       
+    // }, [])
+    //console.log()
+    const url = `/Menu/GetMenuByTypeName?type_name=${categoryName}`  
+    const { data, loading, errorState, getData } = useGetData()
+
+    useEffect(() => {
+        getData(url)
     }, [])
+
     const handleError = 
     (
         <Box sx={wrapperStyle}>
@@ -54,7 +62,7 @@ export const ClassListSection = ({categoryName}) => {
                 <Backdrop sx={backdropStyle} open={loading} >
                     <CircularProgress color="primary" />
                 </Backdrop>
-                {classData.map((item)=>{
+                {data?.map((item)=>{
                     return (
                         <Grid xs={12} md={4} key={item.id_menu}>
                             <Link to={`/class/${item.id_menu}`} underline='none' style={{textDecoration:'none'}}>

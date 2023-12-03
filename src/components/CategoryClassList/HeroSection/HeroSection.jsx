@@ -2,29 +2,37 @@ import { Box, Stack, Typography, Backdrop, CircularProgress, Alert } from '@mui/
 import { bodyStyle, titleStyle, wrapperStyle, bannerWrapperStyle, backdropStyle } from './HeroSectionStyles'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import useGetData from '../../../hooks/useGetData'
 
 export const HeroSection = ({categoryName}) => {
-  const [classData, setClassData] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [errorState, setErrorState] = useState(false)
+  // const [classData, setClassData] = useState([])
+  // const [loading, setLoading] = useState(false)
+  // const [errorState, setErrorState] = useState(false)
+
+  // useEffect(() => {
+  //   setErrorState(false)
+  //   setLoading(true)
+  //   axios.get(`http://52.237.194.35:2024/api/Type/GetTypeByName?name=${categoryName}`)
+  //   .then((response) => {
+  //     // handle success
+  //     //console.log(response.data)
+  //     setClassData(response.data)
+  //     setLoading(false)
+  //   })
+  //   .catch((error) => {
+  //     // handle error
+  //     //console.log(error);
+  //     setLoading(false)
+  //     setErrorState(true)
+  //   })
+  
+  // }, [])
+
+  const url = `/Type/GetTypeByName?name=${categoryName}`  
+  const { data: classData, loading, errorState, getData } = useGetData()
 
   useEffect(() => {
-    setErrorState(false)
-    setLoading(true)
-    axios.get(`http://52.237.194.35:2024/api/Type/GetTypeByName?name=${categoryName}`)
-    .then((response) => {
-      // handle success
-      //console.log(response.data)
-      setClassData(response.data)
-      setLoading(false)
-    })
-    .catch((error) => {
-      // handle error
-      //console.log(error);
-      setLoading(false)
-      setErrorState(true)
-    })
-  
+      getData(url)
   }, [])
   
   const bannerStyle = {

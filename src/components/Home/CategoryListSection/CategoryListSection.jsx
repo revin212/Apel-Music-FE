@@ -6,34 +6,43 @@ import { dummyData } from '../../../utils/dummyDataCategory'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
+import useGetData from '../../../hooks/useGetData'
+
 export const CategoryListSection = () => {
-    const [categoryData, setCategoryData] = useState([])
-    const [loading, setLoading] = useState(false)
-    const [errorState, setErrorState] = useState(false)
-    //console.log('loading = ', loading)
-    useEffect(()=> {
-        setLoading(true)
-        setErrorState(false)
-        axios.get('http://52.237.194.35:2024/api/Type/GetActiveType')
-            .then((response) => {
-            // handle success
-               setCategoryData(response.data)
-               setLoading(false)
-            })
-            .catch((error) => {
-            // handle error
-               //console.log(error)
-               setLoading(false)
-               setErrorState(true)
-               return(
-                <Box sx={wrapperStyle}>
-                    <Alert variant="filled" severity="error">
-                        Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
-                    </Alert>
-                </Box>
-               )
+    // const [categoryData, setCategoryData] = useState([])
+    // const [loading, setLoading] = useState(false)
+    // const [errorState, setErrorState] = useState(false)
+    // //console.log('loading = ', loading)
+    // useEffect(()=> {
+    //     setLoading(true)
+    //     setErrorState(false)
+    //     axios.get('http://52.237.194.35:2024/api/Type/GetActiveType')
+    //         .then((response) => {
+    //         // handle success
+    //            setCategoryData(response.data)
+    //            setLoading(false)
+    //         })
+    //         .catch((error) => {
+    //         // handle error
+    //            //console.log(error)
+    //            setLoading(false)
+    //            setErrorState(true)
+    //            return(
+    //             <Box sx={wrapperStyle}>
+    //                 <Alert variant="filled" severity="error">
+    //                     Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+    //                 </Alert>
+    //             </Box>
+    //            )
                
-            })
+    //         })
+    // }, [])
+
+    const url = `/Type/GetActiveType`  
+    const { data: categoryData, loading, errorState, getData } = useGetData()
+
+    useEffect(() => {
+        getData(url)
     }, [])
 
     const handleError =
