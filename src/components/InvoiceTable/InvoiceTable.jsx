@@ -103,7 +103,7 @@ export const InvoiceTable = () => {
           {visibleRows.map((row, index) => (
             <StyledTableRow key={row.no}>
               <StyledTableCell component="th" scope="row">
-                {row.no}
+                {(rowsPerPage * page) + index+1}
               </StyledTableCell>
               <StyledTableCell>{row.no_invoice}</StyledTableCell>
               <StyledTableCell>{dateToStringInvoice(new Date(row.buy_date))}</StyledTableCell>

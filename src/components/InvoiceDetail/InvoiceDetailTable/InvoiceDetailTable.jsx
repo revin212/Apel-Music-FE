@@ -94,10 +94,10 @@ export const InvoiceDetailTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {visibleRows.map((row) => (
+          {visibleRows.map((row, index) => (
             <StyledTableRow key={row.no}>
               <StyledTableCell component="th" scope="row">
-                {row.no}
+                {(rowsPerPage * page) + index+1}
               </StyledTableCell>
               <StyledTableCell>{row.course_name}</StyledTableCell>
               <StyledTableCell>{row.category}</StyledTableCell>
