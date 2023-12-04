@@ -1,5 +1,6 @@
 import { Button, Stack, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
+import { SkeletonEmailConfirm } from '../Skeleton/SkeletonEmailConfirm'
 
 const titleStyle = {
     fontSize: '24px',
@@ -19,9 +20,11 @@ const descStyle = {
     marginBottom: '40px'
 }
 
-export const SuccessMessage = ({title, desc, buttonList}) => {
+export const SuccessMessage = ({title, desc, buttonList, loading=false}) => {
   return (
     <Stack sx={{alignItems:'center', justifyContent:'start', flexGrow:'1'}}>
+        {loading && <SkeletonEmailConfirm />}
+        {!loading && 
         <Stack gap={'40px'} sx={{alignItems:'center', justifyContent:'center'}}>
             <img src="/images/Group 2.png" alt="logo" width='250px' height='250px' />
             <Stack sx={{alignItems:'center', justifyContent:'center'}}>
@@ -45,7 +48,7 @@ export const SuccessMessage = ({title, desc, buttonList}) => {
                     })}
                     </Stack>
             </Stack>
-        </Stack>
+        </Stack>}
     </Stack>
   )
 }

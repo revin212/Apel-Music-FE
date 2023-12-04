@@ -6,7 +6,7 @@ import { SuccessMessage } from '../../components/successPage/successMessage'
 
 export const EmailConfirm = () => {
     const email = new URLSearchParams(window.location.search).get('email');
-    const { emailConfirm } = useEmailConfirm();
+    const { emailConfirm, loading } = useEmailConfirm();
 
     useEffect(()=>{
         emailConfirm(import.meta.env.VITE_API_URL + "/MsUser/ActivateUser?Email=" + email)
@@ -19,6 +19,7 @@ export const EmailConfirm = () => {
             title={'Konfirmasi Email Berhasil'}
             desc={'Silahkan Login terlebih dahulu untuk masuk ke aplikasi'}
             buttonList={[{width: '176px', desc:'Masuk Sekarang', link:'/login'}]}
+            loading = {loading}
          />
     </Stack>
   )
