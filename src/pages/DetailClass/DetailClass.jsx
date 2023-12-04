@@ -1,13 +1,16 @@
 import { Box } from '@mui/material'
-import React from 'react'
+import { useState } from 'react'
 import { ClassDescription } from '../../components/DetailClass/ClassDesctioption/ClassDescription'
 import { RecommendedClasses } from '../../components/DetailClass/RecommendedClasses/RecommendedClasses'
+import { useParams } from 'react-router-dom'
 
 export const DetailClass = () => {
+  const { id } = useParams();
+  const [categoryIdState, setCategoryIdState] = useState('');
   return (
     <Box>
-        <ClassDescription />
-        <RecommendedClasses />
+        <ClassDescription id={id} setCategoryIdState={setCategoryIdState} />
+        <RecommendedClasses id={id} categoryIdState={categoryIdState} />
     </Box>
   )
 }
