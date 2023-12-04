@@ -1,32 +1,35 @@
 import { Box, Typography, Input, Button, Stack } from "@mui/material";
-import { inputStyle, titleStyle } from "./New Password.style";
+import { batalButtonStyle, buttonStyle, inputStyle, messageStyle, titleStyle } from "./New Password.style";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import useResetPassword from "../../hooks/useResetPassword";
 
 const NewPassword = () => {
     const [data, setData] = useState({})
-    const [message, setMessage] = useState('')
+    const { resetPassword, loading, error, setError, msg } = useResetPassword()
     const navigate = useNavigate()
+    const Id = new URLSearchParams(window.location.search).get('Id');
 
     const handleChange = (e) => {
         setData({
             ...data,
             [e.target.name]: e.target.value
         })
-        setMessage('')
+        setError('')
     }
 
     const passwordValidation = () => {
-        let regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
-        if(regex.test(data.oldPw) /* && data.oldPw compare with password in db */ && regex.test(data.newPw)){
-            if(data.oldPw != data.newPw){
-                alert(`Password valid! Updating your password...\nOld: ${data.oldPw}\nNew: ${data.newPw}`) //Change it to update new pass to db for prod
-                navigate('/login')
-            } else {
-                setMessage('New password cannot be the same as the old one!')
-            }
-        } else {
-            setMessage('Invalid password, please try again')
+        if(data.newPw != data.newPwConf){
+            setError('Password does not match')
+            return false
+        } else return true
+    }
+
+    const handleNewPassword = (e) => {
+        e.preventDefault();
+        setError('');
+        if(passwordValidation()){
+            resetPassword(import.meta.env.VITE_API_URL + '/MsUser/ResetPassword', {id: Id,password:data.newPw, confirmPassword:data.newPwConf})
         }
     }
 
@@ -35,28 +38,20 @@ const NewPassword = () => {
             <Typography variant="h2" sx={titleStyle}>
                 Buat Password
             </Typography>
+            {msg && <p style={messageStyle} >{msg}</p>}
             <Box display='flex' flexDirection='column' gap='1.5rem' mt='60px'>
-                <Input disableUnderline type='password' sx={inputStyle} placeholder="Password Baru" onChange={handleChange} name="oldPw"/>
-                <Input disableUnderline type='password' sx={inputStyle} placeholder="Konfirmasi Password Baru" onChange={handleChange} name="newPw"/>
+                <Input disableUnderline type='password' sx={inputStyle} placeholder="Password Baru" onChange={handleChange} name="newPw"/>
+                <Input disableUnderline type='password' sx={inputStyle} placeholder="Konfirmasi Password Baru" onChange={handleChange} name="newPwConf"/>
                 <Typography variant="body" sx={{color:'red'}}>
-                    {message}
+                    {error}
                 </Typography>
             </Box>
             <Stack direction='row' gap='1.5rem' mt='40px'>
-                <Button variant="outlined" sx={{
-                    maxWidth: '140px',
-                    maxHeight: '43px',
-                    width: '100%'
-                }} placeholder="Batal" onClick={()=>{navigate('/login')}}>
+                <Button variant="outlined" sx={batalButtonStyle} placeholder="Batal" onClick={()=>{navigate('/login')}}>
                     Batal
                 </Button>
-                <Button variant="contained" sx={{
-                    maxWidth: '140px',
-                    maxHeight: '43px',
-                    width: '100%'
-                }} onClick={passwordValidation}>Konfirmasi</Button>
+                <Button type='submit' variant="contained" sx={buttonStyle} onClick={handleNewPassword} disabled={loading}>Konfirmasi</Button>
             </Stack>
-
         </Box>
     )
 }
