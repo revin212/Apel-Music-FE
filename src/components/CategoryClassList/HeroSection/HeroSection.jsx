@@ -3,6 +3,8 @@ import { bodyStyle, titleStyle, wrapperStyle, bannerWrapperStyle, backdropStyle 
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import useGetData from '../../../hooks/useGetData'
+import { SkeletonHeaderImage } from '../../Skeleton/SkeletonHeaderImage'
+import { SkeletonDescription } from '../../Skeleton/SkeletonDescription'
 
 export const HeroSection = ({categoryName}) => {
   // const [classData, setClassData] = useState([])
@@ -45,7 +47,7 @@ export const HeroSection = ({categoryName}) => {
   const handleError = 
   (
     <Box sx={wrapperStyle} minHeight={'334px'}>
-      <Alert variant="filled" severity="error">
+      <Alert variant="outlined" severity="error" sx={{color:'warning.main'}}>
         Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
       </Alert>
     </Box>
@@ -55,13 +57,12 @@ export const HeroSection = ({categoryName}) => {
   (
     <Box sx={wrapperStyle} minHeight={'334px'}>
       <Box sx={bannerWrapperStyle}>
-        <Backdrop sx={backdropStyle} open={loading} >
-            <CircularProgress color="primary"/>
-        </Backdrop>
+        {loading && <SkeletonHeaderImage />}
         <Box sx={bannerStyle}/>
       </Box>
   
       <Stack direction='column' gap='16px' paddingInline={{xs: '30px',sm:'80px',md:'120px'}} paddingBlock='80px'>
+          {loading && <SkeletonDescription />}
           <Typography variant='h4' sx={titleStyle}>
               {classData.type_name}
           </Typography>

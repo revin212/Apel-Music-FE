@@ -14,7 +14,6 @@ const Navbar = () => {
 
   useEffect(()=>{
     //cek apakah token expires 1 menit lagi
-    console.log(new Date(tokenExpires) - Date.now())
     if(new Date(tokenExpires) - Date.now() < 60000){
       refreshToken(import.meta.env.VITE_API_URL + "/MsUser/RefreshToken")
     }
