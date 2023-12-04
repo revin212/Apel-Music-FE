@@ -1,16 +1,19 @@
 import { Delete, DeleteForever } from "@mui/icons-material"
-import { Box, Checkbox, Container, FormControlLabel, Stack, Input, Typography, Button } from "@mui/material"
+import { Box, Checkbox, Container, FormControlLabel, Stack, Input, Typography, Button, Alert } from "@mui/material"
 import { useState, useEffect } from "react"
 import { ModalPaymentMethod } from "../../components/ModalPaymentMethod/ModalPaymentMethod"
 import { dateToString } from "../../utils/DateUtils"
 import { cartItemStyle, classDescStyle, containerStyle, deleteBtnStyle, footerStyle, imageStyle, imageWrapperStyle, selectAllStyle, totalBiayaStyle, totalBiayaWrapperStyle } from "./checkoutStyles"
 import { dummyDataCheckout } from "../../utils/dummyDataCheckout"
+import { SkeletonMyClass } from "../../components/Skeleton/SkeletonMyClass"
 
 const Checkout = (/*{ data }*/) => {
     const [cart, setCart] = useState(dummyDataCheckout)
     const [openModal, setOpenModal] = useState(false)
     const [total, setTotal] = useState(0)
     const [allChecked, setAllChecked] = useState(false)
+    const loading = false
+    const errorState = false
 
     const handleSelect = (e) => {
         setCart(cart.map((item, index)=>{
@@ -71,7 +74,17 @@ const Checkout = (/*{ data }*/) => {
                 <Box sx={selectAllStyle}>
                     <Checkbox onChange={handleSelectAll} checked={allChecked} /> Pilih Semua
                 </Box>
-                {cart.map((e, i)=>{
+                {errorState && 
+                <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
+                    Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+                </Alert>}
+                {loading && [...Array(3)].map((item, i)=>{
+                    return(
+                        <SkeletonMyClass key={i} />
+                    )
+                })}
+                {!errorState && !loading && 
+                cart.map((e, i)=>{
                     return(
                         <Stack direction='row' justifyContent={'space-between'} alignItems='center'  key={i} sx={cartItemStyle}>
                             <Stack direction='row' gap='24px' alignItems='center'>
