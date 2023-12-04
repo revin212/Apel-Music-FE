@@ -1,17 +1,32 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Alert, Box, Stack, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import { dummyData } from '../../../utils/dummyDataRecommended'
 import { Link } from 'react-router-dom'
 import { categoryStyle, imageStyle, wrapperStyle, classNameStyle, priceStyle, titleStyle } from './RecommendedClassesStyles'
+import { SkeletonCourse } from '../../Skeleton/SkeletonCourse'
 
 export const RecommendedClasses = ({classData}) => {
+    const errorState = false;
+    const loading = false;
   return (
     <Box sx={wrapperStyle}>
         <Typography variant='h2' sx={titleStyle}>
             Kelas lain yang mungkin kamu suka
         </Typography>
+        {errorState && 
+            <Alert variant="outlined" severity="error" sx={{color:'warning.main'}}>
+                Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+            </Alert>
+        }
         <Grid container columnSpacing={3} rowSpacing={7.5}>
-                {dummyData.map((item)=>{
+                {loading && [...Array(3)].map((item, i)=>{
+                    return(
+                        <Grid xs={12} md={4} key={i}>
+                            <SkeletonCourse />
+                        </Grid>
+                    )
+                })}
+                {!loading && dummyData.map((item)=>{
                 return (
                     <Grid xs={12} md={4} key={item.id}>
                         <Link href='#' underline='none' style={{textDecoration:'none'}}>
