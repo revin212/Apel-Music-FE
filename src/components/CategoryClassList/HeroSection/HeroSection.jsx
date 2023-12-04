@@ -5,32 +5,10 @@ import axios from 'axios'
 import useGetData from '../../../hooks/useGetData'
 import { SkeletonHeaderImage } from '../../Skeleton/SkeletonHeaderImage'
 import { SkeletonDescription } from '../../Skeleton/SkeletonDescription'
+import { useParams } from 'react-router-dom'
 
-export const HeroSection = ({categoryName}) => {
-  // const [classData, setClassData] = useState([])
-  // const [loading, setLoading] = useState(false)
-  // const [errorState, setErrorState] = useState(false)
-
-  // useEffect(() => {
-  //   setErrorState(false)
-  //   setLoading(true)
-  //   axios.get(`http://52.237.194.35:2024/api/Type/GetTypeByName?name=${categoryName}`)
-  //   .then((response) => {
-  //     // handle success
-  //     //console.log(response.data)
-  //     setClassData(response.data)
-  //     setLoading(false)
-  //   })
-  //   .catch((error) => {
-  //     // handle error
-  //     //console.log(error);
-  //     setLoading(false)
-  //     setErrorState(true)
-  //   })
-  
-  // }, [])
-
-  const url = `/Type/GetTypeByName?name=${categoryName}`  
+export const HeroSection = ({id}) => {
+  const url = `/MsCategory/GetCategoryDetail?id=${id}`
   const { data: classData, loading, errorState, getData } = useGetData()
 
   useEffect(() => {
@@ -39,7 +17,7 @@ export const HeroSection = ({categoryName}) => {
   
   const bannerStyle = {
     height: '334px',
-    backgroundImage: `url("data:image/jpeg;base64,${classData.image}")`,
+    backgroundImage: classData.headerImage ? `url("https://localhost:7201/${classData.headerImage.replace("\r\n", "")}")` : `url("https://placehold.co/1280x334")`,
     backgroundSize: 'cover',
     backgroundPosition: '0 20%'
   }
@@ -64,7 +42,7 @@ export const HeroSection = ({categoryName}) => {
       <Stack direction='column' gap='16px' paddingInline={{xs: '30px',sm:'80px',md:'120px'}} paddingBlock='80px'>
           {loading && <SkeletonDescription />}
           <Typography variant='h4' sx={titleStyle}>
-              {classData.type_name}
+              {classData.title}
           </Typography>
           <Typography variant='body1' sx={bodyStyle}>
               {classData.description}

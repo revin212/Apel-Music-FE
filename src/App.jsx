@@ -32,7 +32,7 @@ function App() {
               <Route>
                   <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
-                    <Route path="/category/:type_name" element={<CategoryClassList />} />
+                    <Route path="/category/:id" element={<CategoryClassList />} />
                     <Route path="/class/:id" element={<DetailClass />}/>
                     <Route path="/invoice" element={<Invoice />}/>
                     <Route path="/invoice/:id" element={<InvoiceDetail />}/>

@@ -8,33 +8,9 @@ import axios from 'axios'
 import useGetData from '../../../hooks/useGetData'
 import { SkeletonCourse } from '../../Skeleton/SkeletonCourse'
 
-export const ClassListSection = ({categoryName}) => {
-    //const { id } = categoryName
-    // const [classData, setClassData] = useState([])
-    // const [loading, setLoading] = useState(false)
-    // const [errorState, setErrorState] = useState(false)
-    
-    // useEffect(() => {
-    //     setErrorState(false)
-    //     setLoading(true)
-    //     axios.get(`http://52.237.194.35:2024/api/Menu/GetMenuByTypeName?type_name=${categoryName}`)
-    //     .then((response) => {
-    //       // handle success
-    //       //console.log(response.data)
-    //       setClassData(response.data)
-    //       setLoading(false)
-    //     })
-    //     .catch((error) => {
-    //       // handle error
-    //       //console.log(error);
-    //       setLoading(false)
-    //       setErrorState(true)
-    //     })
-      
-    // }, [])
-    //console.log()
-    const url = `/Menu/GetMenuByTypeName?type_name=${categoryName}`  
-    const { data, loading, errorState, getData } = useGetData()
+export const ClassListSection = ({id}) => {
+    const url = `/MsCourse/GetByCategoryList?id=${id}`
+    const { data: classData, loading, errorState, getData } = useGetData()
 
     useEffect(() => {
         getData(url)
@@ -67,19 +43,19 @@ export const ClassListSection = ({categoryName}) => {
                         </Grid>
                     )
                 })}
-                {data?.map((item)=>{
+                {classData.map((item)=>{
                     return (
-                        <Grid xs={12} md={4} key={item.id_menu}>
-                            <Link to={`/class/${item.id_menu}`} underline='none' style={{textDecoration:'none'}}>
+                        <Grid xs={12} md={4} key={item.id}>
+                            <Link to={`/class/${item.id}`} underline='none' style={{textDecoration:'none'}}>
                             <Stack direction='column' gap='16px'>
-                                <img src={`data:image/jpeg;base64,${item.image}`} width="350" height="234" alt={item.name} style={imageStyle} />
+                                <img src={`https://localhost:7201/${item.image}`} width="350" height="234" alt={item.name} style={imageStyle} />
                                 <Box padding='0px, 8px, 0px, 8px'>
                                     <Box minHeight='113px' maxWidth='292px'>
                                         <Typography variant='body1' sx={categoryStyle}>
-                                            {categoryName}
+                                            {item.categoryName}
                                         </Typography>
                                         <Typography variant='h4' sx={classNameStyle}>
-                                            {item.title}
+                                            {item.name}
                                         </Typography>
                                         <Typography variant='subtitle1' sx={priceStyle}>
                                             IDR {new Intl.NumberFormat(["ban", "id"]).format(item.price)}

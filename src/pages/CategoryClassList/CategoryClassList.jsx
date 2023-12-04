@@ -4,11 +4,11 @@ import { Box } from '@mui/material'
 import { ClassListSection } from '../../components/CategoryClassList/ClassListSection/ClassListSection'
 import {useParams} from 'react-router-dom'
 const CategoryClassList = () => {
-  const { type_name } = useParams()
+  const { id } = useParams()
   return (
     <Box>
-      <HeroSection categoryName={type_name} />
-      <ClassListSection categoryName={type_name} />
+      <HeroSection id={id} />
+      <ClassListSection id={id} />
     </Box>
   )
 }
