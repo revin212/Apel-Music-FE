@@ -10,7 +10,7 @@ const useGetData = (url) => {
         setErrorState(false)
         setLoading(true)
        
-        await axios.get(import.meta.env.VITE_API_URL_DUMMY + url)
+        await axios.get(import.meta.env.VITE_API_URL + url)
         .then((response) => {
           // handle success
           setData(response.data)
@@ -18,7 +18,6 @@ const useGetData = (url) => {
         })
         .catch((error) => {
           // handle error
-          console.log(error);
           setLoading(false)
           setErrorState(true)
         })
