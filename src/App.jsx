@@ -21,6 +21,7 @@ import { MyClass } from "./pages/MyClass/MyClass";
 import { EmailConfirm } from "./pages/EmailConfirm/EmailConfirm";
 import { CheckoutSuccess } from "./pages/CheckoutSuccess/CheckoutSuccess";
 import { NotFound } from "./pages/NotFound/NotFound";
+import { AuthRoute } from "./components/ProtectedRoutes/AuthRoute";
 
 function App() {
   return (
@@ -34,16 +35,20 @@ function App() {
                     <Route index element={<Home />} />
                     <Route path="/category/:id" element={<CategoryClassList />} />
                     <Route path="/class/:id" element={<DetailClass />}/>
-                    <Route path="/invoice" element={<Invoice />}/>
-                    <Route path="/invoice/:id" element={<InvoiceDetail />}/>
-                    <Route path="/myclass" element={<MyClass />}/>
+                    <Route path="/" element={<AuthRoute />}> 
+                      <Route path="/myclass" element={<MyClass />}/>
+                      <Route path="/invoice" element={<Invoice />}/>
+                      <Route path="/invoice/:id" element={<InvoiceDetail />}/>
+                    </Route>
                   </Route>
                   <Route path="/" element={<Layout2 />}>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/new-password" element={<NewPassword />} />
-                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/" element={<AuthRoute />}> 
+                      <Route path="/checkout" element={<Checkout />} /> 
+                    </Route>
                   </Route>
                   <Route path="/email-confirm" element={<EmailConfirm />} />
                   <Route path="/checkout-success" element={<CheckoutSuccess />} />
