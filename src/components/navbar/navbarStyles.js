@@ -12,7 +12,7 @@ export const navbarMenuListStyle = {
     justifyContent: 'space-between',
     width: '100%',
     color: 'primary.main',
-    px: '50px',
+    px: {xs:'12px', sm:'35px', md:'50px'},
     my: 'auto'
 }
 
@@ -27,7 +27,25 @@ export const notLoginMenuListStyle = {
 
 export const loggedInMenuListStyle = {
     listStyleType:'none',
-    display: 'flex',
+    display: {
+        xs:'none',
+        md:'flex'
+    },
     flexDirection: 'row',
     gap:'40px'
+}
+
+export const loggedInMobileMenuListStyle = {
+    display: {
+        xs:'flex',
+        md:'none'
+    },
+    aliignItems: 'center',
+    justifyContent: 'center'
+}
+
+export const drawerMenuWrapperStyle = {
+    width: '200px',
+    height: '100vh',
+    minHeight: '100vh',
 }

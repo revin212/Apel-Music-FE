@@ -23,7 +23,7 @@ const Login = () => {
     return (
         !token? 
         <>
-            <Box maxWidth='616px' mx='auto' my='90px'>
+            <Box maxWidth='616px' mx={{xs:'18px',sm:'auto'}} my='90px'>
                 <Stack direction='column' gap={2} mb='60px'>
                     <Typography variant='h2' sx={titleStyle}>Selamat Datang Musikers!</Typography>
                     <Typography variant='body2' component='p' sx={subtitleStyle}>Login dulu yuk</Typography>

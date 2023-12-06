@@ -2,7 +2,13 @@ div.register-wrapper{
     min-height: 460px;
     max-width: 616px;
     margin-block: 90px;
-    margin-inline: auto;
+    margin-inline: 18px;
+}
+
+@media only screen and (min-width: 600px) {
+    div.register-wrapper{
+        margin-inline: auto;
+    }
 }
 
 div.register-title-wrapper{

@@ -35,7 +35,7 @@ const ForgotPassword = () => {
     }
 
     return(
-        <Box maxWidth='616px' mx='auto' my='90px'>
+        <Box maxWidth='616px' mx={{xs:'18px',sm:'auto'}} my='90px'>
             <Box width='100%' mb='40px'>
                 <Stack gap='16px' mb='60px' direction='column'>
                     <Typography variant='h2' sx={titleStyle}>

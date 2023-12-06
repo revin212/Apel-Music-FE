@@ -6,7 +6,7 @@ const navbarMenuListStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     color: 'primary.main',
-    px: '50px',
+    px: {xs:'12px',md:'50px'},
     my: 'auto',
     height: '91.51px',
 }

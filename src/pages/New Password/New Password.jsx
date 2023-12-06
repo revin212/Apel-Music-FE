@@ -39,7 +39,7 @@ const NewPassword = () => {
     }
 
     return(
-        <Box maxWidth='616px' mx='auto' my='90px'>
+        <Box maxWidth='616px' mx={{xs:'18px',sm:'auto'}} my='90px'>
             <Typography variant="h2" sx={titleStyle}>
                 Buat Password
             </Typography>

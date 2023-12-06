@@ -1,14 +1,16 @@
 import { Box, Typography, Button } from '@mui/material'
-import { Logout, Person, ShoppingCart } from "@mui/icons-material";
-import { useEffect, useContext } from 'react'
+import { Logout, Menu, Person, ShoppingCart } from "@mui/icons-material";
+import { useEffect, useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../AuthContext/AuthContext';
-import { homeButtonStyle, loggedInMenuListStyle, navbarMenuListStyle, navbarWrapperStyle, notLoginMenuListStyle } from './NavbarStyles';
+import { homeButtonStyle, loggedInMenuListStyle, loggedInMobileMenuListStyle, navbarMenuListStyle, navbarWrapperStyle, notLoginMenuListStyle } from './NavbarStyles';
 import usePostData from '../../hooks/usePostData';
 import { doesHttpOnlyCookieExist } from '../../utils/authUtils';
+import { MobileNavbar } from './MobileNavbar';
 
 const Navbar = () => {
   const { token, tokenExpires } = useContext(AuthContext);
+  const [openMobileNav, setOpemMobileNav] = useState(false);
   const { postData } = usePostData();
 
   useEffect(()=>{
@@ -33,7 +35,14 @@ const Navbar = () => {
 
           {token
           ?
-          <ul style={loggedInMenuListStyle}>
+          <>
+          <Box sx={loggedInMobileMenuListStyle}>
+            <Button onClick={()=>setOpemMobileNav(true)}>
+              <Menu sx={{color:'text.gray2'}} />
+            </Button>
+            <MobileNavbar openMobileNav={openMobileNav} setOpemMobileNav={setOpemMobileNav} />
+          </Box>
+          <Box sx={loggedInMenuListStyle}>
               <li>
                   <Link to='/checkout' style={{padding: '10px', display: 'flex', alignContent:'center'}}>
                     <ShoppingCart sx={{color: 'text.gray0'}} />
@@ -60,7 +69,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li style={{display: 'flex', textAlign:'center'}}>
-                  <Typography variant='p' sx={{
+                  <Typography hidden variant='p' sx={{
                     fontWeight: '500',
                     color: 'text.black',
                     my: 'auto'
@@ -68,7 +77,7 @@ const Navbar = () => {
                     |
                   </Typography>
               </li>
-              <li>
+              <li hidden >
                   <Link to='/myclass' style={{padding: '10px', display: 'flex', alignContent:'center'}}>
                     <Person sx={{color: 'text.gray0'}} />
                   </Link>
@@ -78,10 +87,12 @@ const Navbar = () => {
                     <Logout sx={{color: 'text.gray0'}} />
                   </Link>
               </li>
-            </ul>
+            </Box>
+            </>
           : <ul style={notLoginMenuListStyle}>
+              <Box sx={{display: {xs:'none', md:'flex'}}}>
               <li style={{display: 'flex', alignContent:'center'}}>
-                <Link to='/register' style={{padding: '10px', textDecoration:'none',}}>
+                <Link to='/register' style={{padding: '10px', textDecoration:'none'}}>
                   <Typography variant='p' sx={{
                     fontWeight: '500',
                     color: 'text.black'
@@ -90,6 +101,7 @@ const Navbar = () => {
                   </Typography>
                 </Link>
               </li>
+              </Box>
               <li>
                 <Link to='/login'>
                   <Button variant='contained' sx={{

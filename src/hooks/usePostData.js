@@ -11,7 +11,7 @@ const usePostData = () => {
     let location = useLocation();
     let from = location.state?.from.pathname || '/';
 
-    const { newToken, setAuth } = useContext(AuthContext);
+    const { newToken } = useContext(AuthContext);
 
     const postData = async (url, variant, withCredentials=false, payload={}) => {
         try {
@@ -78,10 +78,6 @@ const usePostData = () => {
                         console.error("Error during logout:", err);
                         document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT';
                         break;
-                    }
-                case 'refreshToken':
-                    {
-                        setAuth(false);
                     }
                 case 'emailConfirm':
                     {
