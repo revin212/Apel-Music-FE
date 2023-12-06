@@ -1,6 +1,5 @@
 import { Alert, Box, Stack, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
-import { dummyData } from '../../../utils/dummyDataRecommended'
 import { Link } from 'react-router-dom'
 import { categoryStyle, imageStyle, wrapperStyle, classNameStyle, priceStyle, titleStyle } from './RecommendedClassesStyles'
 import { SkeletonCourse } from '../../Skeleton/SkeletonCourse'
@@ -35,12 +34,12 @@ export const RecommendedClasses = ({id, categoryIdState}) => {
                         </Grid>
                     )
                 })}
-                {!loading && data.map((item)=>{
+                {!loading && data?.map((item)=>{
                 return (
                     <Grid xs={12} md={4} key={item.id}>
                         <Link to={`/class/${item.id}`} underline='none' style={{textDecoration:'none'}}>
                         <Stack direction='column' gap='16px'>
-                            <img src={item.image?`https://localhost:7201/${item.image}`:''} width="350" height="234" alt={item.name} style={imageStyle} />
+                            <img src={item.image?`${import.meta.env.VITE_BASE_URL}/${item.image}`:''} width="350" height="234" alt={item.name} style={imageStyle} />
                             <Box padding='0px, 8px, 0px, 8px'>
                                 <Box minHeight='113px' maxWidth='292px'>
                                     <Typography variant='body1' sx={categoryStyle}>

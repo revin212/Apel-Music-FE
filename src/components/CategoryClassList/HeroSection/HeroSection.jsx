@@ -1,11 +1,9 @@
-import { Box, Stack, Typography, Backdrop, CircularProgress, Alert } from '@mui/material'
-import { bodyStyle, titleStyle, wrapperStyle, bannerWrapperStyle, backdropStyle } from './HeroSectionStyles'
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import { Box, Stack, Typography, Alert } from '@mui/material'
+import { bodyStyle, titleStyle, wrapperStyle, bannerWrapperStyle } from './HeroSectionStyles'
+import React, { useEffect } from 'react'
 import useGetData from '../../../hooks/useGetData'
 import { SkeletonHeaderImage } from '../../Skeleton/SkeletonHeaderImage'
 import { SkeletonDescription } from '../../Skeleton/SkeletonDescription'
-import { useParams } from 'react-router-dom'
 
 export const HeroSection = ({id}) => {
   const url = `/MsCategory/GetCategoryDetail?id=${id}`
@@ -17,7 +15,7 @@ export const HeroSection = ({id}) => {
   
   const bannerStyle = {
     height: '334px',
-    backgroundImage: classData.headerImage ? `url("https://localhost:7201/${classData.headerImage.replace("\r\n", "")}")` : `url("https://placehold.co/1280x334")`,
+    backgroundImage: `url("${import.meta.env.VITE_BASE_URL}/${classData.headerImage ? classData.headerImage.replace("\r\n", "") : classData.image}")`,
     backgroundSize: 'cover',
     backgroundPosition: '0 20%'
   }
@@ -36,7 +34,7 @@ export const HeroSection = ({id}) => {
     <Box sx={wrapperStyle} minHeight={'334px'}>
       <Box sx={bannerWrapperStyle}>
         {loading && <SkeletonHeaderImage />}
-        <Box sx={bannerStyle}/>
+        {classData && <Box sx={bannerStyle}/>}
       </Box>
   
       <Stack direction='column' gap='16px' paddingInline={{xs: '30px',sm:'80px',md:'120px'}} paddingBlock='80px'>

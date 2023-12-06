@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Stack, Typography, CircularProgress, Backdrop, Alert } from '@mui/material'
+import { Box, Stack, Typography, Alert } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
-import { imageStyle, wrapperStyle, titleStyle, categoryNameStyle, backdropStyle } from './CategoryListSectionStyles'
-import { dummyData } from '../../../utils/dummyDataCategory'
+import { imageStyle, wrapperStyle, titleStyle, categoryNameStyle } from './CategoryListSectionStyles'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 
 import useGetData from '../../../hooks/useGetData'
 import { SkeletonCategory } from '../../Skeleton/SkeletonCategory'
@@ -43,12 +41,12 @@ export const CategoryListSection = () => {
                     </Grid>
                 )
             })}
-            {categoryData.map((item)=>{
+            {categoryData?.map((item)=>{
                 return (
                     <Grid xs={6} md={3} key={item.id}>
                         <Link to={`/category/${item.id}`} underline='none' style={{textDecoration:'none'}}>
                         <Stack direction='column' gap='24px' alignItems='center'>
-                            <img src={`https://localhost:7201/${item.image}`} width="350" height="234" alt={item.type_name} style={imageStyle} />
+                            <img src={`${import.meta.env.VITE_BASE_URL}/${item.image}`} width="350" height="234" alt={item.type_name} style={imageStyle} />
                             <Typography variant='h4' sx={categoryNameStyle}>
                                 {item.name}
                             </Typography>

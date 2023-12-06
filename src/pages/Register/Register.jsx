@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import useRegister from '../../hooks/useRegister'
 import './Register.css'
 import { Button } from '@mui/material'
+import usePostData from '../../hooks/usePostData'
 
 const Register = () => {
     const [name, setName] = useState('')
@@ -10,7 +10,7 @@ const Register = () => {
     const [pwd, setPwd] = useState('')
     const [pwdconf, setPwdconf] = useState('')
     const registerUrl = import.meta.env.VITE_API_URL + "/MsUser/Register"
-    const { register, isLoading, error, setError, msg, succesMessage } = useRegister();
+    const { postData, isLoading, error, setError, msg } = usePostData();
 
     const resetForm = () => {
         setName('');
@@ -30,13 +30,13 @@ const Register = () => {
             setError("Password does not match")
             return
         }
-        register(registerUrl, {
+        postData(registerUrl, 'register', true,
+        {
             name: name, 
             email: email, 
             password:pwd, 
             confirmPassword: pwdconf
         });
-        // succesMessage();
         resetForm();
     }
 

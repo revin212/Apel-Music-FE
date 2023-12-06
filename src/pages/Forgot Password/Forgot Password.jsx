@@ -2,14 +2,14 @@ import { Box, Button, Stack, Typography, Input  } from "@mui/material";
 import { inputStyle, messageStyle, subtitleStyle, titleStyle } from "./Forgot password.style";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useForgetPassword from "../../hooks/useForgetPassword";
+import usePostData from "../../hooks/usePostData";
 
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('')
 
     const navigate = useNavigate()
-    const {forgetPassword, loading, error, setError, msg} = useForgetPassword()
+    const {postData, isLoading, error, setError, msg} = usePostData()
 
     const handleChange = (e) => {
         setError('')
@@ -30,7 +30,7 @@ const ForgotPassword = () => {
         e.preventDefault();
         setError('');
         if(emailValidation()){
-            forgetPassword(import.meta.env.VITE_API_URL + `/MsUser/ForgetPassword?Email=${email}`)
+            postData(import.meta.env.VITE_API_URL + `/MsUser/ForgetPassword?Email=${email}`, 'forgetPassword')
         }
     }
 
@@ -59,10 +59,11 @@ const ForgotPassword = () => {
                 }} placeholder="Batal" onClick={()=>{navigate('/login')}}>
                     Batal
                 </Button>
-                <Button type="submit" disabled={loading} variant="contained" onClick={(e)=>handleForgetPassword(e)} sx={{
+                <Button type="submit" disabled={isLoading} variant="contained" onClick={(e)=>handleForgetPassword(e)} sx={{
                     maxWidth: '140px',
                     maxHeight: '43px',
-                    width: '100%'
+                    width: '100%',
+                    
                 }}>Konfirmasi</Button>
             </Stack>
         </Box>

@@ -46,7 +46,3 @@ export const priceStyle = {
     letterSpacing: '0em',
     color: 'secondary.main',
 }
-
-export const backdropStyle= {
-    position: 'absolute'
-}

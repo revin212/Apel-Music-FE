@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from 'axios';
 
-const useGetData = (url) => {
+const useGetData = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
     const [errorState, setErrorState] = useState(false)

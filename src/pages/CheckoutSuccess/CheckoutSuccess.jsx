@@ -1,10 +1,25 @@
+import { useContext, useEffect } from 'react'
 import { Stack } from '@mui/material'
 import { SuccessHeader } from '../../components/successPage/successHeader'
 import { SuccessMessage } from '../../components/successPage/successMessage'
 import { ArrowForward, Home } from '@mui/icons-material'
+import { Navigate } from 'react-router-dom'
+import { AuthContext } from '../../components/AuthContext/AuthContext'
+import usePostData from '../../hooks/usePostData'
 
 export const CheckoutSuccess = () => {
+  const { token, tokenExpires, auth } = useContext(AuthContext);
+  const { postData } = usePostData();
+
+  useEffect(()=>{
+    //cek apakah token expires 1 menit lagi
+    if(new Date(tokenExpires) - Date.now() < 60000){
+      postData(import.meta.env.VITE_API_URL + "/MsUser/RefreshToken", 'refreshToken', true)
+    }
+  }, [token, tokenExpires])
+
   return (
+    auth? 
     <Stack sx={{minHeight: '100vh'}}>
         <SuccessHeader />
         <SuccessMessage 
@@ -16,5 +31,7 @@ export const CheckoutSuccess = () => {
             ]}
          />
     </Stack>
+    :
+    <Navigate to='/' /> 
   )
 }

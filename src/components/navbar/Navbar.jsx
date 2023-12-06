@@ -1,26 +1,30 @@
 import { Box, Typography, Button } from '@mui/material'
 import { Logout, Person, ShoppingCart } from "@mui/icons-material";
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../AuthContext/AuthContext';
-import useLogout from '../../hooks/useLogout';
-import useRefreshToken from '../../hooks/useRefreshToken';
 import { homeButtonStyle, loggedInMenuListStyle, navbarMenuListStyle, navbarWrapperStyle, notLoginMenuListStyle } from './NavbarStyles';
+import usePostData from '../../hooks/usePostData';
+import { doesHttpOnlyCookieExist } from '../../utils/authUtils';
 
 const Navbar = () => {
-  const [token, tokenExpires, newToken] = useContext(AuthContext);
-  const logout = useLogout();
-  const refreshToken = useRefreshToken();
+  const { token, tokenExpires, setAuth } = useContext(AuthContext);
+  const { postData } = usePostData();
 
   useEffect(()=>{
-    //cek apakah token expires 1 menit lagi
-    if(new Date(tokenExpires) - Date.now() < 60000){
-      refreshToken(import.meta.env.VITE_API_URL + "/MsUser/RefreshToken")
+    //cek apakah ada cookies refreshToken & token expires 1 menit lagi
+    if(doesHttpOnlyCookieExist("refreshToken") &&
+    new Date(tokenExpires) - Date.now() < 60000)
+    {
+      postData(import.meta.env.VITE_API_URL + "/MsUser/RefreshToken", 'refreshToken', true)
+    } else if(!doesHttpOnlyCookieExist("refreshToken"))
+    {
+      setAuth(false)
     }
   }, [token, tokenExpires])
 
   const handleLogout = () => {
-    logout(import.meta.env.VITE_API_URL + "/MsUser/Logout");
+    postData(import.meta.env.VITE_API_URL + "/MsUser/Logout", 'logout', true);
   }
 
   return (

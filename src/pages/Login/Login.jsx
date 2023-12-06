@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState, useContext } from 'react'
 import { Box, Stack, Button, Typography, Input } from '@mui/material'
 import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle, errorMsgStyle } from './LoginStyles'
-import { Link } from 'react-router-dom'
-import useLogin from '../../hooks/useLogin'
-import axios from 'axios'; 
+import { Link, Navigate } from 'react-router-dom'
+import { AuthContext } from '../../components/AuthContext/AuthContext'
+import usePostData from '../../hooks/usePostData'
 
 
 
@@ -12,14 +12,16 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [pwd, setPwd] = useState('')
     const loginUrl = import.meta.env.VITE_API_URL + "/MsUser/Login"
-    const { login, isLoading, error } = useLogin();
+    const { postData, isLoading, error } = usePostData();
+    const { token } = useContext(AuthContext);
     
     const handleLogin = (e) => {
         e.preventDefault();
-        login(loginUrl, {email:email, password:pwd})
+        postData(loginUrl, 'login', true, {email:email, password:pwd})
     }
 
     return (
+        !token? 
         <>
             <Box maxWidth='616px' mx='auto' my='90px'>
                 <Stack direction='column' gap={2} mb='60px'>
@@ -55,6 +57,8 @@ const Login = () => {
                 </Typography>
             </Box>
         </>
+        :
+        <Navigate to='/' /> 
   )
 }
 

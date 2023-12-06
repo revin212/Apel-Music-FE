@@ -1,12 +1,12 @@
 import { Box, Typography, Input, Button, Stack } from "@mui/material";
 import { batalButtonStyle, buttonStyle, inputStyle, messageStyle, titleStyle } from "./New Password.style";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import useResetPassword from "../../hooks/useResetPassword";
+import { useNavigate } from "react-router-dom";
+import usePostData from "../../hooks/usePostData";
 
 const NewPassword = () => {
     const [data, setData] = useState({})
-    const { resetPassword, loading, error, setError, msg } = useResetPassword()
+    const { postData, isLoading, error, setError, msg } = usePostData()
     const navigate = useNavigate()
     const Id = new URLSearchParams(window.location.search).get('Id');
 
@@ -29,7 +29,12 @@ const NewPassword = () => {
         e.preventDefault();
         setError('');
         if(passwordValidation()){
-            resetPassword(import.meta.env.VITE_API_URL + '/MsUser/ResetPassword', {id: Id,password:data.newPw, confirmPassword:data.newPwConf})
+            postData(import.meta.env.VITE_API_URL + '/MsUser/ResetPassword', 'resetPassword', false, 
+            {
+                id: Id,
+                password:data.newPw, 
+                confirmPassword:data.newPwConf
+            })
         }
     }
 
@@ -50,7 +55,7 @@ const NewPassword = () => {
                 <Button variant="outlined" sx={batalButtonStyle} placeholder="Batal" onClick={()=>{navigate('/login')}}>
                     Batal
                 </Button>
-                <Button type='submit' variant="contained" sx={buttonStyle} onClick={handleNewPassword} disabled={loading}>Konfirmasi</Button>
+                <Button type='submit' variant="contained" sx={buttonStyle} onClick={handleNewPassword} disabled={isLoading}>Konfirmasi</Button>
             </Stack>
         </Box>
     )

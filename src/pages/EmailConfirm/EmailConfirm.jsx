@@ -1,15 +1,15 @@
 import { Stack } from '@mui/material'
 import { useEffect } from 'react'
-import useEmailConfirm from '../../hooks/useEmailConfirm'
 import { SuccessHeader } from '../../components/successPage/successHeader'
 import { SuccessMessage } from '../../components/successPage/successMessage'
+import usePostData from '../../hooks/usePostData'
 
 export const EmailConfirm = () => {
     const email = new URLSearchParams(window.location.search).get('email');
-    const { emailConfirm, loading } = useEmailConfirm();
+    const { postData, loading } = usePostData();
 
     useEffect(()=>{
-        emailConfirm(import.meta.env.VITE_API_URL + "/MsUser/ActivateUser?Email=" + email)
+      postData(import.meta.env.VITE_API_URL + "/MsUser/ActivateUser?Email=" + email, 'emailConfirm')
     }, [])
 
   return (

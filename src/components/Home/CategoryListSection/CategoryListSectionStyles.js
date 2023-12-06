@@ -29,7 +29,3 @@ export const categoryNameStyle = {
     color: 'text.black',
     textAlign: 'center',
 }
-
-export const backdropStyle= {
-    position: 'absolute'
-}

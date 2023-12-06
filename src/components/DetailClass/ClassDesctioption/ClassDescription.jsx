@@ -31,7 +31,7 @@ export const ClassDescription = ({id, setCategoryIdState}) => {
         {!loading && 
         <Stack direction={{xs:'column',md:'row'}} gap='40px'>
             <Stack direction='row' justifyContent={{xs:'center',md:'auto'}} sx={imageWrapperStyle}>
-                <img src={classData.image?`https://localhost:7201/${classData.image}`:''} alt={classData?.name} style={imageStyle} />
+                <img src={classData.image?`${import.meta.env.VITE_BASE_URL}/${classData.image}`:''} alt={classData?.name} style={imageStyle} />
             </Stack>
             <Stack direction='column' gap='60px' flexGrow={1}>
                 <Stack direction='column' gap='16px'>
