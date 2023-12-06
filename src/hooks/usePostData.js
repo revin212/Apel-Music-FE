@@ -29,18 +29,21 @@ const usePostData = () => {
             case 'login':
                 {
                     await newToken(response.data);
+                    document.cookie = `token=${response.data.token}`;
                     navigate(from);
                     break;
                 }
             case 'logout':
                 {
                     await newToken({token: "", tokenExpires: Date.now()});
+                    document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT';
                     navigate("/");
                     break;
                 }
             case 'refreshToken':
                 {
                     await newToken(response.data);
+                    document.cookie = `token=${response.data.token}`;
                     break;
                 }
             case 'forgetPassword':
@@ -51,6 +54,7 @@ const usePostData = () => {
             case 'resetPassword':
                 {
                     setMsg(response.data);
+                    navigate('/login');
                     break;
                 }
             case 'emailConfirm':
@@ -72,6 +76,7 @@ const usePostData = () => {
                 case 'logout':
                     {
                         console.error("Error during logout:", err);
+                        document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT';
                         break;
                     }
                 case 'refreshToken':

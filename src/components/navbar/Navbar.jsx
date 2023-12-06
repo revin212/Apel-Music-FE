@@ -8,7 +8,7 @@ import usePostData from '../../hooks/usePostData';
 import { doesHttpOnlyCookieExist } from '../../utils/authUtils';
 
 const Navbar = () => {
-  const { token, tokenExpires, setAuth } = useContext(AuthContext);
+  const { token, tokenExpires } = useContext(AuthContext);
   const { postData } = usePostData();
 
   useEffect(()=>{
@@ -17,9 +17,6 @@ const Navbar = () => {
     new Date(tokenExpires) - Date.now() < 60000)
     {
       postData(import.meta.env.VITE_API_URL + "/MsUser/RefreshToken", 'refreshToken', true)
-    } else if(!doesHttpOnlyCookieExist("refreshToken"))
-    {
-      setAuth(false)
     }
   }, [token, tokenExpires])
 

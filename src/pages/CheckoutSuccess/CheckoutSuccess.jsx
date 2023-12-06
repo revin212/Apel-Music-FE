@@ -8,7 +8,7 @@ import { AuthContext } from '../../components/AuthContext/AuthContext'
 import usePostData from '../../hooks/usePostData'
 
 export const CheckoutSuccess = () => {
-  const { token, tokenExpires, auth } = useContext(AuthContext);
+  const { token, tokenExpires } = useContext(AuthContext);
   const { postData } = usePostData();
 
   useEffect(()=>{
@@ -19,7 +19,7 @@ export const CheckoutSuccess = () => {
   }, [token, tokenExpires])
 
   return (
-    auth? 
+    token? 
     <Stack sx={{minHeight: '100vh'}}>
         <SuccessHeader />
         <SuccessMessage 
