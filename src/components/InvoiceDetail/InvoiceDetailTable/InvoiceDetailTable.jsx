@@ -8,8 +8,10 @@ import { styled } from '@mui/material/styles';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { dateToString } from '../../../utils/DateUtils';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Box } from '@mui/material';
+import useGetData from '../../../hooks/useGetData';
+import { useParams } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -60,6 +62,13 @@ const rows = [
 export const InvoiceDetailTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const { id } = useParams()
+
+  const {data: invoiceDetailList, loading, errorState, getData} = useGetData();
+
+  useEffect(()=>{
+    getData('/TsOrderDetail/GetMyInvoicesDetailList?orderid='+ id)
+  },[])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -73,11 +82,11 @@ export const InvoiceDetailTable = () => {
 
   const visibleRows = useMemo(
     () =>
-      rows.slice(
+    invoiceDetailList.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [page, rowsPerPage],
+    [page, rowsPerPage, invoiceDetailList],
   );
 
   return (
@@ -95,15 +104,15 @@ export const InvoiceDetailTable = () => {
         </TableHead>
         <TableBody>
           {visibleRows.map((row, index) => (
-            <StyledTableRow key={row.no}>
+            <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {(rowsPerPage * page) + index+1}
               </StyledTableCell>
               <StyledTableCell>{row.course_name}</StyledTableCell>
               <StyledTableCell>{row.category}</StyledTableCell>
-              <StyledTableCell>{dateToString(new Date(row.course_date))}</StyledTableCell>
+              <StyledTableCell>{dateToString(new Date(row.jadwal))}</StyledTableCell>
               <StyledTableCell>
-                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.price)}
+                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.harga)}
               </StyledTableCell>
             </StyledTableRow>
           ))}
@@ -113,7 +122,7 @@ export const InvoiceDetailTable = () => {
     <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={rows.length}
+        count={invoiceDetailList.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

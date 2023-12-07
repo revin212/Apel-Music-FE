@@ -10,7 +10,9 @@ import TableRow from '@mui/material/TableRow';
 import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { dateToStringInvoice } from '../../utils/DateUtils';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import useGetData from '../../hooks/useGetData';
+import { getCookie } from '../../utils/authUtils';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -65,6 +67,13 @@ const rows = [
 export const InvoiceTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [userId, setUserId] = useState(getCookie('userId'))
+
+  const {data: invoiceList, loading, errorState, getData} = useGetData();
+
+  useEffect(()=>{
+    getData('/TsOrder/GetMyInvoicesList?userid='+ userId)
+  },[])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -76,13 +85,14 @@ export const InvoiceTable = () => {
     setPage(0);
   };
 
+
   const visibleRows = useMemo(
     () =>
-      rows.slice(
+      invoiceList.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [page, rowsPerPage],
+    [page, rowsPerPage, invoiceList],
   );
 
   return (
@@ -101,18 +111,18 @@ export const InvoiceTable = () => {
         </TableHead>
         <TableBody>
           {visibleRows.map((row, index) => (
-            <StyledTableRow key={row.no}>
+            <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {(rowsPerPage * page) + index+1}
               </StyledTableCell>
-              <StyledTableCell>{row.no_invoice}</StyledTableCell>
-              <StyledTableCell>{dateToStringInvoice(new Date(row.buy_date))}</StyledTableCell>
+              <StyledTableCell>{row.invoiceNo}</StyledTableCell>
+              <StyledTableCell>{dateToStringInvoice(new Date(row.orderDate))}</StyledTableCell>
               <StyledTableCell>{row.course_count}</StyledTableCell>
               <StyledTableCell>
-                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.total_price)}
+                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.totalHarga)}
               </StyledTableCell>
               <StyledTableCell>
-                <Link to={row.detail_url}>
+                <Link to={`/invoice/${row.id}`}>
                 <Button variant='contained' sx={{width:'100%', maxWidth:'180px'}}>
                     Rincian 
                 </Button>
@@ -126,7 +136,7 @@ export const InvoiceTable = () => {
     <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={rows.length}
+        count={invoiceList.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

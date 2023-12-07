@@ -67,6 +67,11 @@ const usePostData = () => {
                 {
                     break;
                 }
+            case 'addToCart':
+                {
+                    setMsg("Berhasil ditambahkan")
+                    break;
+                }
             default: break;
             }
         } catch (err) {
@@ -89,6 +94,10 @@ const usePostData = () => {
                     {
                         console.error(err);
                         break;
+                    }
+                case 'checkoutFlow':
+                    {
+                        setError("Server error, please try again")
                     }
                 default: break;
             }
