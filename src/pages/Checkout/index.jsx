@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import { ModalPaymentMethod } from "../../components/ModalPaymentMethod/ModalPaymentMethod"
 import { dateToString } from "../../utils/DateUtils"
 import { cartItemStyle, classDescStyle, containerStyle, deleteBtnStyle, footerStyle, footerWrapperStyle, imageStyle, imageWrapperStyle, selectAllStyle, totalBiayaStyle, totalBiayaWrapperStyle } from "./checkoutStyles"
-import { dummyDataCheckout } from "../../utils/dummyDataCheckout"
 import { SkeletonMyClass } from "../../components/Skeleton/SkeletonMyClass"
 import { handleDelete, handleSelect, handleSelectAll, isSelectedAll } from "./checkoutUtils"
 import { getCookie } from "../../utils/authUtils"
@@ -12,35 +11,28 @@ import useGetData from "../../hooks/useGetData"
 import usePostData from "../../hooks/usePostData"
 
 const Checkout = () => {
-    // const [cart, setCart] = useState(dummyDataCheckout)
     const [openModal, setOpenModal] = useState(false)
     const [userId, setUserId] = useState(getCookie('userId'))
     const [cartDataChange, setCartDataChange] = useState(false)
     const [allChecked, setAllChecked] = useState(false)
 
-    const {data: cartList, getData: getCartListData, loading: getCartListLoading, errorState: getCartListError} = useGetData();
+    const {data: cartList, setData: setCartList,getData: getCartListData, loading: getCartListLoading, errorState: getCartListError} = useGetData();
     const {data: cartInfo, getData: getCartInfoData, loading: getCartInfoLoading, errorState: getCarInfoError} = useGetData();
-    const {postData, isLoading: postDataLoading} = usePostData();
+    const {postData, isLoading: postDataLoading, error: postError} = usePostData();
+
+    useEffect(()=>{
+        getCartInfoData('/TsOrder/GetCartInfo?userid='+ userId)
+    },[cartDataChange, postError])
 
     useEffect(()=>{
         getCartListData('/TsOrder/GetCart?userid='+ userId)
-        getCartInfoData('/TsOrder/GetCartInfo?userid='+ userId)
-      },[cartDataChange])
+    },[postError])
 
-
-    // useEffect(() => {
-    //     setTotal(()=>{
-    //         let sum = 0
-    //         cart.forEach((e)=>{
-    //             sum += e.price
-    //             if(!e.selected) sum -= e.price
-    //         })
-    //         return sum
-    //     })
-    //     if(isSelectedAll(cart))
-    //         setAllChecked(true)
-    //     else setAllChecked(false)
-    // }, [cart]);
+    useEffect(()=>{
+        if(isSelectedAll(cartList))
+            setAllChecked(true)
+        else setAllChecked(false)
+    },[cartList])
 
     const handleOpenModal = () => {
         setOpenModal(true)
@@ -50,24 +42,26 @@ const Checkout = () => {
         <>
             <Container sx={containerStyle}>
                 <Box sx={selectAllStyle}>
-                    <Checkbox disabled={postDataLoading} onChange={()=>handleSelectAll(cartList, postData, userId, allChecked, setAllChecked,setCartDataChange)} checked={allChecked} /> Pilih Semua
+                    <Checkbox disabled={postDataLoading} checked={allChecked} onChange={()=>handleSelectAll(cartList, setCartList, postData, userId, allChecked, setAllChecked,setCartDataChange)} /> Pilih Semua
                 </Box>
                 {getCartListError && 
                 <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
                     Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
                 </Alert>}
-                {/* {getCartListLoading && [...Array(3)].map((item, i)=>{
+                {getCartListLoading && [...Array(3)].map((item, i)=>{
                     return(
-                        <SkeletonMyClass key={i} />
+                        <Box paddingLeft={{xs:0, md:7}} paddingTop={3}>
+                            <SkeletonMyClass key={i} />
+                        </Box>
                     )
-                })} */}
+                })}
                 {!getCartListError && !getCartListLoading && 
                 cartList?.map((item, i)=>{
                     return(
                         <Stack direction='row' justifyContent={{xs:'center',md:'space-between'}} alignItems={{xs:'start', md:'center'}} key={item.id} sx={cartItemStyle}>
                             <Stack direction='row' gap={{xs:'8px', md:'24px'}} alignItems={{xs:'start', md:'center'}} sx={{width: '100%', maxWidth:{xs:'250px', sm:'400px', md:'none'}}}>
                                 <Stack height='100%'>
-                                    <Checkbox disabled={postDataLoading} checked={item.isSelected} onChange={()=>handleSelect(item.id, postData, userId, item.isSelected, setCartDataChange)} id={`${item.id}`} />
+                                    <Checkbox disabled={postDataLoading} checked={item.isSelected} onChange={()=>handleSelect(cartList, setCartList, item.id, postData, userId, item.isSelected, setCartDataChange)} id={`${item.id}`} />
                                 </Stack>
                                 <Stack direction={{xs:"column", md:"row"}} gap="24px" alignItems={'start'} flexGrow={1} >
                                 <Stack alignItems={'center'} width={{xs:'100%', md:'auto'}}>
@@ -88,7 +82,7 @@ const Checkout = () => {
                                 </Stack>
                             </Stack>
                             <Stack>
-                                <Button disabled={postDataLoading} onClick={()=>handleDelete(item.id, postData, setCartDataChange)} id={item.id} variant="text" sx={deleteBtnStyle}>
+                                <Button disabled={postDataLoading} onClick={()=>handleDelete(item.id, postData, setCartDataChange, cartList, setCartList)} id={item.id} variant="text" sx={deleteBtnStyle}>
                                     <DeleteForever id={item.id} sx={{color: 'warning.main'}}/>
                                     <Typography id={item.id} display={{xs:"none", md:"block"}}>Delete</Typography>
                                 </Button>

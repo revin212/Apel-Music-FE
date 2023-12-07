@@ -1,4 +1,8 @@
-export const handleSelect = async (cartItemId, postData, userId, selectedState, setCartDataChange) => {
+export const handleSelect = async (cartList, setCartList, cartItemId, postData, userId, selectedState, setCartDataChange) => {
+    setCartList(cartList.map((item)=>{
+        return item.id == cartItemId ? {...item, isSelected: !item.isSelected} : item
+    }))
+
     await selectCartItem(postData, cartItemId, selectedState, userId)
     setCartDataChange(prev=>!prev)
 }
@@ -11,25 +15,23 @@ const selectCartItem = async (postData, cartItemId, selectedState, userId) => {
     })
 }
 
-export const handleSelectAll = async (cartList, postData, userId, selectedState, setAllChecked, setCartDataChange) => {
-    for (let i=0; i<cartList.length; i++) {
-        await selectCartItem(postData, cartList[i].id, selectedState, userId)
+export const handleSelectAll = async (cartList, setCartList, postData, userId, allChecked, setAllChecked, setCartDataChange) => {
+    if(!isSelectedAll(cartList)) {
+        setCartList(cartList.map((item, index)=>{
+            return {...item, isSelected: true}
+        }))
+        setAllChecked(true)
+    } else {
+        setCartList(cartList.map((item, index)=>{
+            return {...item, isSelected: false}
+        }))
+        setAllChecked(false)
     }
-    setAllChecked(!selectedState)
-    setCartDataChange(prev=>!prev)
     
-    // if(!isSelectedAll(cart)) {
-    //     setCart(cart.map((item, index)=>{
-    //         return {...item, selected: true}
-    //     }))
-    //     setAllChecked(true)
-    //     return
-    // } else {
-    //     setCart(cart.map((item, index)=>{
-    //         return {...item, selected: false}
-    //     }))
-    //     setAllChecked(false)
-    // }
+    for (let i=0; i<cartList.length; i++) {
+        await selectCartItem(postData, cartList[i].id, allChecked, userId)
+    }
+    setCartDataChange(prev=>!prev)
 }
 
 export const isSelectedAll = (cart) => {
@@ -40,14 +42,13 @@ export const isSelectedAll = (cart) => {
     return true
 }
 
-export const handleDelete = async (cartItemId, postData, setCartDataChange) => {
-    // const deleteTarget = e.target.id
-    // setCart(cart.filter(item=>{
-    //     if(item.id == deleteTarget){
-    //         return false
-    //     }
-    //     return true
-    // }))
+export const handleDelete = async (cartItemId, postData, setCartDataChange, cartList, setCartList) => {
+    setCartList(cartList.filter(item=>{
+        if(item.id == cartItemId){
+            return false
+        }
+        return true
+    }))
     await postData(`${import.meta.env.VITE_API_URL}/TsOrderDetail/DeleteFromCart`, 'checkoutFlow', false, {id: cartItemId})
     setCartDataChange(prev=>!prev)
 }

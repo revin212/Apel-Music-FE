@@ -23,7 +23,7 @@ const useGetData = () => {
         })
     }
     
-    return {data, loading, errorState, getData}
+    return {data, setData, loading, errorState, getData}
 }
 
 
