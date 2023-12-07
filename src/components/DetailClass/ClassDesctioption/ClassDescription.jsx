@@ -1,15 +1,41 @@
-import { Stack, Typography, Button, Alert } from '@mui/material'
+import { Stack, Typography, Button, Alert, Box } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { bodyStyle, categoryStyle, classNameStyle, imageStyle, imageWrapperStyle, priceStyle, titleStyle } from './ClassDescriptionStyles'
 import { MuiSelect } from './MuiSelect'
 import { SkeletonCourseDetail } from '../../Skeleton/SkeletonCourseDetail'
 import { SkeletonDescription } from '../../Skeleton/SkeletonDescription'
 import useGetData from '../../../hooks/useGetData'
+import usePostData from '../../../hooks/usePostData'
+import { getCookie } from '../../../utils/authUtils'
+import { dateToStringJadwal } from '../../../utils/DateUtils'
+import { useNavigate } from 'react-router-dom'
 
 export const ClassDescription = ({id, setCategoryIdState}) => {
+    const [userId, setUserId] = useState(getCookie('userId'))
     const [jadwal, setJadwal] = useState('');
+    const navigate = useNavigate()
     const url = `/MsCourse/GetDetail?id=${id}`
     const { data: classData, loading, errorState, getData } = useGetData()
+    const { isLoading: postLoading, error: postError, setError: setPostError,postData, msg } = usePostData()
+    
+    const handleAddToCart = async () => {
+        if(!jadwal){
+            setPostError("Tolong pilih jadwal")
+            return
+        }
+        setPostError("")
+        await postData(`${import.meta.env.VITE_API_URL}/TsOrderDetail/AddToCart`, 'addToCart', false, {
+            userId: userId,
+            courseId: id,
+            jadwal: dateToStringJadwal(new Date(jadwal))
+        })
+    }
+
+    const handleBuyNow = async () => {
+        await handleAddToCart();
+        if(!postError)
+            navigate('/checkout')
+    }
 
     useEffect(() => {
         getData(url)
@@ -44,12 +70,22 @@ export const ClassDescription = ({id, setCategoryIdState}) => {
                     <Typography variant='subtitle1' sx={priceStyle}>
                         IDR {new Intl.NumberFormat(["ban", "id"]).format(classData?.price)}
                     </Typography>
-                    <MuiSelect jadwal={jadwal} setJadwal={setJadwal} />
+                    <Box position={'relative'}>
+                        <MuiSelect jadwal={jadwal} setJadwal={setJadwal} />
+                        {postError && 
+                        <Typography variant="body2" sx={{color:'warning.main', position:'absolute', bottom:'-24px', left:0}}>
+                                {postError}
+                        </Typography>}
+                        {msg && 
+                        <Typography variant="body2" sx={{color:'#4dc050', position:'absolute', bottom:'-24px', left:0}}>
+                                {msg}
+                        </Typography>}
+                    </Box>
                 </Stack>
                  
                 <Stack direction='row' gap='16px'>
-                    <Button variant='outlined' sx={{maxWidth:'233px', width:'100%'}}>Masukkan Keranjang</Button>
-                    <Button variant='contained' sx={{maxWidth:'233px', width:'100%'}}>Beli Sekarang</Button>
+                    <Button disabled={postLoading} onClick={handleAddToCart} variant='outlined' sx={{maxWidth:'233px', width:'100%'}}>Masukkan Keranjang</Button>
+                    <Button disabled={postLoading} variant='contained' onClick={handleBuyNow} sx={{maxWidth:'233px', width:'100%'}}>Beli Sekarang</Button>
                 </Stack>
             </Stack>
         </Stack>}
