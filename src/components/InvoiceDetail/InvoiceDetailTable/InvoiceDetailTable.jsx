@@ -108,8 +108,8 @@ export const InvoiceDetailTable = () => {
               <StyledTableCell component="th" scope="row">
                 {(rowsPerPage * page) + index+1}
               </StyledTableCell>
-              <StyledTableCell>{row.course_name}</StyledTableCell>
-              <StyledTableCell>{row.category}</StyledTableCell>
+              <StyledTableCell>{row.courseName}</StyledTableCell>
+              <StyledTableCell>{row.courseCategoryName}</StyledTableCell>
               <StyledTableCell>{dateToString(new Date(row.jadwal))}</StyledTableCell>
               <StyledTableCell>
                 IDR {new Intl.NumberFormat(["ban", "id"]).format(row.harga)}
