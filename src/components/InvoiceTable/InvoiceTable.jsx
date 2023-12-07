@@ -7,12 +7,13 @@ import TablePagination from '@mui/material/TablePagination';
 import { styled } from '@mui/material/styles';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Box, Button } from '@mui/material';
+import { Alert, Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { dateToStringInvoice } from '../../utils/DateUtils';
 import { useState, useMemo, useEffect } from 'react';
 import useGetData from '../../hooks/useGetData';
 import { getCookie } from '../../utils/authUtils';
+import { SkeletonTableRow } from '../Skeleton/SkeletonTableRow';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -110,7 +111,25 @@ export const InvoiceTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {visibleRows.map((row, index) => (
+          {loading && 
+            <StyledTableRow>
+              <StyledTableCell colSpan={6}>
+                <SkeletonTableRow />
+              </StyledTableCell>
+            </StyledTableRow>
+            }
+
+          {errorState && 
+            <StyledTableRow>
+              <StyledTableCell colSpan={6}>
+                <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
+                    Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+                </Alert>
+              </StyledTableCell>
+            </StyledTableRow>
+            }
+
+          {visibleRows?.map((row, index) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {(rowsPerPage * page) + index+1}

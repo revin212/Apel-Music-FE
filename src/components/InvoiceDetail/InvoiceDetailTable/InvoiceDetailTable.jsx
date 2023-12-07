@@ -9,9 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { dateToString } from '../../../utils/DateUtils';
 import { useState, useMemo, useEffect } from 'react';
-import { Box } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import useGetData from '../../../hooks/useGetData';
 import { useParams } from 'react-router-dom';
+import { SkeletonTableRow } from '../../Skeleton/SkeletonTableRow';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -48,16 +49,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-
-function createData(no, course_name, category, course_date, price ) {
-    return { no, course_name, category, course_date, price };
-}
-
-const rows = [
-    createData(1,'Kursus Drummer Special Coach (Eno Netral)', 'Drum',new Date('2022-07-25'), 8500000),
-    createData(2,'Biola Mid-Level Course', 'Biola',new Date('2022-07-23'), 3000000),
-];
-  
 
 export const InvoiceDetailTable = () => {
   const [page, setPage] = useState(0);
@@ -102,8 +93,27 @@ export const InvoiceDetailTable = () => {
             <StyledTableCell>Harga</StyledTableCell>
           </TableRow>
         </TableHead>
+        
         <TableBody>
-          {visibleRows.map((row, index) => (
+          {loading && 
+            <StyledTableRow>
+              <StyledTableCell colSpan={5}>
+                <SkeletonTableRow />
+              </StyledTableCell>
+            </StyledTableRow>
+            }
+
+          {errorState && 
+            <StyledTableRow>
+              <StyledTableCell colSpan={5}>
+                <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
+                    Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+                </Alert>
+              </StyledTableCell>
+            </StyledTableRow>
+            }
+
+          {visibleRows?.map((row, index) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {(rowsPerPage * page) + index+1}

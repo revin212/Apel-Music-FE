@@ -29,7 +29,7 @@ export const InvoiceDetailHeader = () => {
         </Breadcrumbs>
         <Stack gap='24px'>
             <Typography variant='h2' sx={titleStyle}>Rincian Invoice</Typography>
-            <Stack direction='row' justifyContent='space-between' alignItems='end'>
+            <Stack direction={{xs:'column', md:'row'}} gap='24px' justifyContent='space-between' alignItems={{xs:'start', md:'end'}}>
                 <Stack gap='8px'>
                     <Stack direction='row' gap='24px'>
                         <Typography variant='body1' sx={noInvoiceStyle} >No. Invoice :</Typography>

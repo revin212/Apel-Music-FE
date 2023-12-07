@@ -15,7 +15,7 @@ export const breadcrumbStyle ={
 
 
 export const noInvoiceStyle = {
-    fontSize: '18px',
+    fontSize: {xs:'14px',sm:'18px'},
     fontWeight: '500',
     lineHeight: '27px',
     letterSpacing: '0em',
@@ -23,7 +23,7 @@ export const noInvoiceStyle = {
 }
 
 export const totalhargaStyle = {
-    fontSize: '18px',
+    fontSize: {xs:'14px',sm:'18px'},
     fontWeight: '700',
     lineHeight: '27px',
     letterSpacing: '0em',
