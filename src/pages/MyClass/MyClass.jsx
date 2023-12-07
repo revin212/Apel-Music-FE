@@ -15,8 +15,6 @@ export const MyClass = () => {
         getData('/MsUser/GetMyClass?userid=' + userId);
     },[])
 
-    console.log(classList)
-
   return (
     <Box sx={containerStyle}>
         {errorState && 
