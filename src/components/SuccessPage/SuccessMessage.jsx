@@ -17,12 +17,13 @@ const descStyle = {
     lineHeight: '24px',
     letterSpacing: '0em',
     color: 'text.gray2',
-    marginBottom: '40px'
+    marginBottom: '40px',
+    textAlign: 'center'
 }
 
 export const SuccessMessage = ({title, desc, buttonList, loading=false}) => {
   return (
-    <Stack sx={{alignItems:'center', justifyContent:'start', flexGrow:'1'}}>
+    <Stack sx={{alignItems:'center', justifyContent:'start', flexGrow:'1', px:{xs:'16px', md:'auto'}}}>
         {loading && <SkeletonEmailConfirm />}
         {!loading && 
         <Stack gap={'40px'} sx={{alignItems:'center', justifyContent:'center'}}>

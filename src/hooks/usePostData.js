@@ -29,7 +29,8 @@ const usePostData = () => {
             case 'login':
                 {
                     await newToken(response.data);
-                    document.cookie = `token=${response.data.token}`;
+                    document.cookie = `token=${response.data.token}; SameSite=None; Secure`;
+                    document.cookie = `userId=${response.data.userId}; SameSite=None; Secure`;
                     navigate(from);
                     break;
                 }
@@ -37,13 +38,14 @@ const usePostData = () => {
                 {
                     await newToken({token: "", tokenExpires: Date.now()});
                     document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT';
+                    document.cookie = 'userId=;expires=Thu, 01 Jan 1970 00:00:01 GMT';
                     navigate("/");
                     break;
                 }
             case 'refreshToken':
                 {
                     await newToken(response.data);
-                    document.cookie = `token=${response.data.token}`;
+                    document.cookie = `token=${response.data.token} ; SameSite=None; Secure`;
                     break;
                 }
             case 'forgetPassword':
@@ -58,6 +60,10 @@ const usePostData = () => {
                     break;
                 }
             case 'emailConfirm':
+                {
+                    break;
+                }
+            case 'checkoutFlow':
                 {
                     break;
                 }
