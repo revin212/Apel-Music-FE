@@ -12,7 +12,7 @@ import useGetData from "../../hooks/useGetData"
 import usePostData from "../../hooks/usePostData"
 
 const Checkout = () => {
-    const [cart, setCart] = useState(dummyDataCheckout)
+    // const [cart, setCart] = useState(dummyDataCheckout)
     const [openModal, setOpenModal] = useState(false)
     const [userId, setUserId] = useState(getCookie('userId'))
     const [cartDataChange, setCartDataChange] = useState(false)

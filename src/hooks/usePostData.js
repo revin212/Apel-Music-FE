@@ -72,6 +72,11 @@ const usePostData = () => {
                     setMsg("Berhasil ditambahkan")
                     break;
                 }
+            case 'buyNow':
+                {
+                    navigate('/checkout')
+                    break;
+                }
             default: break;
             }
         } catch (err) {

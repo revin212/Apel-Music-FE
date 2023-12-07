@@ -18,13 +18,13 @@ export const ClassDescription = ({id, setCategoryIdState}) => {
     const { data: classData, loading, errorState, getData } = useGetData()
     const { isLoading: postLoading, error: postError, setError: setPostError,postData, msg } = usePostData()
     
-    const handleAddToCart = async () => {
+    const handleAddToCart = async (variant='addToCart') => {
         if(!jadwal){
             setPostError("Tolong pilih jadwal")
             return
         }
         setPostError("")
-        await postData(`${import.meta.env.VITE_API_URL}/TsOrderDetail/AddToCart`, 'addToCart', false, {
+        await postData(`${import.meta.env.VITE_API_URL}/TsOrderDetail/AddToCart`, variant, false, {
             userId: userId,
             courseId: id,
             jadwal: dateToStringJadwal(new Date(jadwal))
@@ -32,9 +32,7 @@ export const ClassDescription = ({id, setCategoryIdState}) => {
     }
 
     const handleBuyNow = async () => {
-        await handleAddToCart();
-        if(!postError)
-            navigate('/checkout')
+        await handleAddToCart('buyNow')
     }
 
     useEffect(() => {

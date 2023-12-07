@@ -11,15 +11,13 @@ const selectCartItem = async (postData, cartItemId, selectedState, userId) => {
     })
 }
 
-export const handleSelectAll = (cartList, postData, userId, selectedState, setAllChecked, setCartDataChange) => {
-    cartList.forEach((cartItem, index) => {
-        selectCartItem(postData, cartItem.id, selectedState, userId)
-    })
+export const handleSelectAll = async (cartList, postData, userId, selectedState, setAllChecked, setCartDataChange) => {
+    for (let i=0; i<cartList.length; i++) {
+        await selectCartItem(postData, cartList[i].id, selectedState, userId)
+    }
+    setAllChecked(!selectedState)
+    setCartDataChange(prev=>!prev)
     
-    setTimeout(()=>{
-        setAllChecked(!selectedState)
-        setCartDataChange(prev=>!prev)
-    }, 200)
     // if(!isSelectedAll(cart)) {
     //     setCart(cart.map((item, index)=>{
     //         return {...item, selected: true}
