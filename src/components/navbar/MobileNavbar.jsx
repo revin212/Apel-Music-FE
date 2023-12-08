@@ -31,6 +31,7 @@ export const MobileNavbar = ({ openMobileNav, setOpemMobileNav }) => {
         anchor='right'
         open={openMobileNav}
         onClose={toggleDrawer(false)}
+        sx={{display:{xs:'block', md:'none'}}}
     >
         <Stack justifyContent='space-between' sx={drawerMenuWrapperStyle}>
             <Stack sx={{py: '32px', px: '16px'}}>
