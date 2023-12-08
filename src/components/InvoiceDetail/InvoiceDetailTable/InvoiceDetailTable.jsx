@@ -61,7 +61,7 @@ export const InvoiceDetailTable = () => {
 
   useEffect(()=>{
     getData('/TsOrderDetail/GetMyInvoicesDetailList?orderid='+ id, { 'Authorization': `Bearer ${token}` })
-  },[])
+  },[token])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

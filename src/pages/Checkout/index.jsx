@@ -24,11 +24,11 @@ const Checkout = () => {
 
     useEffect(()=>{
         getCartInfoData('/TsOrder/GetCartInfo?userid='+ userId, { 'Authorization': `Bearer ${token}` })
-    },[cartDataChange, postError])
+    },[cartDataChange, postError, token])
 
     useEffect(()=>{
         getCartListData('/TsOrder/GetCart?userid='+ userId, { 'Authorization': `Bearer ${token}` })
-    },[postError])
+    },[postError, token])
 
     useEffect(()=>{
         if(isSelectedAll(cartList))

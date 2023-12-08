@@ -15,7 +15,7 @@ export const MyClass = () => {
 
     useEffect(()=>{
         getData('/MsUser/GetMyClass?userid=' + userId, { 'Authorization': `Bearer ${token}` });
-    },[])
+    },[token])
 
   return (
     <Box sx={containerStyle}>
