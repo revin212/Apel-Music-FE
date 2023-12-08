@@ -11,8 +11,6 @@ export const InvoiceDetailHeader = () => {
     const {id} = useParams()
     const {data: invoiceData, loading, errorState, getData} = useGetData();
     const {token} = useContext(AuthContext)
-
-    // console.log(invoiceData)
     
     useEffect(()=>{
         getData('/TsOrder/GetInvoiceDetailHeader?id='+ id, { 'Authorization': `Bearer ${token}` })

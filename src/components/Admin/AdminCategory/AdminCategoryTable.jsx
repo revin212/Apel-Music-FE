@@ -136,7 +136,7 @@ export const AdminCategoryTable = () => {
                         <Edit color='secondary' />
                     </Button>
                     </Link>
-                    <Switch />
+                    <Switch color='secondary' defaultChecked />
                 </Stack>
               </StyledTableCell>
             </StyledTableRow>
