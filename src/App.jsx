@@ -22,6 +22,11 @@ import { EmailConfirm } from "./pages/EmailConfirm/EmailConfirm";
 import { CheckoutSuccess } from "./pages/CheckoutSuccess/CheckoutSuccess";
 import { NotFound } from "./pages/NotFound/NotFound";
 import { AuthRoute } from "./components/ProtectedRoutes/AuthRoute";
+import LayoutAdmin from "./pages/LayoutAdmin/LayoutAdmin";
+import { AdminCourse } from "./pages/Admin/AdminCourse";
+import { AdminCategory } from "./pages/Admin/AdminCategory";
+import { AdminUser } from "./pages/Admin/AdminUser";
+import { AdminInvoice } from "./pages/Admin/AdminInvoice";
 
 function App() {
   return (
@@ -49,6 +54,12 @@ function App() {
                     <Route path="/" element={<AuthRoute />}> 
                       <Route path="/checkout" element={<Checkout />} /> 
                     </Route>
+                  </Route>
+                  <Route path="/admin" element={<LayoutAdmin />}>
+                      <Route path="/admin/category" element={<AdminCategory />} /> 
+                      <Route path="/admin/course" element={<AdminCourse />} /> 
+                      <Route path="/admin/user" element={<AdminUser />} /> 
+                      <Route path="/admin/invoice" element={<AdminInvoice />} /> 
                   </Route>
                   <Route path="/email-confirm" element={<EmailConfirm />} />
                   <Route path="/checkout-success" element={<CheckoutSuccess />} />

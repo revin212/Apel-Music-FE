@@ -44,7 +44,7 @@ const Checkout = () => {
         <>
             <Container sx={containerStyle}>
                 <Box sx={selectAllStyle}>
-                    <Checkbox disabled={postDataLoading} checked={allChecked} onChange={()=>handleSelectAll(cartList, setCartList, postData, userId, allChecked, setAllChecked,setCartDataChange, token)} /> Pilih Semua
+                    <Checkbox name={'select-all'} disabled={postDataLoading} checked={allChecked} onChange={()=>handleSelectAll(cartList, setCartList, postData, userId, allChecked, setAllChecked,setCartDataChange, token)} /> Pilih Semua
                 </Box>
                 {getCartListError && 
                 <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>

@@ -1,5 +1,5 @@
-import { Box, Typography, Button } from '@mui/material'
-import { Logout, Menu, Person, ShoppingCart } from "@mui/icons-material";
+import { Box, Typography, Button, Menu, MenuItem } from '@mui/material'
+import { Class, Logout, Menu as MenuIcon, Person, Piano, Receipt, ShoppingCart } from "@mui/icons-material";
 import { useEffect, useContext, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AuthContext } from '../AuthContext/AuthContext';
@@ -13,6 +13,8 @@ const Navbar = () => {
   const [openMobileNav, setOpemMobileNav] = useState(false);
   const { postData } = usePostData();
   const location = useLocation();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
   useEffect(()=>{
     //cek apakah ada cookies refreshToken & token expires 1 menit lagi
@@ -39,7 +41,7 @@ const Navbar = () => {
           <>
           <Box sx={loggedInMobileMenuListStyle}>
             <Button onClick={()=>setOpemMobileNav(true)}>
-              <Menu sx={{color:'text.gray2'}} />
+              <MenuIcon sx={{color:'text.gray2'}} />
             </Button>
             <MobileNavbar openMobileNav={openMobileNav} setOpemMobileNav={setOpemMobileNav} />
           </Box>
@@ -70,7 +72,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li style={{display: 'flex', textAlign:'center'}}>
-                  <Typography hidden variant='p' sx={{
+                  <Typography variant='p' sx={{
                     fontWeight: '500',
                     color: 'text.black',
                     my: 'auto'
@@ -78,10 +80,72 @@ const Navbar = () => {
                     |
                   </Typography>
               </li>
-              <li hidden >
-                  <Link to='/myclass' style={{padding: '10px', display: 'flex', alignContent:'center'}}>
+              <li>
+                  <Button onClick={(e)=>setAnchorEl(e.currentTarget)}
+                    sx={{display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none', '&:hover':{backgroundColor:'primary.main'}}}
+                    id="basic-button"
+                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}          
+                  >
                     <Person sx={{color: 'text.gray0'}} />
-                  </Link>
+                    <Typography variant='p' sx={{
+                          fontWeight: '500',
+                          color: 'text.black'
+                          }}>
+                          Admin
+                    </Typography>
+                  </Button>
+                  <Menu sx={{padding: '10px', display: 'flex', alignContent:'center', '& ul':{backgroundColor:'primary.main'} }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={()=>setAnchorEl(null)}
+                  >
+                        <MenuItem >
+                        <Link to='/admin/category'  style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>
+                            <Piano sx={{color: 'text.gray0'}} />
+                            <Typography variant='p' sx={{
+                            fontWeight: '500',
+                            color: 'text.black'
+                            }}>
+                            Category
+                            </Typography>
+                        </Link>
+                      </MenuItem>
+                      <MenuItem >
+                        <Link to='/admin/course' style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>
+                          <Class sx={{color: 'text.gray0'}} />
+                          <Typography variant='p' sx={{
+                          fontWeight: '500',
+                          color: 'text.black'
+                          }}>
+                          Course
+                          </Typography>
+                        </Link>
+                      </MenuItem>
+                      <MenuItem >
+                        <Link to='/admin/user' style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>
+                            <Person sx={{color: 'text.gray0'}} />
+                            <Typography variant='p' sx={{
+                            fontWeight: '500',
+                            color: 'text.black'
+                            }}>
+                            User
+                            </Typography>
+                        </Link>
+                      </MenuItem>
+                      <MenuItem >
+                        <Link to='/admin/invoice' style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>
+                          <Receipt sx={{color: 'text.gray0'}} />
+                          <Typography variant='p' sx={{
+                          fontWeight: '500',
+                          color: 'text.black'
+                          }}>
+                          Invoice
+                          </Typography>
+                        </Link>
+                      </MenuItem>
+                  </Menu>
               </li>
               <li>
                   <Link to='/logout' onClick={handleLogout} style={{padding: '10px', display: 'flex', alignContent:'center'}}>
