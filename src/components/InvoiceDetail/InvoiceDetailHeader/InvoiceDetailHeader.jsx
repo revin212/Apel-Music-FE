@@ -3,18 +3,20 @@ import { breadcrumbStyle, noInvoiceStyle, titleStyle, totalhargaStyle } from './
 import { Link, useParams } from 'react-router-dom'
 import { dateToStringInvoice } from '../../../utils/DateUtils'
 import useGetData from '../../../hooks/useGetData'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
+import { AuthContext } from '../../AuthContext/AuthContext'
 
 
 export const InvoiceDetailHeader = () => {
     const {id} = useParams()
     const {data: invoiceData, loading, errorState, getData} = useGetData();
+    // const {token} = useContext(AuthContext)
 
-//     console.log(invoiceData)
+    // console.log(invoiceData)
     
-//   useEffect(()=>{
-//     getData('/TsOrder/GetById?id='+ id)
-//   },[])
+    // useEffect(()=>{
+    //     getData('/TsOrder/GetById?id='+ id, { 'Authorization': `Bearer ${token}` })
+    // },[])
 
   return (
     <>

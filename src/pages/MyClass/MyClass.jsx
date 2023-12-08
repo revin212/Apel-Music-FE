@@ -2,17 +2,19 @@ import { Alert, Box, Stack, Typography } from "@mui/material"
 import { classDescStyle, classListWrapperStyle, classWrapperStyle, containerStyle, imgStyle, imgWrapperStyle } from './MyClassStyles'
 import { dummyDataCheckout } from "../../utils/dummyDataCheckout"
 import { dateToString } from "../../utils/DateUtils"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { SkeletonMyClass } from "../../components/Skeleton/SkeletonMyClass"
 import useGetData from "../../hooks/useGetData"
 import { getCookie } from "../../utils/authUtils"
+import { AuthContext } from "../../components/AuthContext/AuthContext"
 
 export const MyClass = () => {
     const {data: classList, loading, errorState, getData} = useGetData();
     const [userId, setUserId] = useState(getCookie('userId'))
+    const {token} = useContext(AuthContext)
 
     useEffect(()=>{
-        getData('/MsUser/GetMyClass?userid=' + userId);
+        getData('/MsUser/GetMyClass?userid=' + userId, { 'Authorization': `Bearer ${token}` });
     },[])
 
   return (

@@ -13,13 +13,13 @@ const usePostData = () => {
 
     const { newToken } = useContext(AuthContext);
 
-    const postData = async (url, variant, withCredentials=false, payload={}) => {
+    const postData = async (url, variant, withCredentials=false, payload={}, header={}) => {
         try {
             setIsLoading(true);
             setError('');
             setMsg('');
             const instance = axios.create({withCredentials: withCredentials});
-            const response = await instance.post(url, payload);
+            const response = await instance.post(url, payload, {headers: header});
             switch(variant){
             case 'register':
                 {

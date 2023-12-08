@@ -10,10 +10,11 @@ import TableRow from '@mui/material/TableRow';
 import { Alert, Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { dateToStringInvoice } from '../../utils/DateUtils';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useContext } from 'react';
 import useGetData from '../../hooks/useGetData';
 import { getCookie } from '../../utils/authUtils';
 import { SkeletonTableRow } from '../Skeleton/SkeletonTableRow';
+import { AuthContext } from '../AuthContext/AuthContext';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -71,9 +72,10 @@ export const InvoiceTable = () => {
   const [userId, setUserId] = useState(getCookie('userId'))
 
   const {data: invoiceList, loading, errorState, getData} = useGetData();
+  const {token} = useContext(AuthContext)
 
   useEffect(()=>{
-    getData('/TsOrder/GetMyInvoicesList?userid='+ userId)
+    getData('/TsOrder/GetMyInvoicesList?userid='+ userId, { 'Authorization': `Bearer ${token}` })
   },[])
 
   const handleChangePage = (event, newPage) => {

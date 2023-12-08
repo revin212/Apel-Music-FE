@@ -1,5 +1,5 @@
 import { Stack, Typography, Button, Alert, Box } from '@mui/material'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { bodyStyle, categoryStyle, classNameStyle, imageStyle, imageWrapperStyle, priceStyle, titleStyle } from './ClassDescriptionStyles'
 import { MuiSelect } from './MuiSelect'
 import { SkeletonCourseDetail } from '../../Skeleton/SkeletonCourseDetail'
@@ -8,19 +8,23 @@ import useGetData from '../../../hooks/useGetData'
 import usePostData from '../../../hooks/usePostData'
 import { getCookie } from '../../../utils/authUtils'
 import { dateToStringJadwal } from '../../../utils/DateUtils'
-import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../AuthContext/AuthContext'
 
 export const ClassDescription = ({id, setCategoryIdState}) => {
     const [userId, setUserId] = useState(getCookie('userId'))
     const [jadwal, setJadwal] = useState('');
-    const navigate = useNavigate()
     const url = `/MsCourse/GetDetail?id=${id}`
     const { data: classData, loading, errorState, getData } = useGetData()
-    const { isLoading: postLoading, error: postError, setError: setPostError,postData, msg } = usePostData()
-    
-    const handleAddToCart = async (variant='addToCart') => {
+    const { isLoading: postLoading, error: postError, setError: setPostError, postData, msg } = usePostData()
+    const {token} = useContext(AuthContext)
+
+    const handleAddToCart = async (variant) => {
         if(!jadwal){
             setPostError("Tolong pilih jadwal")
+            return
+        }
+        if(!token){
+            setPostError("Anda belum login")
             return
         }
         setPostError("")
@@ -28,7 +32,7 @@ export const ClassDescription = ({id, setCategoryIdState}) => {
             userId: userId,
             courseId: id,
             jadwal: dateToStringJadwal(new Date(jadwal))
-        })
+        }, { 'Authorization': `Bearer ${token}` })
     }
 
     const handleBuyNow = async () => {
@@ -82,7 +86,7 @@ export const ClassDescription = ({id, setCategoryIdState}) => {
                 </Stack>
                  
                 <Stack direction='row' gap='16px'>
-                    <Button disabled={postLoading} onClick={handleAddToCart} variant='outlined' sx={{maxWidth:'233px', width:'100%'}}>Masukkan Keranjang</Button>
+                    <Button disabled={postLoading} onClick={()=>handleAddToCart('addToCart')} variant='outlined' sx={{maxWidth:'233px', width:'100%'}}>Masukkan Keranjang</Button>
                     <Button disabled={postLoading} variant='contained' onClick={handleBuyNow} sx={{maxWidth:'233px', width:'100%'}}>Beli Sekarang</Button>
                 </Stack>
             </Stack>

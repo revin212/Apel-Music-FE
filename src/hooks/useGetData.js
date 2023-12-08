@@ -6,11 +6,11 @@ const useGetData = () => {
     const [loading, setLoading] = useState(false)
     const [errorState, setErrorState] = useState(false)
    
-    const getData = async (url) =>{
+    const getData = async (url, header={}) =>{
         setErrorState(false)
         setLoading(true)
        
-        await axios.get(import.meta.env.VITE_API_URL + url)
+        await axios.get(import.meta.env.VITE_API_URL + url, {headers: header})
         .then((response) => {
           // handle success
           setData(response.data)

@@ -1,9 +1,10 @@
 import { Box, Modal, Stack, Typography, Button, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { buttonStyle, itemButtonStyle, methodListStyle, modalContentStyle, paymentMethodList, titleStyle } from './ModalPaymentMethodStyle';
 import useGetData from '../../hooks/useGetData';
 import usePostData from '../../hooks/usePostData';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../AuthContext/AuthContext';
 
 
 export const ModalPaymentMethod = ({ modalOpen, setModalOpen, userId, cartId }) => {
@@ -12,6 +13,7 @@ export const ModalPaymentMethod = ({ modalOpen, setModalOpen, userId, cartId }) 
   const navigate = useNavigate()
   const {data, getData} = useGetData();
   const { postData, error, isLoading } = usePostData();
+  const {token} = useContext(AuthContext)
 
   useEffect(()=>{
     getData('/MsPaymentMethod/GetAll')
@@ -22,7 +24,7 @@ export const ModalPaymentMethod = ({ modalOpen, setModalOpen, userId, cartId }) 
         id: cartId,
         userId: userId,
         paymentId: paymentMethod.id
-    });
+    }, { 'Authorization': `Bearer ${token}` });
     if(error) {
         alert(error);
         return

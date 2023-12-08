@@ -8,11 +8,12 @@ import { styled } from '@mui/material/styles';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { dateToString } from '../../../utils/DateUtils';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useContext } from 'react';
 import { Alert, Box } from '@mui/material';
 import useGetData from '../../../hooks/useGetData';
 import { useParams } from 'react-router-dom';
 import { SkeletonTableRow } from '../../Skeleton/SkeletonTableRow';
+import { AuthContext } from '../../AuthContext/AuthContext';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -56,9 +57,10 @@ export const InvoiceDetailTable = () => {
   const { id } = useParams()
 
   const {data: invoiceDetailList, loading, errorState, getData} = useGetData();
+  const {token} = useContext(AuthContext)
 
   useEffect(()=>{
-    getData('/TsOrderDetail/GetMyInvoicesDetailList?orderid='+ id)
+    getData('/TsOrderDetail/GetMyInvoicesDetailList?orderid='+ id, { 'Authorization': `Bearer ${token}` })
   },[])
 
   const handleChangePage = (event, newPage) => {
