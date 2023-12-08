@@ -96,7 +96,7 @@ export const AdminCategoryForm = () => {
             <textarea name={"description"} value={ data.description } onChange={handleChange} id='description-input' placeholder="Description" rows={6} style={textAreaStyle} />
             <Stack direction={'row'} alignItems={'center'} gap="8px">
                 <Typography>Status</Typography>
-                <Switch checked={ data.status } onChange={handleChangeSwitch} name={'status'} id='status-input' />
+                <Switch checked={ data.status } onChange={handleChangeSwitch} name={'status'} id='status-input' color={'secondary'} />
             </Stack>
 
             <Stack direction='column' gap='24px' mt={2} >

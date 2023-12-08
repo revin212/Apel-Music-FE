@@ -18,7 +18,7 @@ const titleStyle = {
 export const AdminCategory = () => {
   return (
     <Stack gap='32px'>
-        <Typography variant='h2' sx={titleStyle}>Admin Panel : <Typography variant='h2' sx={titleStyle}>Category</Typography></Typography>
+        <Typography variant='h2' sx={titleStyle}>Admin Panel : <Typography sx={titleStyle}>Category</Typography></Typography>
         <Link to='/admin/category/form' style={{textDecoration:'none', width:'100%', maxWidth:'180px'}}>
           <Button variant='contained' color='secondary' sx={{width:'100%'}}>
             <Add />Add Category

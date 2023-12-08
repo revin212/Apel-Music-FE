@@ -97,7 +97,7 @@ const Checkout = () => {
                 <Box sx={footerStyle}>
                 <Box sx={totalBiayaWrapperStyle}>
                     <Typography fontSize={{xs:'12px',md:'18px'}}>Total biaya</Typography> 
-                    <Typography sx={totalBiayaStyle}>{cartInfo?.totalHarga > 0 ? "IDR " + new Intl.NumberFormat(["ban", "id"]).format(cartInfo?.totalHarga) : ""}</Typography>
+                    <Typography sx={totalBiayaStyle}>{cartInfo?.totalHarga > 0 ? "IDR " + new Intl.NumberFormat(["ban", "id"]).format(cartInfo?.totalHarga) : "IDR 0"}</Typography>
                 </Box>
                 <Button variant="contained" sx={{fontSize:{xs:'10px',md:'16px'}}} onClick={handleOpenModal} disabled={cartInfo?.totalHarga == 0}>Bayar Sekarang</Button>
                 </Box>
