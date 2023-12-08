@@ -1,4 +1,4 @@
-import { Class, Home, Logout, Person, Piano, Receipt, ShoppingCart } from '@mui/icons-material';
+import { Class, Home, Logout, Payment, Person, Piano, Receipt, ShoppingCart } from '@mui/icons-material';
 import { Drawer, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom';
@@ -62,6 +62,15 @@ export const AdminNavbarDrawer = ({ openMobileNav, setOpemMobileNav }) => {
                     color: 'text.black'
                     }}>
                     User
+                    </Typography>
+                </Link>
+                <Link to='/admin/payment-method' style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>
+                    <Payment sx={{color: 'text.gray0'}} />
+                    <Typography variant='p' sx={{
+                    fontWeight: '500',
+                    color: 'text.black'
+                    }}>
+                    Payment Method
                     </Typography>
                 </Link>
                 <Link to='/admin/invoice' style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>

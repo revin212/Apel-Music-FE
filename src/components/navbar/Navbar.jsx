@@ -1,5 +1,5 @@
 import { Box, Typography, Button, Menu, MenuItem } from '@mui/material'
-import { Class, Logout, Menu as MenuIcon, Person, Piano, Receipt, ShoppingCart } from "@mui/icons-material";
+import { Class, Logout, Menu as MenuIcon, Payment, Person, Piano, Receipt, ShoppingCart } from "@mui/icons-material";
 import { useEffect, useContext, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AuthContext } from '../AuthContext/AuthContext';
@@ -82,7 +82,7 @@ const Navbar = () => {
               </li>
               <li>
                   <Button onClick={(e)=>setAnchorEl(e.currentTarget)}
-                    sx={{display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none', '&:hover':{backgroundColor:'primary.main'}}}
+                    sx={{display: 'flex', justifyContent:'center', alignItems:'center', gap:'12px', textDecoration:'none', '&:hover':{backgroundColor:'primary.main'}}}
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
@@ -132,6 +132,17 @@ const Navbar = () => {
                             }}>
                             User
                             </Typography>
+                        </Link>
+                      </MenuItem>
+                      <MenuItem >
+                        <Link to='/admin/payment-method' style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>
+                          <Payment sx={{color: 'text.gray0'}} />
+                          <Typography variant='p' sx={{
+                          fontWeight: '500',
+                          color: 'text.black'
+                          }}>
+                          Payment Method
+                          </Typography>
                         </Link>
                       </MenuItem>
                       <MenuItem >

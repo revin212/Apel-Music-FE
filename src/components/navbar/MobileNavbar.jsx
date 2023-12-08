@@ -1,4 +1,4 @@
-import { Class, Logout, Person, Piano, Receipt, ShoppingCart } from '@mui/icons-material';
+import { ArrowDropDown, ArrowDropUp, Class, Logout, Payment, Person, Piano, Receipt, ShoppingCart } from '@mui/icons-material';
 import { Button, Collapse, Drawer, Stack, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
@@ -65,7 +65,8 @@ export const MobileNavbar = ({ openMobileNav, setOpemMobileNav }) => {
                     Pembelian
                     </Typography>
                 </Link>
-                <Button sx={{padding: '10px', display: 'flex', justifyContent:'start', gap:'12px', textDecoration:'none', '&:hover':{backgroundColor:'primary.main'} }} onClick={()=>setAdminOpen(prev=>!prev)}>
+                <Button sx={{padding: '10px', display: 'flex', justifyContent:'space-between', textDecoration:'none', '&:hover':{backgroundColor:'primary.main'} }} onClick={()=>setAdminOpen(prev=>!prev)}>
+                    <Stack direction={'row'} gap='12px'>
                     <Person sx={{color: 'text.gray0'}} />
                     <Typography variant='p' sx={{
                     fontWeight: '500',
@@ -73,6 +74,9 @@ export const MobileNavbar = ({ openMobileNav, setOpemMobileNav }) => {
                     }}>
                     Admin
                     </Typography>
+                    </Stack>
+                    {!adminOpen && <ArrowDropDown sx={{color:'text.black'}} />}
+                    {adminOpen && <ArrowDropUp sx={{color:'text.black'}} />}
                 </Button>
                 <Collapse in={adminOpen} timeout="auto" unmountOnExit sx={{paddingLeft:1}} >
                     <Link to='/admin/category'  style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>
@@ -101,6 +105,15 @@ export const MobileNavbar = ({ openMobileNav, setOpemMobileNav }) => {
                         }}>
                         User
                         </Typography>
+                    </Link>
+                    <Link to='/admin/payment-method' style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>
+                          <Payment sx={{color: 'text.gray0'}} />
+                          <Typography variant='p' sx={{
+                          fontWeight: '500',
+                          color: 'text.black'
+                          }}>
+                          Payment Method
+                          </Typography>
                     </Link>
                     <Link to='/admin/invoice' style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>
                         <Receipt sx={{color: 'text.gray0'}} />
