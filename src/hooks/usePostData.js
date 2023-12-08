@@ -56,7 +56,7 @@ const usePostData = () => {
             case 'resetPassword':
                 {
                     setMsg(response.data);
-                    navigate('/login');
+                    navigate('/login?msg=Reset password berhasil');
                     break;
                 }
             case 'emailConfirm':

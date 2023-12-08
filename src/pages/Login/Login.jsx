@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Box, Stack, Button, Typography, Input } from '@mui/material'
-import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle, errorMsgStyle } from './LoginStyles'
+import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle, errorMsgStyle, messageStyle } from './LoginStyles'
 import { Link, Navigate } from 'react-router-dom'
 import { AuthContext } from '../../components/AuthContext/AuthContext'
 import usePostData from '../../hooks/usePostData'
@@ -12,8 +12,12 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [pwd, setPwd] = useState('')
     const loginUrl = import.meta.env.VITE_API_URL + "/MsUser/Login"
-    const { postData, isLoading, error } = usePostData();
+    const { postData, isLoading, error, msg, setMsg } = usePostData();
     const { token } = useContext(AuthContext);
+
+    useEffect(()=>{
+        setMsg(new URLSearchParams(window.location.search).get('msg'))
+    },[])
     
     const handleLogin = (e) => {
         e.preventDefault();
@@ -29,6 +33,7 @@ const Login = () => {
                     <Typography variant='body2' component='p' sx={subtitleStyle}>Login dulu yuk</Typography>
                 </Stack>
 
+                {msg && <p style={messageStyle} >{msg}</p>}
                 {error && <Typography variant='body2' sx={errorMsgStyle} >{error}</Typography>}
 
                 <Typography component='form' sx={formStyle}>
