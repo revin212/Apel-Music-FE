@@ -32,8 +32,10 @@ export const AdminNavbarDrawer = ({ openMobileNav, setOpemMobileNav }) => {
         open={openMobileNav}
         onClose={toggleDrawer(false)}
         sx={{'& div.MuiStack-root':{backgroundColor:'primary.main'}}}
-    >
-        <Stack justifyContent='space-between' sx={drawerMenuWrapperStyle}>
+    > 
+        <Stack sx={drawerMenuWrapperStyle}>
+            <Typography variant='h4' sx={{fontSize:'24px', fontWeight:600, textAlign:'center', pt: '32px'}}>Admin Panel</Typography>
+            <Stack justifyContent='space-between' height={'100%'}>
             <Stack sx={{py: '32px', px: '16px'}}>
                 <Link to='/admin/category'  style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>
                     <Piano sx={{color: 'text.gray0'}} />
@@ -82,6 +84,7 @@ export const AdminNavbarDrawer = ({ openMobileNav, setOpemMobileNav }) => {
                     Logout
                     </Typography>
                 </Link>
+            </Stack>
             </Stack>
         </Stack>
     </Drawer>

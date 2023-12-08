@@ -7,14 +7,15 @@ import TablePagination from '@mui/material/TablePagination';
 import { styled } from '@mui/material/styles';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Alert, Box, Button } from '@mui/material';
+import { Alert, Box, Button, Stack, Switch } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { dateToStringInvoice } from '../../utils/DateUtils';
+import { dateToStringInvoice } from '../../../utils/DateUtils';
 import { useState, useMemo, useEffect, useContext } from 'react';
-import useGetData from '../../hooks/useGetData';
-import { getCookie } from '../../utils/authUtils';
-import { SkeletonTableRow } from '../Skeleton/SkeletonTableRow';
-import { AuthContext } from '../AuthContext/AuthContext';
+import useGetData from '../../../hooks/useGetData';
+import { getCookie } from '../../../utils/authUtils';
+import { SkeletonTableRow } from '../../Skeleton/SkeletonTableRow';
+import { AuthContext } from '../../AuthContext/AuthContext';
+import { Edit } from '@mui/icons-material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -50,9 +51,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 'none',
     },
 }));
+  
 
-
-export const InvoiceTable = () => {
+export const AdminCategoryTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [userId, setUserId] = useState(getCookie('userId'))
@@ -91,10 +92,10 @@ export const InvoiceTable = () => {
         <TableHead>
           <TableRow>
             <StyledTableCell>No</StyledTableCell>
-            <StyledTableCell>No. Invoice</StyledTableCell>
-            <StyledTableCell>Tanggal Beli</StyledTableCell>
-            <StyledTableCell>Jumlah Kursus</StyledTableCell>
-            <StyledTableCell>Total Harga</StyledTableCell>
+            <StyledTableCell>Name</StyledTableCell>
+            <StyledTableCell>Image</StyledTableCell>
+            <StyledTableCell>Description</StyledTableCell>
+            <StyledTableCell>Status</StyledTableCell>
             <StyledTableCell sx={{width:{xs:'100px', md:'180px'}}}>Action</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -129,11 +130,14 @@ export const InvoiceTable = () => {
                 IDR {new Intl.NumberFormat(["ban", "id"]).format(row.totalHarga)}
               </StyledTableCell>
               <StyledTableCell>
-                <Link to={`/invoice/${row.id}`}>
-                <Button variant='contained' sx={{width:'100%', maxWidth:'180px'}}>
-                    Rincian 
-                </Button>
-                </Link>
+                <Stack direction={{xs:'column', md:'row'}} gap={{xs:'12px', md:'8px'}} justifyContent={'center'} alignItems={'center'}>
+                    <Link to={`/admin/category/form`}>
+                    <Button sx={{width:'100%', maxWidth:'100px'}}>
+                        <Edit color='secondary' />
+                    </Button>
+                    </Link>
+                    <Switch />
+                </Stack>
               </StyledTableCell>
             </StyledTableRow>
           ))}
