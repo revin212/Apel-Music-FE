@@ -10,7 +10,7 @@ import { MobileNavbar } from './MobileNavbar';
 
 const Navbar = () => {
   const { token, tokenExpires } = useContext(AuthContext);
-  const [openMobileNav, setOpemMobileNav] = useState(true);
+  const [openMobileNav, setOpemMobileNav] = useState(false);
   const { postData } = usePostData();
   const location = useLocation();
 
