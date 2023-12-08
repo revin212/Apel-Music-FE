@@ -1,7 +1,7 @@
 import { Box, Typography, Button } from '@mui/material'
 import { Logout, Menu, Person, ShoppingCart } from "@mui/icons-material";
 import { useEffect, useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { AuthContext } from '../AuthContext/AuthContext';
 import { homeButtonStyle, loggedInMenuListStyle, loggedInMobileMenuListStyle, navbarMenuListStyle, navbarWrapperStyle, notLoginMenuListStyle } from './NavbarStyles';
 import usePostData from '../../hooks/usePostData';
@@ -10,8 +10,9 @@ import { MobileNavbar } from './MobileNavbar';
 
 const Navbar = () => {
   const { token, tokenExpires } = useContext(AuthContext);
-  const [openMobileNav, setOpemMobileNav] = useState(false);
+  const [openMobileNav, setOpemMobileNav] = useState(true);
   const { postData } = usePostData();
+  const location = useLocation();
 
   useEffect(()=>{
     //cek apakah ada cookies refreshToken & token expires 1 menit lagi
@@ -20,7 +21,7 @@ const Navbar = () => {
     {
       postData(import.meta.env.VITE_API_URL + "/MsUser/RefreshToken", 'refreshToken', true)
     }
-  }, [token, tokenExpires])
+  }, [location])
 
   const handleLogout = () => {
     postData(import.meta.env.VITE_API_URL + "/MsUser/Logout", 'logout', true);
