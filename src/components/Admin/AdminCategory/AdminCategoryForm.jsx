@@ -5,6 +5,7 @@ import usePostData from '../../../hooks/usePostData'
 import { AuthContext } from '../../AuthContext/AuthContext'
 import { ArrowBack } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
+import { convertImageToBase64 } from '../../../utils/imageUtils'
 
 
 export const AdminCategoryForm = () => {
@@ -15,14 +16,11 @@ export const AdminCategoryForm = () => {
         status: true
     })
 
-    // console.log(data);
-
     const handleChange = (e) => {
         setData({
             ...data,
             [e.target.name]: e.target.value
         })
-        // setError('')
     }
 
     const handleChangeSwitch = (e) => {
@@ -33,12 +31,14 @@ export const AdminCategoryForm = () => {
     }
 
     const handleUploadImage = (e) => {
-        setData({
-            ...data,
-            image: e.target.files[0]
+        const imgUrl = URL.createObjectURL(e.target.files[0])
+        convertImageToBase64(imgUrl, (dataUrl)=>{
+            setData({
+                ...data,
+                image: dataUrl.slice(22)
+            })
         })
     }
-
     
     const loginUrl = import.meta.env.VITE_API_URL + "/MsUser/Login"
     const { postData, isLoading, error } = usePostData();
@@ -85,10 +85,10 @@ export const AdminCategoryForm = () => {
                 <img
                     alt="not found"
                     width={"250px"}
-                    src={URL.createObjectURL(data.image)}
+                    src={data.image.length > 100 ? `data:image/jpeg;base64,${data.image}` : `${import.meta.env.VITE_BASE_URL}/${data.image}`}
                 />
                 <br />
-                <button onClick={() => setData({...data, image: null})}>Remove</button>
+                <button onClick={() => {setData({...data, image: null})}}>Remove</button>
                 </div>
             )}
             </Stack>
