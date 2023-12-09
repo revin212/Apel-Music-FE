@@ -1,20 +1,24 @@
 import { useState, useContext } from 'react'
 import { Box, Stack, Button, Typography, Input, TextareaAutosize, Switch } from '@mui/material'
-import { inputStyle, titleStyle, subtitleStyle, formStyle, errorMsgStyle, textAreaStyle } from './AdminCategoryFormStyle'
+import { inputStyle, titleStyle, subtitleStyle, formStyle, errorMsgStyle, textAreaStyle } from './AdminCourseFormStyle'
 import usePostData from '../../../hooks/usePostData'
 import { AuthContext } from '../../AuthContext/AuthContext'
 import { ArrowBack } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import { convertImageToBase64 } from '../../../utils/imageUtils'
+import { SelectCategory } from './SelectCategory'
 
 
-export const AdminCategoryForm = () => {
+export const AdminCourseForm = () => {
     const [data, setData] = useState({
         name: '',
-        image: null,
+        categoryId: '',
+        image: '',
         description: '',
+        price: 0,
         status: true
     })
+    const [categoryName, setCategoryName] = useState('')
 
     const handleChange = (e) => {
         setData({
@@ -53,7 +57,7 @@ export const AdminCategoryForm = () => {
   return (
     <>
     <Box width={'min-content'}>
-        <Link to='/admin/category' style={{textDecoration:'none'}}>
+        <Link to='/admin/course' style={{textDecoration:'none'}}>
             <Button variant='outlined' 
             sx={{color:'text.gray2', display:'flex', gap:1}}>
                 <ArrowBack />
@@ -64,13 +68,18 @@ export const AdminCategoryForm = () => {
     <Box maxWidth='616px' mx={{xs:'18px',sm:'auto'}} my='90px'>
         
         <Stack direction='column' gap={2} mb='60px'>
-            <Typography variant='h2' sx={titleStyle}>Category Add / Edit</Typography>
+            <Typography variant='h2' sx={titleStyle}>Course Add / Edit</Typography>
         </Stack>
 
         {error && <Typography variant='body2' sx={errorMsgStyle} >{error}</Typography>}
 
         <Typography component='form' sx={formStyle}>
             <Input disableUnderline name={"name"} autoComplete='name' value={ data.name } onChange={handleChange} id='name-input' type="text" placeholder="Name" sx={inputStyle}/>
+            
+            <Stack gap="8px">
+                <Typography>Category</Typography>
+                <SelectCategory data={data} setData={setData} categoryName={categoryName} setCategoryName={setCategoryName} />
+            </Stack>
 
             <Stack gap="16px">
             <Typography>Image</Typography>
@@ -87,12 +96,21 @@ export const AdminCategoryForm = () => {
                     src={data.image.length > 100 ? `data:image/jpeg;base64,${data.image}` : `${import.meta.env.VITE_BASE_URL}/${data.image}`}
                 />
                 <br />
-                <button onClick={() => {setData({...data, image: null})}}>Remove</button>
+                <button onClick={() => {setData({...data, image: ''})}}>Remove</button>
                 </div>
             )}
             </Stack>
                 
             <textarea name={"description"} value={ data.description } onChange={handleChange} id='description-input' placeholder="Description" rows={6} style={textAreaStyle} />
+            
+            <Stack gap="8px">
+            <Typography>Price</Typography>
+            <Stack direction={'row'} alignItems={'center'} gap="8px">
+                <Typography>IDR</Typography>
+                <Input disableUnderline name={"price"} value={ data.price } onChange={handleChange} id='price-input' type="number" placeholder="Price" sx={inputStyle}/>
+            </Stack>
+            </Stack>
+
             <Stack direction={'row'} alignItems={'center'} gap="8px">
                 <Typography>Status</Typography>
                 <Switch checked={ data.status } onChange={handleChangeSwitch} name={'status'} id='status-input' color={'secondary'} />

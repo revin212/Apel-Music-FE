@@ -64,6 +64,11 @@ export const InvoiceTable = () => {
     getData('/TsOrder/GetMyInvoicesList?userid='+ userId, { 'Authorization': `Bearer ${token}` })
   },[token])
 
+  useEffect(()=>{
+    document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
+  },[])
+
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
     window.scrollTo(0, 0);

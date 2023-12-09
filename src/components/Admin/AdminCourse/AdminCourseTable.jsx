@@ -7,13 +7,15 @@ import TablePagination from '@mui/material/TablePagination';
 import { styled } from '@mui/material/styles';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { dateToString } from '../../../utils/DateUtils';
+import { Alert, Box, Button, Stack, Switch } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { dateToStringInvoice } from '../../../utils/DateUtils';
 import { useState, useMemo, useEffect, useContext } from 'react';
-import { Alert, Box } from '@mui/material';
 import useGetData from '../../../hooks/useGetData';
-import { useParams } from 'react-router-dom';
+import { getCookie } from '../../../utils/authUtils';
 import { SkeletonTableRow } from '../../Skeleton/SkeletonTableRow';
 import { AuthContext } from '../../AuthContext/AuthContext';
+import { Edit } from '@mui/icons-material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -49,22 +51,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 'none',
     },
 }));
+  
 
-
-export const InvoiceDetailTable = () => {
+export const AdminCourseTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { id } = useParams()
+  const [userId, setUserId] = useState(getCookie('userId'))
 
-  const {data: invoiceDetailList, loading, errorState, getData} = useGetData();
+  const {data: invoiceList, loading, errorState, getData} = useGetData();
   const {token} = useContext(AuthContext)
 
   useEffect(()=>{
-    getData('/TsOrderDetail/GetMyInvoicesDetailList?orderid='+ id, { 'Authorization': `Bearer ${token}` })
-  },[token])
-
-  useEffect(()=>{
     document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
+    getData('/TsOrder/GetMyInvoicesList?userid='+ userId, { 'Authorization': `Bearer ${token}` })
   },[])
 
   const handleChangePage = (event, newPage) => {
@@ -77,13 +76,14 @@ export const InvoiceDetailTable = () => {
     setPage(0);
   };
 
+
   const visibleRows = useMemo(
     () =>
-    invoiceDetailList.slice(
+      invoiceList.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [page, rowsPerPage, invoiceDetailList],
+    [page, rowsPerPage, invoiceList],
   );
 
   return (
@@ -93,17 +93,19 @@ export const InvoiceDetailTable = () => {
         <TableHead>
           <TableRow>
             <StyledTableCell>No</StyledTableCell>
-            <StyledTableCell>Nama Course</StyledTableCell>
-            <StyledTableCell>Kategori</StyledTableCell>
-            <StyledTableCell>Jadwal</StyledTableCell>
-            <StyledTableCell>Harga</StyledTableCell>
+            <StyledTableCell>Name</StyledTableCell>
+            <StyledTableCell>Category</StyledTableCell>
+            <StyledTableCell>Image</StyledTableCell>
+            <StyledTableCell>Description</StyledTableCell>
+            <StyledTableCell>Price</StyledTableCell>
+            <StyledTableCell>Status</StyledTableCell>
+            <StyledTableCell sx={{width:{xs:'100px', md:'180px'}}}>Action</StyledTableCell>
           </TableRow>
         </TableHead>
-        
         <TableBody>
           {loading && 
             <StyledTableRow>
-              <StyledTableCell colSpan={5}>
+              <StyledTableCell colSpan={6}>
                 <SkeletonTableRow />
               </StyledTableCell>
             </StyledTableRow>
@@ -111,7 +113,7 @@ export const InvoiceDetailTable = () => {
 
           {errorState && 
             <StyledTableRow>
-              <StyledTableCell colSpan={5}>
+              <StyledTableCell colSpan={6}>
                 <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
                     Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
                 </Alert>
@@ -124,11 +126,25 @@ export const InvoiceDetailTable = () => {
               <StyledTableCell component="th" scope="row">
                 {(rowsPerPage * page) + index+1}
               </StyledTableCell>
-              <StyledTableCell>{row.courseName}</StyledTableCell>
-              <StyledTableCell>{row.courseCategoryName}</StyledTableCell>
-              <StyledTableCell>{dateToString(new Date(row.jadwal))}</StyledTableCell>
+              <StyledTableCell>{row.invoiceNo}</StyledTableCell>
+              <StyledTableCell>{row.invoiceNo}</StyledTableCell>
+              <StyledTableCell>{dateToStringInvoice(new Date(row.orderDate))}</StyledTableCell>
+              <StyledTableCell>{row.course_count}</StyledTableCell>
               <StyledTableCell>
-                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.harga)}
+                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.totalHarga)}
+              </StyledTableCell>
+              <StyledTableCell>
+                Active
+              </StyledTableCell>
+              <StyledTableCell>
+                <Stack direction={{xs:'column', md:'row'}} gap={{xs:'12px', md:'8px'}} justifyContent={'center'} alignItems={'center'}>
+                    <Link to={`/admin/course/form`}>
+                    <Button sx={{width:'100%', maxWidth:'100px'}}>
+                        <Edit color='secondary' />
+                    </Button>
+                    </Link>
+                    <Switch color='secondary' defaultChecked name='status-switch' />
+                </Stack>
               </StyledTableCell>
             </StyledTableRow>
           ))}
@@ -138,7 +154,7 @@ export const InvoiceDetailTable = () => {
     <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={invoiceDetailList.length}
+        count={invoiceList.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

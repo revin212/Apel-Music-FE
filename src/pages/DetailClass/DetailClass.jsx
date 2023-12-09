@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { useState } from 'react'
-import { ClassDescription } from '../../components/DetailClass/ClassDesctioption/ClassDescription'
+import { ClassDescription } from '../../components/DetailClass/ClassDescription/ClassDescription'
 import { RecommendedClasses } from '../../components/DetailClass/RecommendedClasses/RecommendedClasses'
 import { useParams } from 'react-router-dom'
 

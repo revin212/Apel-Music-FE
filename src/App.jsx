@@ -29,6 +29,7 @@ import { AdminUser } from "./pages/Admin/AdminUser";
 import { AdminInvoice } from "./pages/Admin/AdminInvoice";
 import { AdminCategoryForm } from "./components/Admin/AdminCategory/AdminCategoryForm";
 import { AdminPaymentMethod } from "./pages/Admin/AdminPaymentMethod";
+import { AdminCourseForm } from "./components/Admin/AdminCourse/AdminCourseForm";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
                       <Route path="/admin/category" element={<AdminCategory />} /> 
                       <Route path="/admin/category/form" element={<AdminCategoryForm />} />
                       <Route path="/admin/course" element={<AdminCourse />} /> 
+                      <Route path="/admin/course/form" element={<AdminCourseForm />} />
                       <Route path="/admin/user" element={<AdminUser />} /> 
                       <Route path="/admin/payment-method" element={<AdminPaymentMethod />} /> 
                       <Route path="/admin/invoice" element={<AdminInvoice />} /> 

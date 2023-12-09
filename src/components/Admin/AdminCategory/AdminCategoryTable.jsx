@@ -62,6 +62,7 @@ export const AdminCategoryTable = () => {
   const {token} = useContext(AuthContext)
 
   useEffect(()=>{
+    document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
     getData('/TsOrder/GetMyInvoicesList?userid='+ userId, { 'Authorization': `Bearer ${token}` })
   },[])
 
@@ -136,7 +137,7 @@ export const AdminCategoryTable = () => {
                         <Edit color='secondary' />
                     </Button>
                     </Link>
-                    <Switch color='secondary' defaultChecked />
+                    <Switch color='secondary' defaultChecked name='status-switch' />
                 </Stack>
               </StyledTableCell>
             </StyledTableRow>

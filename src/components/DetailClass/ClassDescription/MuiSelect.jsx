@@ -9,6 +9,7 @@ export const MuiSelect = ({jadwal, setJadwal}) => {
   return (
     <FormControl sx={{ m: 0, width:'100%', maxWidth:'250px'}} size="small" id='date-select-wrapper'>
         <Select
+            name="select-jadwal"
             displayEmpty
             id="demo-select-small"
             value={jadwal}
