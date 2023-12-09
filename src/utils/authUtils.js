@@ -21,3 +21,18 @@ export const doesHttpOnlyCookieExist =  (cookiename) => {
     }
     return "";
   }
+
+  export const setAuthCookies = (data) => {
+    document.cookie = 'token=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+    document.cookie = 'userId=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+    document.cookie = 'rolename=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+    document.cookie = `token=${data.token}; SameSite=None; Secure; path=/`;
+    document.cookie = `userId=${data.userId}; SameSite=None; Secure; path=/`;
+    document.cookie = `rolename=${data.roleName}; SameSite=None; Secure; path=/`;
+  }
+
+  export const deleteAuthCookies = () => {
+    document.cookie = 'token=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+    document.cookie = 'userId=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+    document.cookie = 'rolename=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+  }

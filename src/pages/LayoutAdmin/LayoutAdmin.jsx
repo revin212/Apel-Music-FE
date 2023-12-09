@@ -11,21 +11,18 @@ const wrapperStyle = {
   }
 
 const LayoutAdmin = () => {
-    const { token } = useContext(AuthContext);
+    const { token, roleName } = useContext(AuthContext);
 
     return(
-        <>
-            {token? 
+            token && roleName == `${import.meta.env.VITE_ROLE_ADMIN_KEY}` ? 
             <>
                 <AdminNavbar />
                 <Box sx={wrapperStyle}>
                     <Outlet /> 
                 </Box>
             </>
-            : 
-            <Navigate to='/' /> 
-            }
-        </>
+            :
+            <Navigate to='/' />
     )
 }
 

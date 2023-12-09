@@ -1,11 +1,13 @@
 import { ArrowDropDown, ArrowDropUp, Class, Logout, Payment, Person, Piano, Receipt, ShoppingCart } from '@mui/icons-material';
 import { Button, Collapse, Drawer, Stack, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { drawerMenuWrapperStyle } from './NavbarStyles';
 import usePostData from '../../hooks/usePostData';
+import { AuthContext } from '../AuthContext/AuthContext';
 
 export const MobileNavbar = ({ openMobileNav, setOpemMobileNav }) => {
+    const { roleName } = useContext(AuthContext);
     const [adminOpen, setAdminOpen] = useState(false);
     const toggleDrawer =
     (open) =>
@@ -65,6 +67,8 @@ export const MobileNavbar = ({ openMobileNav, setOpemMobileNav }) => {
                     Pembelian
                     </Typography>
                 </Link>
+                { roleName == `${import.meta.env.VITE_ROLE_ADMIN_KEY}` &&
+                <>
                 <Button sx={{padding: '10px', display: 'flex', justifyContent:'space-between', textDecoration:'none', '&:hover':{backgroundColor:'primary.main'} }} onClick={()=>setAdminOpen(prev=>!prev)}>
                     <Stack direction={'row'} gap='12px'>
                     <Person sx={{color: 'text.gray0'}} />
@@ -125,6 +129,8 @@ export const MobileNavbar = ({ openMobileNav, setOpemMobileNav }) => {
                         </Typography>
                     </Link>
                 </Collapse>
+                </>
+                }
             </Stack>
             <Stack sx={{py: '16px', px: '16px'}}>
                 <Link to='/logout' onClick={handleLogout} style={{padding: '10px', display: 'flex', alignContent:'center', gap:'12px', textDecoration:'none'}}>

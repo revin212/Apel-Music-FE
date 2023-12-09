@@ -1,7 +1,7 @@
 import { Box, Typography, Button } from '@mui/material'
 import { Logout, Menu, Person, ShoppingCart } from "@mui/icons-material";
 import { useEffect, useContext, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, Navigate, useLocation } from 'react-router-dom'
 import { AuthContext } from '../AuthContext/AuthContext';
 import { homeButtonStyle, loggedInMobileMenuListStyle, navbarMenuListStyle, navbarWrapperStyle } from './adminNavbarStyles';
 import usePostData from '../../hooks/usePostData';
@@ -10,7 +10,7 @@ import { MobileNavbar } from './MobileNavbar';
 import { AdminNavbarDrawer } from './AdminNavbarDrawer';
 
 const AdminNavbar = () => {
-  const { token, tokenExpires } = useContext(AuthContext);
+  const { token, tokenExpires, roleName } = useContext(AuthContext);
   const [openMobileNav, setOpemMobileNav] = useState(false);
   const { postData } = usePostData();
   const location = useLocation();

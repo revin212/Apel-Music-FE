@@ -9,7 +9,7 @@ import { doesHttpOnlyCookieExist } from '../../utils/authUtils';
 import { MobileNavbar } from './MobileNavbar';
 
 const Navbar = () => {
-  const { token, tokenExpires } = useContext(AuthContext);
+  const { token, tokenExpires, roleName } = useContext(AuthContext);
   const [openMobileNav, setOpemMobileNav] = useState(false);
   const { postData } = usePostData();
   const location = useLocation();
@@ -71,14 +71,17 @@ const Navbar = () => {
                   </Typography>
                 </Link>
               </li>
+              
+              { roleName == `${import.meta.env.VITE_ROLE_ADMIN_KEY}` &&
+              <>
               <li style={{display: 'flex', textAlign:'center'}}>
-                  <Typography variant='p' sx={{
-                    fontWeight: '500',
-                    color: 'text.black',
-                    my: 'auto'
-                  }}>
-                    |
-                  </Typography>
+                <Typography variant='p' sx={{
+                  fontWeight: '500',
+                  color: 'text.black',
+                  my: 'auto'
+                }}>
+                  |
+                </Typography>
               </li>
               <li>
                   <Button onClick={(e)=>setAnchorEl(e.currentTarget)}
@@ -158,6 +161,8 @@ const Navbar = () => {
                       </MenuItem>
                   </Menu>
               </li>
+              </>
+              }
               <li>
                   <Link to='/logout' onClick={handleLogout} style={{padding: '10px', display: 'flex', alignContent:'center'}}>
                     <Logout sx={{color: 'text.gray0'}} />

@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import axios from 'axios'; 
 import { AuthContext } from '../components/AuthContext/AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { deleteAuthCookies, setAuthCookies } from '../utils/authUtils';
 
 const usePostData = () => {
     const navigate = useNavigate();
@@ -29,23 +30,21 @@ const usePostData = () => {
             case 'login':
                 {
                     await newToken(response.data);
-                    document.cookie = `token=${response.data.token}; SameSite=None; Secure`;
-                    document.cookie = `userId=${response.data.userId}; SameSite=None; Secure`;
+                    setAuthCookies(response.data);
                     navigate(from);
                     break;
                 }
             case 'logout':
                 {
-                    await newToken({token: "", tokenExpires: Date.now()});
-                    document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT';
-                    document.cookie = 'userId=;expires=Thu, 01 Jan 1970 00:00:01 GMT';
+                    await newToken({token: "", tokenExpires: Date.now(), roleName: ""});
+                    deleteAuthCookies();
                     navigate("/");
                     break;
                 }
             case 'refreshToken':
                 {
                     await newToken(response.data);
-                    document.cookie = `token=${response.data.token} ; SameSite=None; Secure`;
+                    setAuthCookies(response.data);
                     break;
                 }
             case 'forgetPassword':
@@ -92,7 +91,7 @@ const usePostData = () => {
                 case 'logout':
                     {
                         console.error("Error during logout:", err);
-                        document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT';
+                        deleteAuthCookies();
                         break;
                     }
                 case 'emailConfirm':
