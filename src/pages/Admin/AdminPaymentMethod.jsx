@@ -1,10 +1,7 @@
 import React from 'react'
 import { Button, Stack, Typography } from '@mui/material'
-import { AdminCategoryTable } from '../../components/Admin/AdminCategory/AdminCategoryTable'
 import { Add } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
-import { AdminCourseTable } from '../../components/Admin/AdminCourse/AdminCourseTable'
-import { AdminUserTable } from '../../components/Admin/AdminUser/AdminUserTable'
 import { AdminPaymentMethodTable } from '../../components/Admin/AdminPaymentMethod/AdminPaymentMethodTable'
 
 const titleStyle = {
