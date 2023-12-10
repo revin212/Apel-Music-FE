@@ -49,7 +49,7 @@ export const AdminCategoryForm = () => {
     
     const handleSave = (e) => {
         e.preventDefault();
-        postData(postUrl, 'createCategory', true, data)
+        postData(postUrl, 'createCategory', false, data, {Authorization: `Bearer ${token}`})
         console.log(data)
     }
 
