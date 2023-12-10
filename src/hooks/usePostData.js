@@ -27,6 +27,11 @@ const usePostData = () => {
                     setMsg("Register success, please check your email for account activation");
                     break;
                 }
+            case 'createCategory':
+                {
+                    setMsg(response.data);
+                    break; 
+                }
             case 'login':
                 {
                     await newToken(response.data);

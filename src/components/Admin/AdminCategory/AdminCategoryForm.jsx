@@ -4,11 +4,14 @@ import { inputStyle, titleStyle, subtitleStyle, formStyle, errorMsgStyle, textAr
 import usePostData from '../../../hooks/usePostData'
 import { AuthContext } from '../../AuthContext/AuthContext'
 import { ArrowBack } from '@mui/icons-material'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { convertImageToBase64 } from '../../../utils/imageUtils'
 
 
 export const AdminCategoryForm = () => {
+
+    const {id} = useParams()
+
     const [data, setData] = useState({
         name: '',
         image: null,
@@ -40,13 +43,13 @@ export const AdminCategoryForm = () => {
         })
     }
     
-    const loginUrl = import.meta.env.VITE_API_URL + "/MsUser/Login"
+    const postUrl = import.meta.env.VITE_API_URL + "/Admin/MsCategoryAdmin/Create"
     const { postData, isLoading, error } = usePostData();
     const { token } = useContext(AuthContext);
     
     const handleSave = (e) => {
         e.preventDefault();
-        // postData(loginUrl, 'login', false, data)
+        postData(postUrl, 'createCategory', true, data)
         console.log(data)
     }
 

@@ -16,6 +16,7 @@ import { getCookie } from '../../../utils/authUtils';
 import { SkeletonTableRow } from '../../Skeleton/SkeletonTableRow';
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { Edit } from '@mui/icons-material';
+import {imageStyle} from './AdminCategoryFormStyle'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -58,12 +59,13 @@ export const AdminCategoryTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [userId, setUserId] = useState(getCookie('userId'))
 
-  const {data: invoiceList, loading, errorState, getData} = useGetData();
+  const {data: categoryList, loading, errorState, getData} = useGetData();
   const {token} = useContext(AuthContext)
 
   useEffect(()=>{
     document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
-    getData('/TsOrder/GetMyInvoicesList?userid='+ userId, { 'Authorization': `Bearer ${token}` })
+    getData('/admin/MsCategoryAdmin/GetAll', { 'Authorization': `Bearer ${token}` })
+    //console.log(categoryList)
   },[])
 
   const handleChangePage = (event, newPage) => {
@@ -79,11 +81,11 @@ export const AdminCategoryTable = () => {
 
   const visibleRows = useMemo(
     () =>
-      invoiceList.slice(
+    categoryList.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [page, rowsPerPage, invoiceList],
+    [page, rowsPerPage, categoryList],
   );
 
   return (
@@ -124,20 +126,18 @@ export const AdminCategoryTable = () => {
               <StyledTableCell component="th" scope="row">
                 {(rowsPerPage * page) + index+1}
               </StyledTableCell>
-              <StyledTableCell>{row.invoiceNo}</StyledTableCell>
-              <StyledTableCell>{dateToStringInvoice(new Date(row.orderDate))}</StyledTableCell>
-              <StyledTableCell>{row.course_count}</StyledTableCell>
-              <StyledTableCell>
-                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.totalHarga)}
-              </StyledTableCell>
+              <StyledTableCell>{row.id}</StyledTableCell>
+              <StyledTableCell><img src={`${import.meta.env.VITE_BASE_URL}/${row.image}`} width="350" height="234" alt={row.name} style={imageStyle} /></StyledTableCell>
+              <StyledTableCell>{row.name}</StyledTableCell>
+              <StyledTableCell>{row.description}</StyledTableCell>
               <StyledTableCell>
                 <Stack direction={{xs:'column', md:'row'}} gap={{xs:'12px', md:'8px'}} justifyContent={'center'} alignItems={'center'}>
-                    <Link to={`/admin/category/form`}>
+                    <Link to={`/admin/category/form/${row.id}`}>
                     <Button sx={{width:'100%', maxWidth:'100px'}}>
                         <Edit color='secondary' />
                     </Button>
                     </Link>
-                    <Switch color='secondary' defaultChecked name='status-switch' />
+                    <Switch color='secondary' checked={row.isActivated} name='status-switch'/>
                 </Stack>
               </StyledTableCell>
             </StyledTableRow>
@@ -148,7 +148,7 @@ export const AdminCategoryTable = () => {
     <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={invoiceList.length}
+        count={categoryList.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

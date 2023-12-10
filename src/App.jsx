@@ -64,6 +64,7 @@ function App() {
                   <Route path="/admin" element={<LayoutAdmin />}>
                       <Route path="/admin/category" element={<AdminCategory />} /> 
                       <Route path="/admin/category/form" element={<AdminCategoryForm />} />
+                      <Route path="/admin/category/form/:id" element={<AdminCategoryForm />} />
                       <Route path="/admin/course" element={<AdminCourse />} /> 
                       <Route path="/admin/course/form" element={<AdminCourseForm />} />
                       <Route path="/admin/user" element={<AdminUser />} /> 

@@ -71,3 +71,10 @@ export const errorMsgStyle = {
     borderColor: 'warning.main',
     color: 'warning.main',
 }
+
+export const imageStyle = {
+    borderRadius: "16px",
+    border: "1px solid ##BDBDBD",
+    width: "100%",
+    height: "auto"
+}
