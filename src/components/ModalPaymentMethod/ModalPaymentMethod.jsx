@@ -1,6 +1,6 @@
 import { Box, Modal, Stack, Typography, Button, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
-import { buttonStyle, itemButtonStyle, methodListStyle, modalContentStyle, paymentMethodList, titleStyle } from './ModalPaymentMethodStyle';
+import { buttonStyle, itemButtonStyle, methodListStyle, modalContentStyle, titleStyle } from './ModalPaymentMethodStyle';
 import useGetData from '../../hooks/useGetData';
 import usePostData from '../../hooks/usePostData';
 import { useNavigate } from 'react-router-dom';
@@ -55,7 +55,7 @@ export const ModalPaymentMethod = ({ modalOpen, setModalOpen, userId, cartId }) 
                             sx={itemButtonStyle}
                             >
                                 <ListItemIcon>
-                                    <img src={`/images/logo/${item.name}.png`} alt={item.name} />
+                                    <img style={{maxWidth:'40px'}} src={`${import.meta.env.VITE_BASE_URL}${item.image}?`+ new Date().getTime()} alt={item.name} />
                                 </ListItemIcon>
                                 <ListItemText primary={item.name} />
                             </ListItemButton>

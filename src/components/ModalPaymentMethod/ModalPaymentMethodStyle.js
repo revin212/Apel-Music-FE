@@ -1,30 +1,3 @@
-export const paymentMethodList = [
-    {
-        name: 'Gopay',
-        image: '/images/logo/Gopay.png'
-    },
-    {
-        name: 'OVO',
-        image: '/images/logo/OVO.png'
-    },
-    {
-        name: 'DANA',
-        image: '/images/logo/DANA.png'
-    },
-    {
-        name: 'Mandiri',
-        image: '/images/logo/Mandiri.png'
-    },
-    {
-        name: 'BCA',
-        image: '/images/logo/BCA.png'
-    },
-    {
-        name: 'BNI',
-        image: '/images/logo/BNI.png'
-    },
-]
-
 export const modalContentStyle = {
     position: 'absolute',
     top: '50%',
@@ -46,7 +19,9 @@ export const modalContentStyle = {
   export const methodListStyle = {
     display: 'flex',
     flexDirection: 'column',
-    gap: '12px'
+    gap: '12px',
+    maxHeight:'350px', 
+    overflowY:'scroll'
 }
 
 export const itemButtonStyle = {

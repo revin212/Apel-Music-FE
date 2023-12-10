@@ -1,6 +1,7 @@
 import { FormControl, OutlinedInput, MenuItem, Select } from '@mui/material'
 import useGetData from '../../../hooks/useGetData';
 import { useEffect } from 'react';
+import './SelectCategory.css'
 
 export const SelectCategory = ({ data, setData, categoryName, setCategoryName }) => {
     const url = '/MsCategory/GetShortList'
@@ -9,6 +10,13 @@ export const SelectCategory = ({ data, setData, categoryName, setCategoryName })
     useEffect(() => {
         getData(url)
     }, [])
+
+    useEffect(() => {
+        if(data.categoryId){
+            const categoryIndex = categoryData.map(function(e) { return e.id; }).indexOf(data.categoryId);
+            setCategoryName(categoryData[categoryIndex].name);
+        }
+    }, [data])
 
     const handleChange = (e) => {
         setCategoryName(e.target.value)
