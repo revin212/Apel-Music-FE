@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import { Box, Stack, Button, Typography, Input, TextareaAutosize, Switch } from '@mui/material'
-import { inputStyle, titleStyle, subtitleStyle, formStyle, errorMsgStyle, textAreaStyle, messageStyle } from './AdminCategoryFormStyle'
+import { inputStyle, titleStyle, subtitleStyle, formStyle, errorMsgStyle, textAreaStyle, messageStyle, imageStyle } from './AdminCategoryFormStyle'
 import usePostData from '../../../hooks/usePostData'
 import { AuthContext } from '../../AuthContext/AuthContext'
 import { ArrowBack } from '@mui/icons-material'
@@ -61,6 +61,7 @@ export const AdminCategoryForm = () => {
     
     const handleSave = (e) => {
         e.preventDefault();
+        window.scrollTo(0, 0);
         if(id){
             patchData(patchUrl, 'editCategory', false, data, { 'Authorization': `Bearer ${token}` })
         } else {
@@ -105,7 +106,8 @@ export const AdminCategoryForm = () => {
                 <img
                     alt="not found"
                     width={"250px"}
-                    src={data.image.length > 100 ? `data:image/jpeg;base64,${data.image}` : `${import.meta.env.VITE_BASE_URL}/${data.image}`}
+                    style={imageStyle}
+                    src={data.image.length > 100 ? `data:image/jpeg;base64,${data.image}` : `${import.meta.env.VITE_BASE_URL}${data.image}?`+new Date().getTime()}
                 />
                 <br />
                 <button onClick={() => {setData({...data, image: null})}}>Remove</button>

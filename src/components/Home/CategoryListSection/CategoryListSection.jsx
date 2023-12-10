@@ -46,7 +46,7 @@ export const CategoryListSection = () => {
                     <Grid xs={6} md={3} key={item.id}>
                         <Link to={`/category/${item.id}`} underline='none' style={{textDecoration:'none'}}>
                         <Stack direction='column' gap='24px' alignItems='center'>
-                            <img src={`${import.meta.env.VITE_BASE_URL}/${item.image}`} width="350" height="234" alt={item.type_name} style={imageStyle} />
+                            <img src={`${import.meta.env.VITE_BASE_URL}${item.image}?`+new Date().getTime()} width="350" height="234" alt={item.type_name} style={imageStyle} />
                             <Typography variant='h4' sx={categoryNameStyle}>
                                 {item.name}
                             </Typography>

@@ -75,6 +75,7 @@ export const errorMsgStyle = {
 export const imageStyle = {
     borderRadius: "16px",
     border: "1px solid ##BDBDBD",
+    maxWidth: '200px',
     width: "100%",
     height: "auto"
 }

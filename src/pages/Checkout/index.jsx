@@ -68,7 +68,7 @@ const Checkout = () => {
                                 <Stack direction={{xs:"column", md:"row"}} gap="24px" alignItems={'start'} flexGrow={1} >
                                 <Stack alignItems={'center'} width={{xs:'100%', md:'auto'}}>
                                     <Box sx={imageWrapperStyle}>
-                                        <img src={`${import.meta.env.VITE_BASE_URL}/${item.image}`} style={imageStyle} />
+                                        <img src={`${import.meta.env.VITE_BASE_URL}${item.image}?`+new Date().getTime()} style={imageStyle} />
                                     </Box>
                                 </Stack>
                                 <Stack>

@@ -15,7 +15,7 @@ export const HeroSection = ({id}) => {
   
   const bannerStyle = {
     height: '334px',
-    backgroundImage: `url("${import.meta.env.VITE_BASE_URL}/${classData.headerImage ? classData.headerImage.replace("\r\n", "") : classData.image}")`,
+    backgroundImage: `url("${import.meta.env.VITE_BASE_URL}${classData.headerImage ? classData.headerImage.replace("\r\n", "") : classData.image}?${new Date().getTime()}")`,
     backgroundSize: 'cover',
     backgroundPosition: '0 20%'
   }

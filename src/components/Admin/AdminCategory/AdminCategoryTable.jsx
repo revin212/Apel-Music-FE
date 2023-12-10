@@ -98,12 +98,12 @@ export const AdminCategoryTable = () => {
 
   return (
     <>
-    <Snackbar open={patchMsg} autoHideDuration={6000} onClose={()=>setPatchMsg('')}>
+    <Snackbar open={Boolean(patchMsg)} autoHideDuration={6000} onClose={()=>setPatchMsg('')}>
         <Alert onClose={()=>setPatchMsg('')} variant='outlined' severity="success" sx={{ width: '100%', backgroundColor: 'white', color:'success.main', mx:'8px', mb:2 }}>
           Toggle status success
         </Alert>
     </Snackbar>
-    <Snackbar open={patchError} autoHideDuration={6000} onClose={()=>setPatchError('')}>
+    <Snackbar open={Boolean(patchError)} autoHideDuration={6000} onClose={()=>setPatchError('')}>
         <Alert onClose={()=>setPatchError('')} variant='outlined' severity="error" sx={{ width: '100%', backgroundColor: 'white', color:'warning.main', mx:'8px', mb:2 }}>
           Toggle status failed
         </Alert>
@@ -145,7 +145,7 @@ export const AdminCategoryTable = () => {
                 {(rowsPerPage * page) + index+1}
               </StyledTableCell>
               <StyledTableCell>{row.name}</StyledTableCell>
-              <StyledTableCell><img src={`${import.meta.env.VITE_BASE_URL}/${row.image}`} width="350" height="234" alt={row.name} style={imageStyle} /></StyledTableCell>
+              <StyledTableCell><img src={`${import.meta.env.VITE_BASE_URL}${row.image}?`+new Date().getTime()} width="350" height="234" alt={row.name} style={imageStyle} /></StyledTableCell>
               <StyledTableCell>
                 <ShowMoreText text={row.description} />
               </StyledTableCell>

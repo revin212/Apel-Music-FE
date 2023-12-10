@@ -45,7 +45,7 @@ export const ClassListSection = () => {
                 <Grid xs={12} md={4} key={item.id}>
                     <Link to={`/class/${item.id}`} underline='none' style={{textDecoration:'none'}}>
                     <Stack direction='column' gap='16px'>
-                        <img src={`${import.meta.env.VITE_BASE_URL}/${item.image}`} width="350" height="234" alt={item.title} style={imageStyle} />
+                        <img src={`${import.meta.env.VITE_BASE_URL}${item.image}?`+new Date().getTime()} width="350" height="234" alt={item.title} style={imageStyle} />
                         <Box padding='0px, 8px, 0px, 8px'>
                             <Box minHeight='113px' maxWidth='292px'>
                                 <Typography variant='body1' sx={categoryStyle}>

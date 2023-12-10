@@ -34,7 +34,7 @@ export const MyClass = () => {
                 return(
                 <Stack key={item.courseId+`${i}`} direction={{xs:"column", md:"row"}} gap='24px' alignItems='center' sx={classWrapperStyle}>
                     <Stack sx={imgWrapperStyle}>
-                        <img width='200px' height='133px' src={item.image?`${import.meta.env.VITE_BASE_URL}/${item.image}`:''} style={imgStyle} />
+                        <img width='200px' height='133px' src={item.image?`${import.meta.env.VITE_BASE_URL}${item.image}?${new Date().getTime()}`:''} style={imgStyle} />
                     </Stack>
                     <Stack>
                         <Box sx={classDescStyle}>
