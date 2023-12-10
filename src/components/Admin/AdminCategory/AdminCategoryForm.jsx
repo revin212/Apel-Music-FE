@@ -61,7 +61,6 @@ export const AdminCategoryForm = () => {
     
     const handleSave = (e) => {
         e.preventDefault();
-            
         if(id){
             patchData(patchUrl, 'editCategory', false, data, { 'Authorization': `Bearer ${token}` })
         } else {
