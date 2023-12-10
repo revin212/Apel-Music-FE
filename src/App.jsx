@@ -66,11 +66,14 @@ function App() {
                       <Route path="/admin/category/form" element={<AdminCategoryForm />} />
                       <Route path="/admin/category/form/:id" element={<AdminCategoryForm />} />
                       <Route path="/admin/course" element={<AdminCourse />} /> 
-                      <Route path="/admin/course/form" element={<AdminCourseForm />} />
+                      <Route path="/admin/course/form/" element={<AdminCourseForm />} />
+                      <Route path="/admin/course/form/:id" element={<AdminCourseForm />} />
                       <Route path="/admin/user" element={<AdminUser />} /> 
-                      <Route path="/admin/user/form" element={<AdminUserForm />} />
+                      <Route path="/admin/user/form/" element={<AdminUserForm />} />
+                      <Route path="/admin/user/form/:id" element={<AdminUserForm />} />
                       <Route path="/admin/payment-method" element={<AdminPaymentMethod />} /> 
-                      <Route path="/admin/payment-method/form" element={<AdminPaymentMethodForm />} />
+                      <Route path="/admin/payment-method/form/" element={<AdminPaymentMethodForm />} />
+                      <Route path="/admin/payment-method/form/:id" element={<AdminPaymentMethodForm />} />
                       <Route path="/admin/invoice" element={<AdminInvoice />} /> 
                       <Route path="/admin/invoice/:id" element={<AdminInvoiceDetail />} /> 
                   </Route>
