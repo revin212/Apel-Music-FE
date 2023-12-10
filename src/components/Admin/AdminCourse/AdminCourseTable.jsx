@@ -105,7 +105,7 @@ export const AdminCourseTable = () => {
         <TableBody>
           {loading && 
             <StyledTableRow>
-              <StyledTableCell colSpan={6}>
+              <StyledTableCell colSpan={8}>
                 <SkeletonTableRow />
               </StyledTableCell>
             </StyledTableRow>
@@ -113,7 +113,7 @@ export const AdminCourseTable = () => {
 
           {errorState && 
             <StyledTableRow>
-              <StyledTableCell colSpan={6}>
+              <StyledTableCell colSpan={8}>
                 <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
                     Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
                 </Alert>

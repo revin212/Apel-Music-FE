@@ -6,7 +6,7 @@ const useGetData = () => {
     const [loading, setLoading] = useState(false)
     const [errorState, setErrorState] = useState(false)
    
-    const getData = async (url, header={}) =>{
+    const getData = async (url, header={}, setEditData=()=>{}) =>{
         setErrorState(false)
         setLoading(true)
        
@@ -14,6 +14,9 @@ const useGetData = () => {
         .then((response) => {
           // handle success
           setData(response.data)
+          if(setEditData){
+            setEditData(response.data)
+          }
           setLoading(false)
         })
         .catch((error) => {

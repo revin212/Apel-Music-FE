@@ -7,7 +7,7 @@ import TablePagination from '@mui/material/TablePagination';
 import { styled } from '@mui/material/styles';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Alert, Box, Button, Stack, Switch } from '@mui/material';
+import { Alert, Box, Button, IconButton, Snackbar, Stack, Switch } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { dateToStringInvoice } from '../../../utils/DateUtils';
 import { useState, useMemo, useEffect, useContext } from 'react';
@@ -15,8 +15,10 @@ import useGetData from '../../../hooks/useGetData';
 import { getCookie } from '../../../utils/authUtils';
 import { SkeletonTableRow } from '../../Skeleton/SkeletonTableRow';
 import { AuthContext } from '../../AuthContext/AuthContext';
-import { Edit } from '@mui/icons-material';
+import { Close, Edit } from '@mui/icons-material';
 import {imageStyle} from './AdminCategoryFormStyle'
+import usePatchData from '../../../hooks/usePatchData';
+import { ShowMoreText } from '../../ShowMoreText/ShowMoreText';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -57,16 +59,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export const AdminCategoryTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [userId, setUserId] = useState(getCookie('userId'))
 
-  const {data: categoryList, loading, errorState, getData} = useGetData();
+  const {data: categoryList, setData: setCategoryList, loading, errorState, getData} = useGetData();
+  const { patchData, isLoading: patchLoading, error: patchError, setError: setPatchError, msg: patchMsg, setMsg: setPatchMsg } = usePatchData();
   const {token} = useContext(AuthContext)
 
   useEffect(()=>{
     document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
     getData('/admin/MsCategoryAdmin/GetAll', { 'Authorization': `Bearer ${token}` })
-    //console.log(categoryList)
-  },[])
+  },[token, patchError])
+
+  const handleTogleActiveStatus = (item) => {
+    setCategoryList(categoryList.map((category)=>{
+      return category.id == item.id ? {...category, isActivated: !category.isActivated} : category
+    }))
+    patchData(`${import.meta.env.VITE_API_URL}/admin/MsCategoryAdmin/ToggleActiveStatus?id=${item.id}`, 'toggleActiveStatus', false, {isActivated: !item.isActivated}, { 'Authorization': `Bearer ${token}` })
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -90,6 +98,16 @@ export const AdminCategoryTable = () => {
 
   return (
     <>
+    <Snackbar open={patchMsg} autoHideDuration={6000} onClose={()=>setPatchMsg('')}>
+        <Alert onClose={()=>setPatchMsg('')} variant='outlined' severity="success" sx={{ width: '100%', backgroundColor: 'white', color:'success.main', mx:'8px', mb:2 }}>
+          Toggle status success
+        </Alert>
+    </Snackbar>
+    <Snackbar open={patchError} autoHideDuration={6000} onClose={()=>setPatchError('')}>
+        <Alert onClose={()=>setPatchError('')} variant='outlined' severity="error" sx={{ width: '100%', backgroundColor: 'white', color:'warning.main', mx:'8px', mb:2 }}>
+          Toggle status failed
+        </Alert>
+    </Snackbar>
     <TableContainer component={Box}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -126,10 +144,12 @@ export const AdminCategoryTable = () => {
               <StyledTableCell component="th" scope="row">
                 {(rowsPerPage * page) + index+1}
               </StyledTableCell>
-              <StyledTableCell>{row.id}</StyledTableCell>
-              <StyledTableCell><img src={`${import.meta.env.VITE_BASE_URL}/${row.image}`} width="350" height="234" alt={row.name} style={imageStyle} /></StyledTableCell>
               <StyledTableCell>{row.name}</StyledTableCell>
-              <StyledTableCell>{row.description}</StyledTableCell>
+              <StyledTableCell><img src={`${import.meta.env.VITE_BASE_URL}/${row.image}`} width="350" height="234" alt={row.name} style={imageStyle} /></StyledTableCell>
+              <StyledTableCell>
+                <ShowMoreText text={row.description} />
+              </StyledTableCell>
+              <StyledTableCell>{row.isActivated ? "Active" : "Inactive"}</StyledTableCell>
               <StyledTableCell>
                 <Stack direction={{xs:'column', md:'row'}} gap={{xs:'12px', md:'8px'}} justifyContent={'center'} alignItems={'center'}>
                     <Link to={`/admin/category/form/${row.id}`}>
@@ -137,7 +157,7 @@ export const AdminCategoryTable = () => {
                         <Edit color='secondary' />
                     </Button>
                     </Link>
-                    <Switch color='secondary' checked={row.isActivated} name='status-switch'/>
+                    <Switch color='secondary' disabled={patchLoading} onChange={()=>handleTogleActiveStatus(row)} checked={row.isActivated} name='status-switch'/>
                 </Stack>
               </StyledTableCell>
             </StyledTableRow>

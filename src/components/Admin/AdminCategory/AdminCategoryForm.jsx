@@ -1,11 +1,13 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Box, Stack, Button, Typography, Input, TextareaAutosize, Switch } from '@mui/material'
-import { inputStyle, titleStyle, subtitleStyle, formStyle, errorMsgStyle, textAreaStyle } from './AdminCategoryFormStyle'
+import { inputStyle, titleStyle, subtitleStyle, formStyle, errorMsgStyle, textAreaStyle, messageStyle } from './AdminCategoryFormStyle'
 import usePostData from '../../../hooks/usePostData'
 import { AuthContext } from '../../AuthContext/AuthContext'
 import { ArrowBack } from '@mui/icons-material'
 import { Link, useParams } from 'react-router-dom'
 import { convertImageToBase64 } from '../../../utils/imageUtils'
+import usePatchData from '../../../hooks/usePatchData'
+import useGetData from '../../../hooks/useGetData'
 
 
 export const AdminCategoryForm = () => {
@@ -16,7 +18,7 @@ export const AdminCategoryForm = () => {
         name: '',
         image: null,
         description: '',
-        status: true
+        isActivated: true
     })
 
     const handleChange = (e) => {
@@ -29,7 +31,7 @@ export const AdminCategoryForm = () => {
     const handleChangeSwitch = (e) => {
         setData({
             ...data,
-            status: !data.status
+            isActivated: !data.isActivated
         })
     }
 
@@ -43,14 +45,28 @@ export const AdminCategoryForm = () => {
         })
     }
     
+    const getUrl = "/Admin/MsCategoryAdmin/GetById?id=" + id
     const postUrl = import.meta.env.VITE_API_URL + "/Admin/MsCategoryAdmin/Create"
-    const { postData, isLoading, error } = usePostData();
+    const patchUrl = import.meta.env.VITE_API_URL + "/Admin/MsCategoryAdmin/Update?id=" + id
+    const { postData, isLoading, error, msg } = usePostData();
+    const { patchData, isLoading: patchLoading, error: patchError, msg: patchMsg } = usePatchData();
     const { token } = useContext(AuthContext);
+    const { getData, data: categoryData, loading: getDataLoading, error: getDataError } = useGetData();
+
+    useEffect(()=>{
+        if(id){
+            getData(getUrl, { 'Authorization': `Bearer ${token}` }, setData)
+        }
+    }, [token])
     
     const handleSave = (e) => {
         e.preventDefault();
-        postData(postUrl, 'createCategory', true, data)
-        console.log(data)
+            
+        if(id){
+            patchData(patchUrl, 'editCategory', false, data, { 'Authorization': `Bearer ${token}` })
+        } else {
+            postData(postUrl, 'createCategory', false, data, { 'Authorization': `Bearer ${token}` })
+        }
     }
 
   return (
@@ -70,7 +86,10 @@ export const AdminCategoryForm = () => {
             <Typography variant='h2' sx={titleStyle}>Category Add / Edit</Typography>
         </Stack>
 
+        {msg && <p style={messageStyle} >{msg}</p>}
+        {patchMsg && <p style={messageStyle} >{patchMsg}</p>}
         {error && <Typography variant='body2' sx={errorMsgStyle} >{error}</Typography>}
+        {patchError && <Typography variant='body2' sx={errorMsgStyle} >{patchError}</Typography>}
 
         <Typography component='form' sx={formStyle}>
             <Input disableUnderline name={"name"} autoComplete='name' value={ data.name } onChange={handleChange} id='name-input' type="text" placeholder="Name" sx={inputStyle}/>
@@ -98,7 +117,7 @@ export const AdminCategoryForm = () => {
             <textarea name={"description"} value={ data.description } onChange={handleChange} id='description-input' placeholder="Description" rows={6} style={textAreaStyle} />
             <Stack direction={'row'} alignItems={'center'} gap="8px">
                 <Typography>Status</Typography>
-                <Switch checked={ data.status } onChange={handleChangeSwitch} name={'status'} id='status-input' color={'secondary'} />
+                <Switch checked={ data.isActivated } onChange={handleChangeSwitch} name={'status'} id='status-input' color={'secondary'} />
             </Stack>
 
             <Stack direction='column' gap='24px' mt={2} >
@@ -107,7 +126,7 @@ export const AdminCategoryForm = () => {
                 }} variant='contained' type='submit' sx={{
                     maxWidth: '140px',
                     maxHeight: '43px',
-                }} disabled={isLoading}>
+                }} disabled={isLoading || patchLoading}>
                     Save
                 </Button>
             </Stack>
