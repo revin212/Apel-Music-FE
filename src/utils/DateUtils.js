@@ -18,6 +18,10 @@ export const dateToStringInvoice = (date) => {
     return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`
 }
 
+export const dateToStringInvoiceHeader = (date) => {
+    return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}, ${dateSatuan(date.getHours())}:${dateSatuan(date.getMinutes())} WIB`
+}
+
 export const dateToStringJadwal = (date) => {
     return `${date.getFullYear()}-${dateSatuan(date.getMonth()+1)}-${dateSatuan(date.getDate())}`
 }

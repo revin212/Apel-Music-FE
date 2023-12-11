@@ -1,7 +1,7 @@
 import { Typography, Stack, Breadcrumbs } from '@mui/material'
 import { breadcrumbStyle, noInvoiceStyle, titleStyle, totalhargaStyle } from './InvoiceDetailHeaderStyles'
 import { Link, useParams } from 'react-router-dom'
-import { dateToStringInvoice } from '../../../utils/DateUtils'
+import { dateToStringInvoiceHeader } from '../../../utils/DateUtils'
 import useGetData from '../../../hooks/useGetData'
 import { useContext, useEffect } from 'react'
 import { AuthContext } from '../../AuthContext/AuthContext'
@@ -37,7 +37,7 @@ export const InvoiceDetailHeader = () => {
                     </Stack>
                     <Stack direction='row' gap='24px'>
                         <Typography variant='body1' sx={noInvoiceStyle} >Tanggal Beli :</Typography>
-                        <Typography variant='body1' sx={noInvoiceStyle} >{dateToStringInvoice(new Date(invoiceData?.orderDate))}</Typography>
+                        <Typography variant='body1' sx={noInvoiceStyle} >{dateToStringInvoiceHeader(new Date(invoiceData?.orderDate))}</Typography>
                     </Stack>
                 </Stack>
                 <Stack direction='row' gap='24px' >

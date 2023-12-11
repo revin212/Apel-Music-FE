@@ -85,7 +85,7 @@ const usePostData = () => {
             default: break;
             }
         } catch (err) {
-            if(err.response)
+            if(typeof err.response.data === 'string' || err.response.data instanceof String)
             {
                 setMsg('')
                 setError(err.response.data)
