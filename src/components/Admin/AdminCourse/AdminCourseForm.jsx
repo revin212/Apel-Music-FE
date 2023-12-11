@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import { Box, Stack, Button, Typography, Input, TextareaAutosize, Switch } from '@mui/material'
-import { inputStyle, titleStyle, subtitleStyle, formStyle, errorMsgStyle, textAreaStyle } from './AdminCourseFormStyle'
+import { inputStyle, titleStyle, subtitleStyle, formStyle, errorMsgStyle, textAreaStyle, messageStyle } from './AdminCourseFormStyle'
 import usePostData from '../../../hooks/usePostData'
 import { AuthContext } from '../../AuthContext/AuthContext'
 import { ArrowBack } from '@mui/icons-material'
@@ -49,9 +49,9 @@ export const AdminCourseForm = () => {
         })
     }
     
-    const getUrl = "/Admin/MsPaymentMethodAdmin/GetById?id=" + id
-    const postUrl = import.meta.env.VITE_API_URL + "/Admin/MsPaymentMethodAdmin/Create"
-    const patchUrl = import.meta.env.VITE_API_URL + "/Admin/MsPaymentMethodAdmin/Update?id=" + id
+    const getUrl = "/Admin/MsCourseAdmin/GetById?id=" + id
+    const postUrl = import.meta.env.VITE_API_URL + "/Admin/MsCourseAdmin/Create"
+    const patchUrl = import.meta.env.VITE_API_URL + "/Admin/MsCourseAdmin/Update?id=" + id
     const { postData, isLoading, error, msg } = usePostData();
     const { patchData, isLoading: patchLoading, error: patchError, msg: patchMsg } = usePatchData();
     const { token } = useContext(AuthContext);

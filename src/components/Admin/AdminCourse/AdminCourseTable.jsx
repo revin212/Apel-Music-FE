@@ -9,10 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Alert, Box, Button, Snackbar, Stack, Switch } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { dateToStringInvoice } from '../../../utils/DateUtils';
 import { useState, useMemo, useEffect, useContext } from 'react';
 import useGetData from '../../../hooks/useGetData';
-import { getCookie } from '../../../utils/authUtils';
 import { SkeletonTableRow } from '../../Skeleton/SkeletonTableRow';
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { Edit } from '@mui/icons-material';
@@ -66,14 +64,14 @@ export const AdminCourseTable = () => {
 
   useEffect(()=>{
     document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
-    getData('/admin/MsPaymentMethodAdmin/GetAll', { 'Authorization': `Bearer ${token}` })
+    getData('/admin/MsCourseAdmin/GetAll', { 'Authorization': `Bearer ${token}` })
   },[token, patchError])
 
   const handleTogleActiveStatus = (item) => {
-    setData(data.map((payment)=>{
-      return payment.id == item.id ? {...payment, isActivated: !payment.isActivated} : payment
+    setData(data.map((course)=>{
+      return course.id == item.id ? {...course, isActivated: !course.isActivated} : course
     }))
-    patchData(`${import.meta.env.VITE_API_URL}/admin/MsPaymentMethodAdmin/ToggleActiveStatus?id=${item.id}`, 'toggleActiveStatus', false, {isActivated: !item.isActivated}, { 'Authorization': `Bearer ${token}` })
+    patchData(`${import.meta.env.VITE_API_URL}/admin/MsCourseAdmin/ToggleActiveStatus?id=${item.id}`, 'toggleActiveStatus', false, {isActivated: !item.isActivated}, { 'Authorization': `Bearer ${token}` })
   }
 
   const handleChangePage = (event, newPage) => {
@@ -152,7 +150,7 @@ export const AdminCourseTable = () => {
                 <img src={`${import.meta.env.VITE_BASE_URL}${row.image}?`+ new Date().getTime()} width="80" height="80" alt={row.name} style={imageStyle} />
               </StyledTableCell>
               <StyledTableCell>
-                <ShowMoreText text={'test'} />  
+                <ShowMoreText text={row.description} />  
               </StyledTableCell>
               <StyledTableCell>
                 IDR {new Intl.NumberFormat(["ban", "id"]).format(row.price)}

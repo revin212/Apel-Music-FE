@@ -1,25 +1,34 @@
 import { FormControl, OutlinedInput, MenuItem, Select } from '@mui/material'
 import useGetData from '../../../hooks/useGetData';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { AuthContext } from '../../AuthContext/AuthContext';
 
-const roleList = [
-    {
-        id:1,
-        name:'Admin'
-    },
-    {
-        id:2,
-        name:'User'
-    },
-]
+// const roleList = [
+//     {
+//         id:1,
+//         name:'Admin'
+//     },
+//     {
+//         id:2,
+//         name:'User'
+//     },
+// ]
 
 export const SelectRole = ({ data, setData, roleName, setRoleName }) => {
-    // const url = '/MsCategory/GetShortList'
-    // const { data: categoryData, loading, errorState, getData } = useGetData()
+    const url = '/Admin/MsUserAdmin/GetRoles'
+    const { data: roleList, loading, errorState, getData } = useGetData()
+    const { token } = useContext(AuthContext);
 
-    // useEffect(() => {
-    //     getData(url)
-    // }, [])
+    useEffect(() => {
+        getData(url, { 'Authorization': `Bearer ${token}` })
+    }, [])
+
+    useEffect(() => {
+        if(data?.roleId && roleList[0]?.id){
+            const roleIndex = roleList.map(function(e) { return e.id; }).indexOf(data.roleId);
+            setRoleName(roleList[roleIndex].name);
+        }
+    }, [data])
 
     const handleChange = (e) => {
         setRoleName(e.target.value)

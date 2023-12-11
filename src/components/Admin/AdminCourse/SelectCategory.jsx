@@ -1,18 +1,20 @@
 import { FormControl, OutlinedInput, MenuItem, Select } from '@mui/material'
 import useGetData from '../../../hooks/useGetData';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import './SelectCategory.css'
+import { AuthContext } from '../../AuthContext/AuthContext';
 
 export const SelectCategory = ({ data, setData, categoryName, setCategoryName }) => {
-    const url = '/MsCategory/GetShortList'
+    const url = '/admin/MsCourseAdmin/GetCategories'
     const { data: categoryData, loading, errorState, getData } = useGetData()
+    const { token } = useContext(AuthContext);
 
     useEffect(() => {
-        getData(url)
+        getData(url, { 'Authorization': `Bearer ${token}` })
     }, [])
 
     useEffect(() => {
-        if(data.categoryId){
+        if(data?.categoryId && categoryData[0]?.id){
             const categoryIndex = categoryData.map(function(e) { return e.id; }).indexOf(data.categoryId);
             setCategoryName(categoryData[categoryIndex].name);
         }
