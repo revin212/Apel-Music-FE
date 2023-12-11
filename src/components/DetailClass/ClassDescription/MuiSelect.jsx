@@ -7,7 +7,7 @@ export const MuiSelect = ({jadwal, setJadwal}) => {
       };
 
   return (
-    <FormControl sx={{ m: 0, width:'100%', maxWidth:'250px'}} size="small" id='date-select-wrapper'>
+    <FormControl sx={{ m: 0, width:'100%', maxWidth:'280px'}} size="small" id='date-select-wrapper'>
         <Select
             name="select-jadwal"
             displayEmpty
@@ -29,7 +29,7 @@ export const MuiSelect = ({jadwal, setJadwal}) => {
             <MenuItem disabled value="">
             <em>Pilih Jadwal Kelas</em>
             </MenuItem>
-            {dateList.map((date,index)=>{return <MenuItem key={index} value={date}>{dateToString(date)}</MenuItem>})}
+            {dateList.map((date,index)=>{return <MenuItem key={index} value={date} sx={{mx:1,my:0.5}}>{dateToString(date)}</MenuItem>})}
         </Select>
     </FormControl>
   )

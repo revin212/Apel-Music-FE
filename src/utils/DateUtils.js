@@ -1,4 +1,17 @@
-export const dateList = [new Date('2022-07-25'), new Date('2022-07-26'), new Date('2022-07-27'), new Date('2022-07-28'), new Date('2022-07-29'), new Date('2022-07-30')]
+export const dateList = [
+    addDays(Date.now(), 7), 
+    addDays(Date.now(), 8), 
+    addDays(Date.now(), 9),
+    addDays(Date.now(), 10),
+    addDays(Date.now(), 11),
+    addDays(Date.now(), 12)
+]
+
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
 
 export const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']
 export const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
