@@ -44,6 +44,7 @@ const usePostData = () => {
                     await newToken({token: "", tokenExpires: Date.now(), roleName: ""});
                     deleteAuthCookies();
                     navigate("/");
+                    
                     break;
                 }
             case 'refreshToken':
@@ -95,8 +96,11 @@ const usePostData = () => {
             switch(variant){
                 case 'logout':
                     {
-                        console.error("Error during logout:", err);
+                        await newToken({token: "", tokenExpires: Date.now(), roleName: ""});
                         deleteAuthCookies();
+                        navigate("/");
+                        console.log(err);
+                        window.location.reload(true);
                         break;
                     }
                 case 'emailConfirm':

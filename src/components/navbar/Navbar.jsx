@@ -26,7 +26,9 @@ const Navbar = () => {
   }, [location])
 
   const handleLogout = () => {
-    postData(import.meta.env.VITE_API_URL + "/MsUser/Logout", 'logout', true);
+   
+      postData(import.meta.env.VITE_API_URL + "/MsUser/Logout", 'logout', true);
+    
   }
 
   return (
