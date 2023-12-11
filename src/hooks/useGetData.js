@@ -4,10 +4,10 @@ import axios from 'axios';
 const useGetData = () => {
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
-    const [errorState, setErrorState] = useState('')
+    const [errorState, setErrorState] = useState(false)
    
     const getData = async (url, header={}, setEditData=()=>{}) =>{
-        setErrorState('')
+        setErrorState(false)
         setLoading(true)
        
         await axios.get(import.meta.env.VITE_API_URL + url, {headers: header})

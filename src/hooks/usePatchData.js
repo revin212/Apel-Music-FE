@@ -35,7 +35,7 @@ const usePatchData = () => {
             default: break;
             }
         } catch (err) {
-            if(err.response)
+            if(typeof err.response.data === 'string' || err.response.data instanceof String)
             {
                 setMsg('')
                 setError(err.response.data)
@@ -44,6 +44,14 @@ const usePatchData = () => {
                 setError("Server error, please try again") 
             }
             switch(variant){
+                case 'editCategory':
+                    {
+                        console.log(err.response)
+                        if(typeof err.response.data.errors.id[0] === 'string' || err.response.data.errors.id[0] instanceof String)
+                        {
+                            setError("Data does not exist")
+                        }
+                    }
                 default: break;
             }
         } finally { setIsLoading(false) }
