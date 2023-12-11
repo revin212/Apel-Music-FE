@@ -13,7 +13,7 @@ export const AdminInvoiceDetailHeader = () => {
     const {token} = useContext(AuthContext)
     
     useEffect(()=>{
-        getData('/TsOrder/GetInvoiceDetailHeader?id='+ id, { 'Authorization': `Bearer ${token}` })
+        getData('/admin/TsOrderAdmin/GetInvoiceDetailHeader?id='+ id, { 'Authorization': `Bearer ${token}` })
     },[token])
 
   return (
@@ -30,15 +30,24 @@ export const AdminInvoiceDetailHeader = () => {
         <Stack gap='24px'>
             <Typography variant='h2' sx={titleStyle}>Rincian Invoice</Typography>
             <Stack direction={{xs:'column', md:'row'}} gap='24px' justifyContent='space-between' alignItems={{xs:'start', md:'end'}}>
-                <Stack gap='8px'>
-                    <Stack direction='row' gap='24px'>
-                        <Typography variant='body1' sx={noInvoiceStyle} >No. Invoice :</Typography>
-                        <Typography variant='body1' sx={noInvoiceStyle} >{invoiceData?.invoiceNo}</Typography>
+                <Stack direction={'row'} gap='24px'>
+                    <Stack gap='8px'>
+                        <Typography variant='body1' sx={noInvoiceStyle} >User Email</Typography>
+                        <Typography variant='body1' sx={noInvoiceStyle} >Payment Method</Typography>
+                        <Typography variant='body1' sx={noInvoiceStyle} >No. Invoice</Typography>
+                        <Typography variant='body1' sx={noInvoiceStyle} >Tanggal Beli</Typography>
+
+                    </Stack>
+                    <Stack gap='8px'>
+                        <Typography variant='body1' sx={noInvoiceStyle} >:&nbsp;&nbsp;{invoiceData?.userEmail}</Typography>
+                        <Typography variant='body1' sx={noInvoiceStyle} >:&nbsp;&nbsp;{invoiceData?.paymentName}</Typography>
+                        <Typography variant='body1' sx={noInvoiceStyle} >:&nbsp;&nbsp;{invoiceData?.invoiceNo}</Typography>
+                        <Typography variant='body1' sx={noInvoiceStyle} >:&nbsp;&nbsp;{dateToStringInvoice(new Date(invoiceData?.orderDate))}</Typography>
+                    </Stack>
+                    {/* <Stack direction='row' gap='24px'>
                     </Stack>
                     <Stack direction='row' gap='24px'>
-                        <Typography variant='body1' sx={noInvoiceStyle} >Tanggal Beli :</Typography>
-                        <Typography variant='body1' sx={noInvoiceStyle} >{dateToStringInvoice(new Date(invoiceData?.orderDate))}</Typography>
-                    </Stack>
+                    </Stack> */}
                 </Stack>
                 <Stack direction='row' gap='24px' >
                     <Typography variant='body1' sx={totalhargaStyle} >Total Harga</Typography>

@@ -55,13 +55,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export const AdminInvoiceTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [userId, setUserId] = useState(getCookie('userId'))
 
   const {data: invoiceList, loading, errorState, getData} = useGetData();
   const {token} = useContext(AuthContext)
 
   useEffect(()=>{
-    getData('/TsOrder/GetMyInvoicesList?userid='+ userId, { 'Authorization': `Bearer ${token}` })
+    getData('/admin/TsOrderAdmin/GetAllInvoicesList', { 'Authorization': `Bearer ${token}` })
   },[token])
 
   useEffect(()=>{
@@ -96,17 +95,19 @@ export const AdminInvoiceTable = () => {
         <TableHead>
           <TableRow>
             <StyledTableCell>No</StyledTableCell>
+            <StyledTableCell>User Email</StyledTableCell>
             <StyledTableCell>No. Invoice</StyledTableCell>
             <StyledTableCell>Tanggal Beli</StyledTableCell>
             <StyledTableCell>Jumlah Kursus</StyledTableCell>
             <StyledTableCell>Total Harga</StyledTableCell>
+            <StyledTableCell>Payment Method</StyledTableCell>
             <StyledTableCell sx={{width:{xs:'100px', md:'180px'}}}>Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {loading && 
             <StyledTableRow>
-              <StyledTableCell colSpan={6}>
+              <StyledTableCell colSpan={8}>
                 <SkeletonTableRow />
               </StyledTableCell>
             </StyledTableRow>
@@ -114,7 +115,7 @@ export const AdminInvoiceTable = () => {
 
           {errorState && 
             <StyledTableRow>
-              <StyledTableCell colSpan={6}>
+              <StyledTableCell colSpan={8}>
                 <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
                     Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
                 </Alert>
@@ -127,12 +128,14 @@ export const AdminInvoiceTable = () => {
               <StyledTableCell component="th" scope="row">
                 {(rowsPerPage * page) + index+1}
               </StyledTableCell>
+              <StyledTableCell>{row.userEmail}</StyledTableCell>
               <StyledTableCell>{row.invoiceNo}</StyledTableCell>
               <StyledTableCell>{dateToStringInvoice(new Date(row.orderDate))}</StyledTableCell>
               <StyledTableCell>{row.course_count}</StyledTableCell>
               <StyledTableCell>
                 IDR {new Intl.NumberFormat(["ban", "id"]).format(row.totalHarga)}
               </StyledTableCell>
+              <StyledTableCell>{row.paymentName}</StyledTableCell>
               <StyledTableCell>
                 <Link to={`/admin/invoice/${row.id}`}>
                 <Button variant='contained' sx={{width:'100%', maxWidth:'180px'}}>
