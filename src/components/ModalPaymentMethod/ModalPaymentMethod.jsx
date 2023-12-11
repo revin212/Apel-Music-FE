@@ -55,7 +55,7 @@ export const ModalPaymentMethod = ({ modalOpen, setModalOpen, userId, cartId }) 
                             sx={itemButtonStyle}
                             >
                                 <ListItemIcon>
-                                    <img style={{maxWidth:'40px'}} src={`${import.meta.env.VITE_BASE_URL}${item.image}?`+ new Date().getTime()} alt={item.name} />
+                                    <img style={{width:'40px',maxWidth:'40px', height:'40px', maxHeight:'40px', objectFit:'contain'}} src={`${import.meta.env.VITE_BASE_URL}${item.image}?`+ new Date().getTime()} alt={item.name} />
                                 </ListItemIcon>
                                 <ListItemText primary={item.name} />
                             </ListItemButton>

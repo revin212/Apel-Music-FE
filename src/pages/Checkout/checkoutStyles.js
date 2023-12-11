@@ -73,7 +73,7 @@ export const totalBiayaStyle = {
 }
 
 export const imageWrapperStyle = {
-    width:'max-content',
+    width:'200px',
     maxWidth:{xs:'150px', md:'200px'}, 
     height:'min-content',
 }
@@ -81,6 +81,8 @@ export const imageWrapperStyle = {
 export const imageStyle = {
     width:'100%', 
     maxWidth:'200px', 
+    maxHeight:'150px',
+    objectFit: 'contain', 
     height:'auto', 
     border:'1px solid #BDBDBD', 
     borderRadius:'16px'

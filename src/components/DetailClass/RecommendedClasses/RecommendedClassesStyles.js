@@ -17,6 +17,8 @@ export const imageStyle = {
     borderRadius: "16px",
     border: "1px solid ##BDBDBD",
     width: "100%",
+    maxHeight:'200px',
+    objectFit: 'contain', 
     height: "auto"
 }
 

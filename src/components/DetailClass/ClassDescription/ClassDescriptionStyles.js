@@ -42,6 +42,8 @@ export const imageWrapperStyle = {
 export const imageStyle = {
     width:'100%', 
     maxWidth:'400px', 
+    maxHeight:'300px',
+    objectFit: 'contain', 
     height:'auto', 
     border:'1px solid #BDBDBD', 
     borderRadius:'16px'
