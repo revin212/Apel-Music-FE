@@ -30,15 +30,21 @@ export const InvoiceDetailHeader = () => {
         <Stack gap='24px'>
             <Typography variant='h2' sx={titleStyle}>Rincian Invoice</Typography>
             <Stack direction={{xs:'column', md:'row'}} gap='24px' justifyContent='space-between' alignItems={{xs:'start', md:'end'}}>
-                <Stack gap='8px'>
-                    <Stack direction='row' gap='24px'>
-                        <Typography variant='body1' sx={noInvoiceStyle} >No. Invoice :</Typography>
+                <Stack gap={{xs:'16px', sm:'8px'}} flexGrow={1}>
+                <Stack direction={{xs:'column', sm:'row'}} gap={{xs:'0px', sm:'8px'}}>
+                    <Typography variant='body1' sx={noInvoiceStyle} fontWeight={{xs:'600', sm:'500'}} width={'100%'} maxWidth={{xs:'none', sm:'130px'}} >No. Invoice</Typography>
+                    <Stack direction={'row'} gap='12px'>
+                        <Typography variant='body1' sx={noInvoiceStyle} display={{xs:'none', sm:'block'}}>:</Typography>
                         <Typography variant='body1' sx={noInvoiceStyle} >{invoiceData?.invoiceNo}</Typography>
                     </Stack>
-                    <Stack direction='row' gap='24px'>
-                        <Typography variant='body1' sx={noInvoiceStyle} >Tanggal Beli :</Typography>
+                </Stack>
+                <Stack direction={{xs:'column', sm:'row'}} gap={{xs:'0px', sm:'8px'}}>
+                    <Typography variant='body1' sx={noInvoiceStyle} fontWeight={{xs:'600', sm:'500'}} width={'100%'} maxWidth={{xs:'none', sm:'130px'}} >Tanggal Beli</Typography>
+                    <Stack direction={'row'} gap='12px'>
+                        <Typography variant='body1' sx={noInvoiceStyle} display={{xs:'none', sm:'block'}} >:</Typography>
                         <Typography variant='body1' sx={noInvoiceStyle} >{dateToStringInvoiceHeader(new Date(invoiceData?.orderDate))}</Typography>
                     </Stack>
+                </Stack>
                 </Stack>
                 <Stack direction='row' gap='24px' >
                     <Typography variant='body1' sx={totalhargaStyle} >Total Harga</Typography>

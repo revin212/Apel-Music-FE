@@ -16,7 +16,6 @@ export const breadcrumbStyle ={
 
 export const noInvoiceStyle = {
     fontSize: {xs:'14px',sm:'18px'},
-    fontWeight: '500',
     lineHeight: '27px',
     letterSpacing: '0em',
     color: 'text.gray2',

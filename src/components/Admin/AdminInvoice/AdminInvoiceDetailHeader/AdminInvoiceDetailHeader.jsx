@@ -1,5 +1,5 @@
 import { Typography, Stack, Breadcrumbs } from '@mui/material'
-import { breadcrumbStyle, noInvoiceStyle, titleStyle, totalhargaStyle } from './AdminInvoiceDetailHeaderStyles'
+import { breadcrumbStyle, noInvoiceStyle, noInvoiceStyleEmail, titleStyle, totalhargaStyle } from './AdminInvoiceDetailHeaderStyles'
 import { Link, useParams } from 'react-router-dom'
 import { useContext, useEffect } from 'react'
 import { dateToStringInvoiceHeader } from '../../../../utils/DateUtils'
@@ -32,20 +32,33 @@ export const AdminInvoiceDetailHeader = () => {
             <Stack direction={{xs:'column', md:'row'}} gap='24px' justifyContent='space-between' alignItems={{xs:'start', md:'end'}}>
                 <Stack gap={{xs:'16px', sm:'8px'}}>
                 <Stack direction={{xs:'column', sm:'row'}} gap={{xs:'0px', sm:'8px'}}>
-                    <Typography variant='body1' sx={noInvoiceStyle} width={'200px'} maxWidth={{xs:'none', sm:'200px'}} flexGrow={1} >User Email</Typography>
-                    <Typography variant='body1' sx={noInvoiceStyle} >:&nbsp;&nbsp;{invoiceData?.userEmail}</Typography>
+                    <Typography variant='body1' sx={noInvoiceStyle} width={'200px'} fontWeight={{xs:'600', sm:'500'}} maxWidth={{xs:'none', sm:'170px'}} flexGrow={1} >User Email</Typography>
+                    <Stack direction={'row'} gap='12px'>
+                        <Typography variant='body1' sx={noInvoiceStyle} display={{xs:'none', sm:'block'}}>:</Typography>
+                        <Typography variant='body1' sx={noInvoiceStyleEmail}>{invoiceData?.userEmail}</Typography>
+                    </Stack>
+                </Stack>
+
+                <Stack direction={{xs:'column', sm:'row'}} gap={{xs:'0px', sm:'8px'}}>
+                    <Typography variant='body1' sx={noInvoiceStyle} width={'100%'} fontWeight={{xs:'600', sm:'500'}} maxWidth={{xs:'none', sm:'170px'}} >Payment Method</Typography>
+                    <Stack direction={'row'} gap='12px'>
+                        <Typography variant='body1' sx={noInvoiceStyle} display={{xs:'none', sm:'block'}}>:</Typography>
+                        <Typography variant='body1' sx={noInvoiceStyle} >{invoiceData?.paymentName}</Typography>
+                    </Stack>
                 </Stack>
                 <Stack direction={{xs:'column', sm:'row'}} gap={{xs:'0px', sm:'8px'}}>
-                    <Typography variant='body1' sx={noInvoiceStyle} width={'100%'} maxWidth={{xs:'none', sm:'200px'}} >Payment Method</Typography>
-                    <Typography variant='body1' sx={noInvoiceStyle} >:&nbsp;&nbsp;{invoiceData?.paymentName}</Typography>
+                    <Typography variant='body1' sx={noInvoiceStyle} width={'100%'} fontWeight={{xs:'600', sm:'500'}} maxWidth={{xs:'none', sm:'170px'}} >No. Invoice</Typography>
+                    <Stack direction={'row'} gap='12px'>
+                        <Typography variant='body1' sx={noInvoiceStyle} display={{xs:'none', sm:'block'}}>:</Typography>
+                        <Typography variant='body1' sx={noInvoiceStyle} >{invoiceData?.invoiceNo}</Typography>
+                    </Stack>
                 </Stack>
                 <Stack direction={{xs:'column', sm:'row'}} gap={{xs:'0px', sm:'8px'}}>
-                    <Typography variant='body1' sx={noInvoiceStyle} width={'100%'} maxWidth={{xs:'none', sm:'200px'}} >No. Invoice</Typography>
-                    <Typography variant='body1' sx={noInvoiceStyle} >:&nbsp;&nbsp;{invoiceData?.invoiceNo}</Typography>
-                </Stack>
-                <Stack direction={{xs:'column', sm:'row'}} gap={{xs:'0px', sm:'8px'}}>
-                    <Typography variant='body1' sx={noInvoiceStyle} width={'100%'} maxWidth={{xs:'none', sm:'200px'}} >Tanggal Beli</Typography>
-                    <Typography variant='body1' sx={noInvoiceStyle} >:&nbsp;&nbsp;{dateToStringInvoiceHeader(new Date(invoiceData?.orderDate))}</Typography>
+                    <Typography variant='body1' sx={noInvoiceStyle} width={'100%'} fontWeight={{xs:'600', sm:'500'}} maxWidth={{xs:'none', sm:'170px'}} >Tanggal Beli</Typography>
+                    <Stack direction={'row'} gap='12px'>
+                        <Typography variant='body1' sx={noInvoiceStyle} display={{xs:'none', sm:'block'}} >:</Typography>
+                        <Typography variant='body1' sx={noInvoiceStyle} >{dateToStringInvoiceHeader(new Date(invoiceData?.orderDate))}</Typography>
+                    </Stack>
                 </Stack>
                 </Stack>
                     
