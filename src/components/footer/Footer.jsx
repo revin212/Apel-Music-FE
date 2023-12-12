@@ -6,7 +6,6 @@ import { Instagram, LocalPhone, MailOutline, Telegram, YouTube } from '@mui/icon
 
 
 export const Footer = () => {
-
   return (
     <Box sx={wrapperStyle}>
       <Stack direction='column' gap='8px'>
@@ -23,14 +22,14 @@ export const Footer = () => {
         </Typography>
         <Stack direction='row' gap='8px' justifyContent={{xs:'center', md:'start'}}>
           <ul style={listWrapperStyle}>
-            <li><Link to="#" className='link-footer'>Gitar</Link></li>
-            <li><Link to="#" className='link-footer'>Biola</Link></li>
-            <li><Link to="#" className='link-footer'>Drum</Link></li>
+            <li><Link to="/category/5fa202ee-884a-11ee-b59a-3c5282e16d0b" className='link-footer'>Gitar</Link></li>
+            <li><Link to="/category/5fa204c4-884a-11ee-b59a-3c5282e16d0b" className='link-footer'>Biola</Link></li>
+            <li><Link to="/category/5f9be1f3-884a-11ee-b59a-3c5282e16d0b" className='link-footer'>Drum</Link></li>
           </ul>
           <ul style={listWrapperStyle}>
-            <li><Link to="#" className='link-footer'>Menyanyi</Link></li>
-            <li><Link to="#" className='link-footer'>Piano</Link></li>
-            <li><Link to="#" className='link-footer'>Saxophone</Link></li>
+            <li><Link to="/category/5fa2057a-884a-11ee-b59a-3c5282e16d0b" className='link-footer'>Menyanyi</Link></li>
+            <li><Link to="/category/5fa20198-884a-11ee-b59a-3c5282e16d0b" className='link-footer'>Piano</Link></li>
+            <li><Link to="/category/b2c3711b-884b-11ee-b59a-3c5282e16d0b" className='link-footer'>Saxophone</Link></li>
           </ul>
         </Stack>
       </Stack>
