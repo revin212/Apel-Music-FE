@@ -62,7 +62,7 @@ export const AdminUserTable = () => {
   usePatchData
 
   useEffect(()=>{
-    document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
+    //document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
     getData('/admin/MsUserAdmin/GetAll', { 'Authorization': `Bearer ${token}` })
   },[token, patchError])
 

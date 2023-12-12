@@ -63,9 +63,9 @@ export const AdminInvoiceTable = () => {
     getData('/admin/TsOrderAdmin/GetAllInvoicesList', { 'Authorization': `Bearer ${token}` })
   },[token])
 
-  useEffect(()=>{
-    document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
-  },[])
+  // useEffect(()=>{
+  //   document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
+  // },[])
 
 
   const handleChangePage = (event, newPage) => {

@@ -63,9 +63,9 @@ export const InvoiceDetailTable = () => {
     getData('/TsOrderDetail/GetMyInvoicesDetailList?orderid='+ id, { 'Authorization': `Bearer ${token}` })
   },[token])
 
-  useEffect(()=>{
-    document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
-  },[])
+  // useEffect(()=>{
+  //   document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
+  // },[])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

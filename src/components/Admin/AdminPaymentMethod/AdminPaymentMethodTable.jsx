@@ -63,7 +63,7 @@ export const AdminPaymentMethodTable = () => {
   const {token} = useContext(AuthContext)
 
   useEffect(()=>{
-    document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
+    //document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
     getData('/admin/MsPaymentMethodAdmin/GetAll', { 'Authorization': `Bearer ${token}` })
   },[token, patchError])
 
