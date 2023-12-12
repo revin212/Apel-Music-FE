@@ -2,6 +2,7 @@ import { DeleteForever } from "@mui/icons-material"
 import { Box, Checkbox, Container, Stack, Typography, Button, Alert } from "@mui/material"
 import { useState, useEffect, useContext } from "react"
 import { ModalPaymentMethod } from "../../components/ModalPaymentMethod/ModalPaymentMethod"
+import { ModalDeleteCart } from "../../components/ModalDeleteCart/ModalDeleteCart"
 import { dateToString } from "../../utils/DateUtils"
 import { cartItemStyle, classDescStyle, containerStyle, deleteBtnStyle, footerStyle, footerWrapperStyle, imageStyle, imageWrapperStyle, selectAllStyle, totalBiayaStyle, totalBiayaWrapperStyle } from "./checkoutStyles"
 import { SkeletonMyClass } from "../../components/Skeleton/SkeletonMyClass"
@@ -13,6 +14,8 @@ import { AuthContext } from "../../components/AuthContext/AuthContext"
 
 const Checkout = () => {
     const [openModal, setOpenModal] = useState(false)
+    const [modalDeleteOpen, setModalDeleteOpen] = useState(false)
+    const [deleteId, setDeleteId] = useState('')
     const [userId, setUserId] = useState(getCookie('userId'))
     const [cartDataChange, setCartDataChange] = useState(false)
     const [allChecked, setAllChecked] = useState(false)
@@ -84,7 +87,10 @@ const Checkout = () => {
                                 </Stack>
                             </Stack>
                             <Stack>
-                                <Button disabled={postDataLoading} onClick={()=>handleDelete(item.id, postData, setCartDataChange, cartList, setCartList, token)} id={item.id} variant="text" sx={deleteBtnStyle}>
+                                <Button disabled={postDataLoading} onClick={()=>{
+                                    setDeleteId(item.id)
+                                    setModalDeleteOpen(true)}
+                                    } id={item.id} variant="text" sx={deleteBtnStyle}>
                                     <DeleteForever id={item.id} sx={{color: 'warning.main'}}/>
                                     <Typography id={item.id} display={{xs:"none", md:"block"}}>Delete</Typography>
                                 </Button>
@@ -103,6 +109,7 @@ const Checkout = () => {
                 </Box>
             </Box>
             <ModalPaymentMethod setModalOpen={setOpenModal} modalOpen={openModal} userId={cartInfo?.userId} cartId={cartInfo?.id} />
+            <ModalDeleteCart modalDeleteOpen={modalDeleteOpen} setModalDeleteOpen={setModalDeleteOpen}  handleDelete={()=>handleDelete(deleteId, postData, setCartDataChange, cartList, setCartList, token)} deleteLoading={postDataLoading} />
         </>
     )
 }
