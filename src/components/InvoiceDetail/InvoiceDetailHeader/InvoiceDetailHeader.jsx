@@ -14,7 +14,7 @@ export const InvoiceDetailHeader = () => {
     
     useEffect(()=>{
         getData('/TsOrder/GetInvoiceDetailHeader?id='+ id, { 'Authorization': `Bearer ${token}` })
-    },[token])
+    },[id, token])
 
   return (
     <>

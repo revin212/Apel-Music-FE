@@ -61,7 +61,7 @@ export const InvoiceDetailTable = () => {
 
   useEffect(()=>{
     getData('/TsOrderDetail/GetMyInvoicesDetailList?orderid='+ id, { 'Authorization': `Bearer ${token}` })
-  },[token])
+  },[id, token])
 
   // useEffect(()=>{
   //   document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'

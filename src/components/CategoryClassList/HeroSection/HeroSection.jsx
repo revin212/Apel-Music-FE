@@ -11,7 +11,7 @@ export const HeroSection = ({id}) => {
 
   useEffect(() => {
       getData(url)
-  }, [])
+  }, [id])
   
   const bannerStyle = {
     height: '334px',

@@ -12,7 +12,7 @@ export const ClassListSection = ({id}) => {
 
     useEffect(() => {
         getData(url)
-    }, [])
+    }, [id])
 
     const handleError = 
     (
