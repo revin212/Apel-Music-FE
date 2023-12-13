@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext/AuthContext';
 
 
-export const ModalPaymentMethod = ({ modalOpen, setModalOpen, userId, cartId }) => {
+export const ModalPaymentMethod = ({ modalOpen, setModalOpen, userId, cartId, setCheckoutError }) => {
   const [paymentMethod, setPaymentMethod] = useState(null);
   const handleListItemClick = (method) => {setPaymentMethod(method)}
   const navigate = useNavigate()
@@ -20,16 +20,13 @@ export const ModalPaymentMethod = ({ modalOpen, setModalOpen, userId, cartId }) 
   },[])
 
   const handleCheckout = async () => {
-    await postData(`${import.meta.env.VITE_API_URL}/TsOrder/CheckoutCart`, 'checkoutFlow', false, {
+    await postData(`${import.meta.env.VITE_API_URL}/TsOrder/CheckoutCart`, 'checkout', false, {
         id: cartId,
         userId: userId,
         paymentId: paymentMethod.id
-    }, { 'Authorization': `Bearer ${token}` });
-    if(error) {
-        alert(error);
-        return
-    }
-    navigate('/checkout-success')
+    }, { 'Authorization': `Bearer ${token}` }, setCheckoutError);
+    if(!isLoading)
+        setModalOpen(false)
   }
 
   return (

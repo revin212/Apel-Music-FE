@@ -19,6 +19,7 @@ const Checkout = () => {
     const [userId, setUserId] = useState(getCookie('userId'))
     const [cartDataChange, setCartDataChange] = useState(false)
     const [allChecked, setAllChecked] = useState(false)
+    const [checkoutError, setCheckoutError] = useState(false)
 
     const {data: cartList, setData: setCartList,getData: getCartListData, loading: getCartListLoading, errorState: getCartListError} = useGetData();
     const {data: cartInfo, getData: getCartInfoData, loading: getCartInfoLoading, errorState: getCarInfoError} = useGetData();
@@ -52,6 +53,10 @@ const Checkout = () => {
                 {getCartListError && 
                 <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
                     Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+                </Alert>}
+                {checkoutError && 
+                <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
+                    Checkout error, mohon coba lagi
                 </Alert>}
                 {getCartListLoading && [...Array(3)].map((item, i)=>{
                     return(
@@ -108,7 +113,7 @@ const Checkout = () => {
                 <Button variant="contained" sx={{fontSize:{xs:'10px',md:'16px'}}} onClick={handleOpenModal} disabled={cartInfo?.totalHarga == 0}>Bayar Sekarang</Button>
                 </Box>
             </Box>
-            <ModalPaymentMethod setModalOpen={setOpenModal} modalOpen={openModal} userId={cartInfo?.userId} cartId={cartInfo?.id} />
+            <ModalPaymentMethod setCheckoutError={setCheckoutError} setModalOpen={setOpenModal} modalOpen={openModal} userId={cartInfo?.userId} cartId={cartInfo?.id} />
             <ModalDeleteCart modalDeleteOpen={modalDeleteOpen} setModalDeleteOpen={setModalDeleteOpen}  handleDelete={()=>handleDelete(deleteId, postData, setCartDataChange, cartList, setCartList, token)} deleteLoading={postDataLoading} />
         </>
     )

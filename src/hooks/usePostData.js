@@ -14,7 +14,7 @@ const usePostData = () => {
 
     const { newToken } = useContext(AuthContext);
 
-    const postData = async (url, variant, withCredentials=false, payload={}, header={}) => {
+    const postData = async (url, variant, withCredentials=false, payload={}, header={}, setExtraState=()=>{}) => {
         try {
             setIsLoading(true);
             setError('');
@@ -68,6 +68,11 @@ const usePostData = () => {
                 {
                     break;
                 }
+            case 'checkout' :
+                {
+                    navigate('/checkout-success')
+                    break;
+                }
             case 'checkoutFlow':
                 {
                     break;
@@ -107,6 +112,10 @@ const usePostData = () => {
                     {
                         console.error(err);
                         break;
+                    }
+                case 'checkout':
+                    {
+                        setExtraState(true)
                     }
                 case 'checkoutFlow':
                     {
