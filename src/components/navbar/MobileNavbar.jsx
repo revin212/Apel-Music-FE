@@ -7,7 +7,7 @@ import usePostData from '../../hooks/usePostData';
 import { AuthContext } from '../AuthContext/AuthContext';
 
 export const MobileNavbar = ({ openMobileNav, setOpemMobileNav }) => {
-    const { roleName } = useContext(AuthContext);
+    const { roleName, email } = useContext(AuthContext);
     const [adminOpen, setAdminOpen] = useState(false);
     const toggleDrawer =
     (open) =>
@@ -26,7 +26,7 @@ export const MobileNavbar = ({ openMobileNav, setOpemMobileNav }) => {
     const { postData } = usePostData();
     const handleLogout = () => {
         setOpemMobileNav(false)
-        postData(import.meta.env.VITE_API_URL + "/MsUser/Logout", 'logout', true);
+        postData(import.meta.env.VITE_API_URL + "/MsUser/Logout", 'logout', true, {"email": email});
       }
 
   return (

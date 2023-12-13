@@ -1,11 +1,14 @@
 import { Class, Home, Logout, Payment, Person, Piano, Receipt, ShoppingCart } from '@mui/icons-material';
 import { Drawer, Stack, Typography } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { drawerMenuWrapperStyle } from './NavbarStyles';
 import usePostData from '../../hooks/usePostData';
+import { AuthContext } from '../AuthContext/AuthContext';
 
 export const AdminNavbarDrawer = ({ openMobileNav, setOpemMobileNav }) => {
+    const {email} = useContext(AuthContext)
+
     const toggleDrawer =
     (open) =>
     (event) => {
@@ -23,7 +26,7 @@ export const AdminNavbarDrawer = ({ openMobileNav, setOpemMobileNav }) => {
     const { postData } = usePostData();
     const handleLogout = () => {
         setOpemMobileNav(false)
-        postData(import.meta.env.VITE_API_URL + "/MsUser/Logout", 'logout', true);
+        postData(import.meta.env.VITE_API_URL + "/MsUser/Logout", 'logout', false, {"email": email});
       }
 
   return (

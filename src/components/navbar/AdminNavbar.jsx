@@ -5,22 +5,21 @@ import { Link, Navigate, useLocation } from 'react-router-dom'
 import { AuthContext } from '../AuthContext/AuthContext';
 import { homeButtonStyle, loggedInMobileMenuListStyle, navbarMenuListStyle, navbarWrapperStyle } from './adminNavbarStyles';
 import usePostData from '../../hooks/usePostData';
-import { doesHttpOnlyCookieExist } from '../../utils/authUtils';
-import { MobileNavbar } from './MobileNavbar';
 import { AdminNavbarDrawer } from './AdminNavbarDrawer';
 
 const AdminNavbar = () => {
-  const { token, tokenExpires, roleName } = useContext(AuthContext);
+  const { token, tokenExpires, roleName, refreshToken, email } = useContext(AuthContext);
   const [openMobileNav, setOpemMobileNav] = useState(false);
   const { postData } = usePostData();
   const location = useLocation();
 
   useEffect(()=>{
     //cek apakah ada cookies refreshToken & token expires 1 menit lagi
-    if(doesHttpOnlyCookieExist("refreshToken") &&
+    
+    if(!token || refreshToken &&
     new Date(tokenExpires) - Date.now() < 60000)
     {
-      postData(import.meta.env.VITE_API_URL + "/MsUser/RefreshToken", 'refreshToken', true)
+      postData(import.meta.env.VITE_API_URL + "/MsUser/RefreshToken", 'refreshToken', true, {"Email": email, "refreshToken": refreshToken})
     }
   }, [location])
 

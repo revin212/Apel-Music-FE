@@ -41,8 +41,8 @@ const usePostData = () => {
                 }
             case 'logout':
                 {
-                    await newToken({token: "", tokenExpires: Date.now(), roleName: ""});
                     deleteAuthCookies();
+                    newToken({token: "", tokenExpires: Date.now(), roleName: "", refreshToken: "", email: ""});
                     navigate("/");
                     
                     break;
@@ -96,8 +96,8 @@ const usePostData = () => {
             switch(variant){
                 case 'logout':
                     {
-                        await newToken({token: "", tokenExpires: Date.now(), roleName: ""});
                         deleteAuthCookies();
+                        newToken({token: "", tokenExpires: Date.now(), roleName: "", refreshToken: "", email: ""});
                         navigate("/");
                         console.log(err);
                         window.location.reload(true);

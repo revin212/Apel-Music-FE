@@ -1,3 +1,5 @@
+import { dateAddDays, dateAddMinutes } from "./DateUtils";
+
 export const doesHttpOnlyCookieExist =  (cookiename) => {
     var d = new Date();
     d.setTime(d.getTime() + (1000));
@@ -23,16 +25,22 @@ export const doesHttpOnlyCookieExist =  (cookiename) => {
   }
 
   export const setAuthCookies = (data) => {
-    document.cookie = 'token=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
-    document.cookie = 'userId=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
-    document.cookie = 'rolename=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
-    document.cookie = `token=${data.token}; SameSite=None; Secure; path=/`;
-    document.cookie = `userId=${data.userId}; SameSite=None; Secure; path=/`;
-    document.cookie = `rolename=${data.roleName}; SameSite=None; Secure; path=/`;
+    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'userId=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'rolename=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'refreshToken=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'email=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = `token=${data.token}; path=/; expires=${dateAddMinutes(Date.now(), 15).toUTCString()};`;
+    document.cookie = `userId=${data.userId}; path=/; expires=${dateAddMinutes(Date.now(), 15).toUTCString()};`;
+    document.cookie = `rolename=${data.roleName}; path=/; expires=${dateAddMinutes(Date.now(), 15).toUTCString()};`;
+    document.cookie = `refreshToken=${data.refreshToken.refreshToken}; path=/; expires=${dateAddDays(Date.now(), 7).toUTCString()};`;
+    document.cookie = `email=${data.refreshToken.email}; path=/; expires=${dateAddDays(Date.now(), 7).toUTCString()};`;
   }
 
   export const deleteAuthCookies = () => {
-    document.cookie = 'token=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
-    document.cookie = 'userId=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
-    document.cookie = 'rolename=; SameSite=None; Secure; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'userId=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'rolename=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'refreshToken=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = 'email=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
