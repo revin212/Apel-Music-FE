@@ -44,3 +44,9 @@ export const doesHttpOnlyCookieExist =  (cookiename) => {
     document.cookie = 'refreshToken=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     document.cookie = 'email=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }
+
+
+  export const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_!@#$%^&*-]).{6,}$/
+    return passwordRegex.test(password);
+  }

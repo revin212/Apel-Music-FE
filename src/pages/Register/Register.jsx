@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import './Register.css'
 import { Button } from '@mui/material'
 import usePostData from '../../hooks/usePostData'
+import { validatePassword } from '../../utils/authUtils'
 
 const Register = () => {
     const [name, setName] = useState('')
@@ -10,7 +11,7 @@ const Register = () => {
     const [pwd, setPwd] = useState('')
     const [pwdconf, setPwdconf] = useState('')
     const registerUrl = import.meta.env.VITE_API_URL + "/MsUser/Register"
-    const { postData, isLoading, error, setError, msg } = usePostData();
+    const { postData, isLoading, error, setError, msg, setMsg } = usePostData();
 
     const resetForm = () => {
         setName('');
@@ -22,12 +23,18 @@ const Register = () => {
     const handleRegister = (e) => {
         e.preventDefault();
         setError('');
+        setMsg('');
+        window.scrollTo(0, 0);
         if(name == '' || email == '' || pwd == '' || pwdconf == '' ) {
             setError("Please fill all the field")
             return
         }
         if(pwd != pwdconf) {
             setError("Password does not match")
+            return
+        }
+        if(!validatePassword(pwd)){
+            setError("Password should contains at least 6 characters, 1 uppercase and 1 lowercase letter with at least 1 number and 1 special character")
             return
         }
         postData(registerUrl, 'register', true,

@@ -3,6 +3,7 @@ import { batalButtonStyle, buttonStyle, inputStyle, messageStyle, titleStyle } f
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import usePostData from "../../hooks/usePostData";
+import { validatePassword } from "../../utils/authUtils";
 
 const NewPassword = () => {
     const [data, setData] = useState({})
@@ -18,24 +19,27 @@ const NewPassword = () => {
         setError('')
     }
 
-    const passwordValidation = () => {
-        if(data.newPw != data.newPwConf){
-            setError('Password does not match')
-            return false
-        } else return true
-    }
-
     const handleNewPassword = (e) => {
         e.preventDefault();
         setError('');
-        if(passwordValidation()){
-            postData(import.meta.env.VITE_API_URL + '/MsUser/ResetPassword', 'resetPassword', false, 
-            {
-                id: Id,
-                password:data.newPw, 
-                confirmPassword:data.newPwConf
-            })
+        if( data.newPw == '' || data.newPwConf == '' ) {
+            setError("Please fill all the field")
+            return
         }
+        if( data.newPw != data.newPwConf ) {
+            setError("Password does not match")
+            return
+        }
+        if(!validatePassword(data.newPw)){
+            setError("Password should contains at least 6 characters, 1 uppercase and 1 lowercase letter with at least 1 number and 1 special character")
+            return
+        }
+        postData(import.meta.env.VITE_API_URL + '/MsUser/ResetPassword', 'resetPassword', false, 
+        {
+            id: Id,
+            password:data.newPw, 
+            confirmPassword:data.newPwConf
+        })
     }
 
     return(
