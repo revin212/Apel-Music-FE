@@ -62,11 +62,11 @@ export const AdminUserForm = () => {
             setError("Please fill name and email")
             return
         }
-        if( data.password != data.confirmPassword ) {
-            setError("Password does not match")
-            return
-        }
-        if(data.password){
+        if(data.password != ''){
+            if( data.password != data.confirmPassword ) {
+                setError("Password does not match")
+                return
+            }
             if(!validatePassword(data.password)){
                 setError("Password should contains at least 6 characters, 1 uppercase and 1 lowercase letter with at least 1 number and 1 special character")
                 return
