@@ -16,8 +16,8 @@ export const titleStyle = {
 
 export const imageStyle = {
     borderRadius: "16px",
-    maxWidth: "100px",
-    maxHeight:'67px',
+    maxWidth: "40%",
+    aspectRatio: "100/67",
     objectFit: 'contain', 
     height: "auto",
 }
