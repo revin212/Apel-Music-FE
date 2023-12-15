@@ -72,6 +72,10 @@ export const AdminCourseForm = () => {
             setError("Name must not be only space characters")
             return
         }
+        if(data.price < 0){
+            setError("Harga harus diatas 0 rupiah")
+            return
+        }
         if(id){
             patchData(patchUrl, 'editCourse', false, data, { 'Authorization': `Bearer ${token}` })
         } else {
