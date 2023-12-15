@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './Register.css'
 import { Button } from '@mui/material'
 import usePostData from '../../hooks/usePostData'
-import { validatePassword } from '../../utils/authUtils'
+import { validateEmail, validateName, validatePassword } from '../../utils/authUtils'
 
 const Register = () => {
     const [name, setName] = useState('')
@@ -27,6 +27,14 @@ const Register = () => {
         window.scrollTo(0, 0);
         if(name == '' || email == '' || pwd == '' || pwdconf == '' ) {
             setError("Please fill all the field")
+            return
+        }
+        if(!validateName(name)){
+            setError("Name must not be only space characters")
+            return
+        }
+        if(!validateEmail(email)){
+            setError("Invalid email")
             return
         }
         if(pwd != pwdconf) {

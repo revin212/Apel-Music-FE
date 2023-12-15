@@ -27,6 +27,11 @@ const usePatchData = () => {
                     setMsg(response.data);
                     break; 
                 }
+            case 'editCourse':
+                {
+                    setMsg('Edit course success');
+                    break; 
+                }
             case 'toggleActiveStatus':
                 {
                     setMsg(response.data);

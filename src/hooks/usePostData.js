@@ -32,6 +32,11 @@ const usePostData = () => {
                     setMsg(response.data);
                     break; 
                 }
+            case 'createCourse':
+                {
+                    setMsg('Create course success');
+                    break; 
+                }
             case 'login':
                 {
                     await newToken(response.data);

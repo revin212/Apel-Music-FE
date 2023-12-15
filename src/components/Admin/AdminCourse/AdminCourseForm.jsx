@@ -9,6 +9,7 @@ import { convertImageToBase64 } from '../../../utils/imageUtils'
 import { SelectCategory } from './SelectCategory'
 import usePatchData from '../../../hooks/usePatchData'
 import useGetData from '../../../hooks/useGetData'
+import { validateName } from '../../../utils/authUtils'
 
 
 export const AdminCourseForm = () => {
@@ -52,7 +53,7 @@ export const AdminCourseForm = () => {
     const getUrl = "/Admin/MsCourseAdmin/GetById?id=" + id
     const postUrl = import.meta.env.VITE_API_URL + "/Admin/MsCourseAdmin/Create"
     const patchUrl = import.meta.env.VITE_API_URL + "/Admin/MsCourseAdmin/Update?id=" + id
-    const { postData, isLoading, error, msg } = usePostData();
+    const { postData, isLoading, error, msg, setError } = usePostData();
     const { patchData, isLoading: patchLoading, error: patchError, msg: patchMsg } = usePatchData();
     const { token } = useContext(AuthContext);
     const { getData, data: paymentData, loading: getDataLoading, error: getDataError } = useGetData();
@@ -65,11 +66,16 @@ export const AdminCourseForm = () => {
     
     const handleSave = (e) => {
         e.preventDefault();
+        setError('')
         window.scrollTo(0, 0);
+        if(!validateName(data.name)){
+            setError("Name must not be only space characters")
+            return
+        }
         if(id){
-            patchData(patchUrl, 'editCategory', false, data, { 'Authorization': `Bearer ${token}` })
+            patchData(patchUrl, 'editCourse', false, data, { 'Authorization': `Bearer ${token}` })
         } else {
-            postData(postUrl, 'createCategory', false, data, { 'Authorization': `Bearer ${token}` })
+            postData(postUrl, 'createCourse', false, data, { 'Authorization': `Bearer ${token}` })
         }
     }
 
