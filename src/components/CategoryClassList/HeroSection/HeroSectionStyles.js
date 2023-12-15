@@ -21,7 +21,3 @@ export const bannerWrapperStyle ={
     height: '334px',
     position: 'relative'
 }
-
-export const backdropStyle= {
-    position: 'absolute'
-}

@@ -10,8 +10,9 @@ export const wrapperStyle = {
     },
     gap: {
         xs: '40px',
-        md: '80px',
+        md: '60px',
     },
+    justifyContent: 'space-between',
 }
 
 export const titleStyle = {

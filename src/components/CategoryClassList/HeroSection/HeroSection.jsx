@@ -1,43 +1,21 @@
-import { Box, Stack, Typography, Backdrop, CircularProgress, Alert } from '@mui/material'
-import { bodyStyle, titleStyle, wrapperStyle, bannerWrapperStyle, backdropStyle } from './HeroSectionStyles'
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import { Box, Stack, Typography, Alert } from '@mui/material'
+import { bodyStyle, titleStyle, wrapperStyle, bannerWrapperStyle } from './HeroSectionStyles'
+import React, { useEffect } from 'react'
 import useGetData from '../../../hooks/useGetData'
+import { SkeletonHeaderImage } from '../../Skeleton/SkeletonHeaderImage'
+import { SkeletonDescription } from '../../Skeleton/SkeletonDescription'
 
-export const HeroSection = ({categoryName}) => {
-  // const [classData, setClassData] = useState([])
-  // const [loading, setLoading] = useState(false)
-  // const [errorState, setErrorState] = useState(false)
-
-  // useEffect(() => {
-  //   setErrorState(false)
-  //   setLoading(true)
-  //   axios.get(`http://52.237.194.35:2024/api/Type/GetTypeByName?name=${categoryName}`)
-  //   .then((response) => {
-  //     // handle success
-  //     //console.log(response.data)
-  //     setClassData(response.data)
-  //     setLoading(false)
-  //   })
-  //   .catch((error) => {
-  //     // handle error
-  //     //console.log(error);
-  //     setLoading(false)
-  //     setErrorState(true)
-  //   })
-  
-  // }, [])
-
-  const url = `/Type/GetTypeByName?name=${categoryName}`  
+export const HeroSection = ({id}) => {
+  const url = `/MsCategory/GetCategoryDetail?id=${id}`
   const { data: classData, loading, errorState, getData } = useGetData()
 
   useEffect(() => {
       getData(url)
-  }, [])
+  }, [id])
   
   const bannerStyle = {
     height: '334px',
-    backgroundImage: `url("data:image/jpeg;base64,${classData.image}")`,
+    backgroundImage: `url("${import.meta.env.VITE_BASE_URL}${classData.headerImage ? classData.headerImage.replace("\r\n", "") : classData.image}?${new Date().getTime()}")`,
     backgroundSize: 'cover',
     backgroundPosition: '0 20%'
   }
@@ -45,7 +23,7 @@ export const HeroSection = ({categoryName}) => {
   const handleError = 
   (
     <Box sx={wrapperStyle} minHeight={'334px'}>
-      <Alert variant="filled" severity="error">
+      <Alert variant="outlined" severity="error" sx={{color:'warning.main'}}>
         Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
       </Alert>
     </Box>
@@ -55,15 +33,14 @@ export const HeroSection = ({categoryName}) => {
   (
     <Box sx={wrapperStyle} minHeight={'334px'}>
       <Box sx={bannerWrapperStyle}>
-        <Backdrop sx={backdropStyle} open={loading} >
-            <CircularProgress color="primary"/>
-        </Backdrop>
-        <Box sx={bannerStyle}/>
+        {loading && <SkeletonHeaderImage />}
+        {classData && <Box sx={bannerStyle}/>}
       </Box>
   
       <Stack direction='column' gap='16px' paddingInline={{xs: '30px',sm:'80px',md:'120px'}} paddingBlock='80px'>
+          {loading && <SkeletonDescription />}
           <Typography variant='h4' sx={titleStyle}>
-              {classData.type_name}
+              {classData.title}
           </Typography>
           <Typography variant='body1' sx={bodyStyle}>
               {classData.description}

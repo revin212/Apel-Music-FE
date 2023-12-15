@@ -3,9 +3,29 @@ import { wrapperStyle, titleStyle, bodyStyle, listWrapperStyle } from './FooterS
 import { Link } from 'react-router-dom'
 import './Footer.css'
 import { Instagram, LocalPhone, MailOutline, Telegram, YouTube } from '@mui/icons-material'
+import useGetData from '../../hooks/useGetData'
+import { useEffect, useState } from 'react'
 
 
 export const Footer = () => {
+  const [categoryColumns, setCategoryColumns] = useState([])
+  const url = '/MsCategory/GetShortList'
+    const { data: categoryData, loading, errorState, getData } = useGetData()
+
+    useEffect(() => {
+        getData(url)
+    }, [])
+
+    useEffect(() => {
+      setCategoryColumns(()=>{
+        let result = []
+        let columns = Math.ceil( categoryData.length / 5 );
+        for(let i=0; i < columns; i++){
+          result[i] = categoryData.slice(i*5, (i+1)*5)
+        }
+        return result
+      })
+  }, [setCategoryColumns, categoryData])
 
   return (
     <Box sx={wrapperStyle}>
@@ -21,17 +41,18 @@ export const Footer = () => {
         <Typography variant='h4' sx={titleStyle}>
           Produk
         </Typography>
-        <Stack direction='row' gap='8px' justifyContent={{xs:'center', md:'start'}}>
-          <ul style={listWrapperStyle}>
-            <li><Link to="#" className='link-footer'>Gitar</Link></li>
-            <li><Link to="#" className='link-footer'>Biola</Link></li>
-            <li><Link to="#" className='link-footer'>Drum</Link></li>
-          </ul>
-          <ul style={listWrapperStyle}>
-            <li><Link to="#" className='link-footer'>Menyanyi</Link></li>
-            <li><Link to="#" className='link-footer'>Piano</Link></li>
-            <li><Link to="#" className='link-footer'>Saxophone</Link></li>
-          </ul>
+        <Stack direction='row' gap='8px' justifyContent={'start'}>
+          {categoryColumns?.map((column, index)=>{
+            return(
+              <ul key={`category-column-${index}`} style={listWrapperStyle}>
+                {column?.map(category=>{
+                  return(
+                    <li key={category.id}><Link to={`/category/${category.id}`} className='link-footer'>{category.name}</Link></li>
+                  )
+                })}
+              </ul>
+            )
+          })}
         </Stack>
       </Stack>
       <Stack direction='column' gap='16px'>

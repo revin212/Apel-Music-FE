@@ -13,7 +13,7 @@ export const HeroSection = () => {
                     Banyak kelas keren yang bisa menunjang bakat bermusik kamu
                 </Typography>
             </Stack>
-            <Stack direction={{xs:'column', md:'row'}} gap='40px' alignItems='center'>
+            <Stack direction={{xs:'column', md:'row'}} gap='40px' alignItems='center' justifyContent={'center'}>
                 <Card sx={cardStyle}>
                     <Typography variant='h3' sx={cardTitleStyle}>
                         500+

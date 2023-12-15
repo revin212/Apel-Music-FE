@@ -1,65 +1,44 @@
-import { Delete, DeleteForever } from "@mui/icons-material"
-import { Box, Checkbox, Container, FormControlLabel, Stack, Input, Typography, Button } from "@mui/material"
-import { useState, useEffect } from "react"
+import { DeleteForever } from "@mui/icons-material"
+import { Box, Checkbox, Container, Stack, Typography, Button, Alert } from "@mui/material"
+import { useState, useEffect, useContext } from "react"
 import { ModalPaymentMethod } from "../../components/ModalPaymentMethod/ModalPaymentMethod"
+import { ModalDeleteCart } from "../../components/ModalDeleteCart/ModalDeleteCart"
 import { dateToString } from "../../utils/DateUtils"
-import { cartItemStyle, classDescStyle, containerStyle, deleteBtnStyle, footerStyle, imageStyle, imageWrapperStyle, selectAllStyle, totalBiayaStyle, totalBiayaWrapperStyle } from "./checkoutStyles"
-import { dummyDataCheckout } from "../../utils/dummyDataCheckout"
+import { cartItemStyle, classDescStyle, containerStyle, deleteBtnStyle, footerStyle, footerWrapperStyle, imageStyle, imageWrapperStyle, selectAllStyle, totalBiayaStyle, totalBiayaWrapperStyle } from "./checkoutStyles"
+import { SkeletonMyClass } from "../../components/Skeleton/SkeletonMyClass"
+import { handleDelete, handleSelect, handleSelectAll, isSelectedAll } from "./checkoutUtils"
+import { getCookie } from "../../utils/authUtils"
+import useGetData from "../../hooks/useGetData"
+import usePostData from "../../hooks/usePostData"
+import { AuthContext } from "../../components/AuthContext/AuthContext"
 
-const Checkout = (/*{ data }*/) => {
-    const [cart, setCart] = useState(dummyDataCheckout)
+const Checkout = () => {
     const [openModal, setOpenModal] = useState(false)
-    const [total, setTotal] = useState(0)
+    const [modalDeleteOpen, setModalDeleteOpen] = useState(false)
+    const [deleteId, setDeleteId] = useState('')
+    const [userId, setUserId] = useState(getCookie('userId'))
+    const [cartDataChange, setCartDataChange] = useState(false)
     const [allChecked, setAllChecked] = useState(false)
+    const [checkoutError, setCheckoutError] = useState(false)
 
-    const handleSelect = (e) => {
-        setCart(cart.map((item, index)=>{
-            return index == e.target.id ? {...item, selected: !item.selected} : item
-        }))
-    }
+    const {data: cartList, setData: setCartList,getData: getCartListData, loading: getCartListLoading, errorState: getCartListError} = useGetData();
+    const {data: cartInfo, getData: getCartInfoData, loading: getCartInfoLoading, errorState: getCarInfoError} = useGetData();
+    const {postData, isLoading: postDataLoading, error: postError} = usePostData();
+    const {token} = useContext(AuthContext)
 
-    const isSelectedAll = () => {
-        for (let i=0; i<cart.length; i++) {
-            if(!cart[i].selected) return false
-        }
-        return true
-    }
+    useEffect(()=>{
+        getCartInfoData('/TsOrder/GetCartInfo?userid='+ userId, { 'Authorization': `Bearer ${token}` })
+    },[cartDataChange, postError, token])
 
-    const handleSelectAll = () => {
-        if(!isSelectedAll()) {
-            setCart(cart.map((item, index)=>{
-                return {...item, selected: true}
-            }))
+    useEffect(()=>{
+        getCartListData('/TsOrder/GetCart?userid='+ userId, { 'Authorization': `Bearer ${token}` })
+    },[postError, token])
+
+    useEffect(()=>{
+        if(isSelectedAll(cartList))
             setAllChecked(true)
-            return
-        } else {
-            setCart(cart.map((item, index)=>{
-                return {...item, selected: false}
-            }))
-            setAllChecked(false)
-        }
-    }
-
-    const handleDelete = (e) => {
-        const deleteTarget = e.target.id
-        setCart(cart.filter(item=>{
-            if(item.id == deleteTarget){
-                return false
-            }
-            return true
-        }))
-    }
-
-    useEffect(() => {
-        setTotal(()=>{
-            let sum = 0
-            cart.forEach((e)=>{
-                sum += e.price
-                if(!e.selected) sum -= e.price
-            })
-            return sum
-        })
-    }, [cart]);
+        else setAllChecked(false)
+    },[cartList])
 
     const handleOpenModal = () => {
         setOpenModal(true)
@@ -69,49 +48,73 @@ const Checkout = (/*{ data }*/) => {
         <>
             <Container sx={containerStyle}>
                 <Box sx={selectAllStyle}>
-                    <Checkbox onChange={handleSelectAll} checked={allChecked} /> Pilih Semua
+                    <Checkbox name={'select-all'} disabled={postDataLoading} checked={allChecked} onChange={()=>handleSelectAll(cartList, setCartList, postData, userId, allChecked, setAllChecked,setCartDataChange, token)} /> Pilih Semua
                 </Box>
-                {cart.map((e, i)=>{
+                {getCartListError && 
+                <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
+                    Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+                </Alert>}
+                {checkoutError && 
+                <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
+                    Checkout error, mohon coba lagi
+                </Alert>}
+                {getCartListLoading && [...Array(3)].map((item, i)=>{
                     return(
-                        <Stack direction='row' justifyContent={'space-between'} alignItems='center'  key={i} sx={cartItemStyle}>
-                            <Stack direction='row' gap='24px' alignItems='center'>
+                        <Box key={i} paddingLeft={{xs:0, md:7}} paddingTop={3}>
+                            <SkeletonMyClass />
+                        </Box>
+                    )
+                })}
+                {!getCartListError && !getCartListLoading && 
+                cartList?.map((item, i)=>{
+                    return(
+                        <Stack direction='row' justifyContent={{xs:'center',md:'space-between'}} alignItems={{xs:'start', md:'center'}} key={item.id} sx={cartItemStyle}>
+                            <Stack direction='row' gap={{xs:'8px', md:'24px'}} alignItems={{xs:'start', md:'center'}} sx={{width: '100%', maxWidth:{xs:'250px', sm:'400px', md:'none'}}}>
                                 <Stack height='100%'>
-                                    <Checkbox checked={e.selected} onChange={handleSelect} id={`${i}`} />
+                                    <Checkbox disabled={postDataLoading} checked={item.isSelected} onChange={()=>handleSelect(cartList, setCartList, item.id, postData, userId, item.isSelected, setCartDataChange, token)} id={`${item.id}`} />
                                 </Stack>
-                                <Stack direction={{xs:"column", md:"row"}} gap="24px" >
-                                <Stack sx={imageWrapperStyle}>
-                                    <img src={e.thumbnail} style={imageStyle} />
+                                <Stack direction={{xs:"column", md:"row"}} gap="24px" alignItems={'start'} flexGrow={1} >
+                                <Stack alignItems={'center'} width={{xs:'100%', md:'auto'}}>
+                                    <Box sx={imageWrapperStyle}>
+                                        <img src={`${import.meta.env.VITE_BASE_URL}${item.image}?`+new Date().getTime()} style={imageStyle} />
+                                    </Box>
                                 </Stack>
                                 <Stack>
                                     <Box sx={classDescStyle}>
-                                        <Typography fontWeight={400} fontSize={16} sx={{color:'text.gray3'}}>{e.type}</Typography>
-                                        <Typography fontWeight={600} fontSize={24} sx={{color:'text.gray1'}}>{e.title}</Typography>
-                                        <Typography fontWeight={400} fontSize={16} my='4px' sx={{color:'text.gray2'}}>Jadwal : {dateToString(e.jadwal)}</Typography>
-                                        <Typography fontWeight={600} fontSize={20} sx={{color: 'secondary.main'}}>
-                                            IDR {new Intl.NumberFormat(["ban", "id"]).format(e.price)}
+                                        <Typography fontWeight={400} fontSize={{xs:8,md:16}} sx={{color:'text.gray3'}}>{item.categoryName}</Typography>
+                                        <Typography fontWeight={600} fontSize={{xs:16,md:24}} sx={{color:'text.gray1'}}>{item.courseName}</Typography>
+                                        <Typography fontWeight={400} fontSize={{xs:12,md:16}} my='4px' sx={{color:'text.gray2'}}>Jadwal : {dateToString(new Date(item.jadwal))}</Typography>
+                                        <Typography fontWeight={600} fontSize={{xs:14,md:20}} sx={{color: 'secondary.main'}}>
+                                            IDR {new Intl.NumberFormat(["ban", "id"]).format(item.harga)}
                                         </Typography>
                                     </Box>
                                 </Stack>
                                 </Stack>
                             </Stack>
                             <Stack>
-                                <Button onClick={(e)=>handleDelete(e)} id={e.id} variant="text" sx={deleteBtnStyle}>
-                                    <DeleteForever id={e.id} sx={{color: 'warning.main'}}/>
-                                    <Typography id={e.id} display={{xs:"none", md:"block"}}>Delete</Typography>
+                                <Button disabled={postDataLoading} onClick={()=>{
+                                    setDeleteId(item.id)
+                                    setModalDeleteOpen(true)}
+                                    } id={item.id} variant="text" sx={deleteBtnStyle}>
+                                    <DeleteForever id={item.id} sx={{color: 'warning.main'}}/>
+                                    <Typography id={item.id} display={{xs:"none", md:"block"}}>Delete</Typography>
                                 </Button>
                             </Stack>
                         </Stack>
                     )
                 })}
             </Container>
-            <Box sx={footerStyle}>
+            <Box sx={footerWrapperStyle}>
+                <Box sx={footerStyle}>
                 <Box sx={totalBiayaWrapperStyle}>
-                    <Typography>Total biaya</Typography> 
-                    <Typography sx={totalBiayaStyle}>{total > 0 ? "IDR " + new Intl.NumberFormat(["ban", "id"]).format(total) : ""}</Typography>
+                    <Typography fontSize={{xs:'12px',md:'18px'}}>Total biaya</Typography> 
+                    <Typography sx={totalBiayaStyle}>{cartInfo?.totalHarga > 0 ? "IDR " + new Intl.NumberFormat(["ban", "id"]).format(cartInfo?.totalHarga) : "IDR 0"}</Typography>
                 </Box>
-                <Button variant="contained" onClick={handleOpenModal} disabled={total == 0}>Bayar Sekarang</Button>
+                <Button variant="contained" sx={{fontSize:{xs:'10px',md:'16px'}}} onClick={handleOpenModal} disabled={cartInfo?.totalHarga == 0}>Bayar Sekarang</Button>
+                </Box>
             </Box>
-            <ModalPaymentMethod setModalOpen={setOpenModal} modalOpen={openModal}/>
+            <ModalPaymentMethod setCheckoutError={setCheckoutError} setModalOpen={setOpenModal} modalOpen={openModal} userId={cartInfo?.userId} cartId={cartInfo?.id} />
+            <ModalDeleteCart modalDeleteOpen={modalDeleteOpen} setModalDeleteOpen={setModalDeleteOpen}  handleDelete={()=>handleDelete(deleteId, postData, setCartDataChange, cartList, setCartList, token)} deleteLoading={postDataLoading} />
         </>
     )
 }

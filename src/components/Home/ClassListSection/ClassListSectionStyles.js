@@ -17,6 +17,8 @@ export const imageStyle = {
     borderRadius: "16px",
     border: "1px solid ##BDBDBD",
     width: "100%",
+    aspectRatio: "350/233",
+    objectFit: 'contain', 
     height: "auto"
 }
 
@@ -45,8 +47,4 @@ export const priceStyle = {
     lineHeight: '27px',
     letterSpacing: '0em',
     color: 'secondary.main',
-}
-
-export const backdropStyle= {
-    position: 'absolute'
 }

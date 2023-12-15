@@ -7,10 +7,14 @@ import TablePagination from '@mui/material/TablePagination';
 import { styled } from '@mui/material/styles';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Box, Button } from '@mui/material';
+import { Alert, Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { dateToStringInvoice } from '../../utils/DateUtils';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useContext } from 'react';
+import useGetData from '../../hooks/useGetData';
+import { getCookie } from '../../utils/authUtils';
+import { SkeletonTableRow } from '../Skeleton/SkeletonTableRow';
+import { AuthContext } from '../AuthContext/AuthContext';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -48,23 +52,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-function createData(no, no_invoice, buy_date, course_count, total_price, detail_url ) {
-    return { no, no_invoice, buy_date, course_count, total_price, detail_url };
-}
-
-const rows = [
-    createData(1,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
-    createData(2,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
-    createData(3,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
-    createData(4,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
-    createData(5,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
-    createData(6,'APM00003', new Date('2022-06-12'), 2, 11500000, '/invoice/1'),
-];
-  
-
 export const InvoiceTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [userId, setUserId] = useState(getCookie('userId'))
+
+  const {data: invoiceList, loading, errorState, getData} = useGetData();
+  const {token} = useContext(AuthContext)
+
+  useEffect(()=>{
+    getData('/TsOrder/GetMyInvoicesList?userid='+ userId, { 'Authorization': `Bearer ${token}` })
+  },[token])
+
+  // useEffect(()=>{
+  //   document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
+  // },[])
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -76,13 +79,14 @@ export const InvoiceTable = () => {
     setPage(0);
   };
 
+
   const visibleRows = useMemo(
     () =>
-      rows.slice(
+      invoiceList.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [page, rowsPerPage],
+    [page, rowsPerPage, invoiceList],
   );
 
   return (
@@ -100,19 +104,37 @@ export const InvoiceTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {visibleRows.map((row, index) => (
-            <StyledTableRow key={row.no}>
-              <StyledTableCell component="th" scope="row">
-                {row.no}
+          {loading && 
+            <StyledTableRow>
+              <StyledTableCell colSpan={6}>
+                <SkeletonTableRow />
               </StyledTableCell>
-              <StyledTableCell>{row.no_invoice}</StyledTableCell>
-              <StyledTableCell>{dateToStringInvoice(new Date(row.buy_date))}</StyledTableCell>
+            </StyledTableRow>
+            }
+
+          {errorState && 
+            <StyledTableRow>
+              <StyledTableCell colSpan={6}>
+                <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
+                    Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+                </Alert>
+              </StyledTableCell>
+            </StyledTableRow>
+            }
+
+          {visibleRows?.map((row, index) => (
+            <StyledTableRow key={row.id}>
+              <StyledTableCell component="th" scope="row">
+                {(rowsPerPage * page) + index+1}
+              </StyledTableCell>
+              <StyledTableCell>{row.invoiceNo}</StyledTableCell>
+              <StyledTableCell>{dateToStringInvoice(new Date(row.orderDate))}</StyledTableCell>
               <StyledTableCell>{row.course_count}</StyledTableCell>
               <StyledTableCell>
-                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.total_price)}
+                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.totalHarga)}
               </StyledTableCell>
               <StyledTableCell>
-                <Link to={row.detail_url}>
+                <Link to={`/invoice/${row.id}`}>
                 <Button variant='contained' sx={{width:'100%', maxWidth:'180px'}}>
                     Rincian 
                 </Button>
@@ -126,7 +148,7 @@ export const InvoiceTable = () => {
     <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={rows.length}
+        count={invoiceList.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

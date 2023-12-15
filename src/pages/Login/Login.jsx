@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Box, Stack, Button, Typography, Input } from '@mui/material'
-import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle, errorMsgStyle } from './LoginStyles'
-import { Link } from 'react-router-dom'
-import useLogin from '../../hooks/useLogin'
-import axios from 'axios'; 
+import { inputStyle, titleStyle, subtitleStyle, forgotPassStyle, formStyle, errorMsgStyle, messageStyle } from './LoginStyles'
+import { Link, Navigate } from 'react-router-dom'
+import { AuthContext } from '../../components/AuthContext/AuthContext'
+import usePostData from '../../hooks/usePostData'
 
 
 
@@ -12,21 +12,28 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [pwd, setPwd] = useState('')
     const loginUrl = import.meta.env.VITE_API_URL + "/MsUser/Login"
-    const { login, isLoading, error } = useLogin();
+    const { postData, isLoading, error, msg, setMsg } = usePostData();
+    const { token } = useContext(AuthContext);
+
+    useEffect(()=>{
+        setMsg(new URLSearchParams(window.location.search).get('msg'))
+    },[])
     
     const handleLogin = (e) => {
         e.preventDefault();
-        login(loginUrl, {email:email, password:pwd})
+        postData(loginUrl, 'login', true, {email:email, password:pwd})
     }
 
     return (
+        !token? 
         <>
-            <Box maxWidth='616px' mx='auto' my='90px'>
+            <Box maxWidth='616px' mx={{xs:'18px',sm:'auto'}} my='90px'>
                 <Stack direction='column' gap={2} mb='60px'>
                     <Typography variant='h2' sx={titleStyle}>Selamat Datang Musikers!</Typography>
                     <Typography variant='body2' component='p' sx={subtitleStyle}>Login dulu yuk</Typography>
                 </Stack>
 
+                {msg && <p style={messageStyle} >{msg}</p>}
                 {error && <Typography variant='body2' sx={errorMsgStyle} >{error}</Typography>}
 
                 <Typography component='form' sx={formStyle}>
@@ -55,6 +62,8 @@ const Login = () => {
                 </Typography>
             </Box>
         </>
+        :
+        <Navigate to='/' /> 
   )
 }
 

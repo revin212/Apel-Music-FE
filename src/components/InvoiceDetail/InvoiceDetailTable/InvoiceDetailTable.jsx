@@ -8,8 +8,12 @@ import { styled } from '@mui/material/styles';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { dateToString } from '../../../utils/DateUtils';
-import { useState, useMemo } from 'react';
-import { Box } from '@mui/material';
+import { useState, useMemo, useEffect, useContext } from 'react';
+import { Alert, Box } from '@mui/material';
+import useGetData from '../../../hooks/useGetData';
+import { useParams } from 'react-router-dom';
+import { SkeletonTableRow } from '../../Skeleton/SkeletonTableRow';
+import { AuthContext } from '../../AuthContext/AuthContext';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -47,19 +51,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-function createData(no, course_name, category, course_date, price ) {
-    return { no, course_name, category, course_date, price };
-}
-
-const rows = [
-    createData(1,'Kursus Drummer Special Coach (Eno Netral)', 'Drum',new Date('2022-07-25'), 8500000),
-    createData(2,'Biola Mid-Level Course', 'Biola',new Date('2022-07-23'), 3000000),
-];
-  
-
 export const InvoiceDetailTable = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const { id } = useParams()
+
+  const {data: invoiceDetailList, loading, errorState, getData} = useGetData();
+  const {token} = useContext(AuthContext)
+
+  useEffect(()=>{
+    getData('/TsOrderDetail/GetMyInvoicesDetailList?orderid='+ id, { 'Authorization': `Bearer ${token}` })
+  },[id, token])
+
+  // useEffect(()=>{
+  //   document.getElementsByClassName('css-yf8vq0-MuiSelect-nativeInput')[0].name = 'table-rows-per-page'
+  // },[])
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -73,11 +79,11 @@ export const InvoiceDetailTable = () => {
 
   const visibleRows = useMemo(
     () =>
-      rows.slice(
+    invoiceDetailList.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [page, rowsPerPage],
+    [page, rowsPerPage, invoiceDetailList],
   );
 
   return (
@@ -93,17 +99,36 @@ export const InvoiceDetailTable = () => {
             <StyledTableCell>Harga</StyledTableCell>
           </TableRow>
         </TableHead>
+        
         <TableBody>
-          {visibleRows.map((row) => (
-            <StyledTableRow key={row.no}>
-              <StyledTableCell component="th" scope="row">
-                {row.no}
+          {loading && 
+            <StyledTableRow>
+              <StyledTableCell colSpan={5}>
+                <SkeletonTableRow />
               </StyledTableCell>
-              <StyledTableCell>{row.course_name}</StyledTableCell>
-              <StyledTableCell>{row.category}</StyledTableCell>
-              <StyledTableCell>{dateToString(new Date(row.course_date))}</StyledTableCell>
+            </StyledTableRow>
+            }
+
+          {errorState && 
+            <StyledTableRow>
+              <StyledTableCell colSpan={5}>
+                <Alert variant="outlined" severity="error" sx={{color:'warning.main', my:'48px', mx:'32px'}}>
+                    Terjadi kesalahan pada server, mohon muat ulang halaman beberapa saat lagi
+                </Alert>
+              </StyledTableCell>
+            </StyledTableRow>
+            }
+
+          {visibleRows?.map((row, index) => (
+            <StyledTableRow key={row.id}>
+              <StyledTableCell component="th" scope="row">
+                {(rowsPerPage * page) + index+1}
+              </StyledTableCell>
+              <StyledTableCell>{row.courseName}</StyledTableCell>
+              <StyledTableCell>{row.courseCategoryName}</StyledTableCell>
+              <StyledTableCell>{dateToString(new Date(row.jadwal))}</StyledTableCell>
               <StyledTableCell>
-                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.price)}
+                IDR {new Intl.NumberFormat(["ban", "id"]).format(row.harga)}
               </StyledTableCell>
             </StyledTableRow>
           ))}
@@ -113,7 +138,7 @@ export const InvoiceDetailTable = () => {
     <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={rows.length}
+        count={invoiceDetailList.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

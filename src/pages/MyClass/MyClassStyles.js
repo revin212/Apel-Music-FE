@@ -5,7 +5,7 @@ export const containerStyle = {
 export const classListWrapperStyle = {
     mt: '40px',
     mx: '72px',
-    borderColor: 'text.gray4'
+    borderColor: 'text.gray4',
 }
 
 export const classWrapperStyle = {
@@ -17,7 +17,8 @@ export const classWrapperStyle = {
 export const classDescStyle = {
     display: 'flex',
     flexDirection: 'column',
-    gap: '4px'
+    gap: '4px',
+    maxWidth: {sm: '300px', md:'none'}
 }
 
 export const imgWrapperStyle = {
@@ -29,4 +30,8 @@ export const imgWrapperStyle = {
 export const imgStyle = {
     borderRadius: '16px',
     border: 'none',
+    maxWidth:'200px', 
+    maxHeight:'133px',
+    objectFit: 'contain', 
+    height:'auto', 
 }

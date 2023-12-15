@@ -16,7 +16,9 @@ export const titleStyle = {
 
 export const imageStyle = {
     borderRadius: "16px",
-    maxWidth: "100px",
+    maxWidth: "40%",
+    aspectRatio: "100/67",
+    objectFit: 'contain', 
     height: "auto",
 }
 
@@ -28,8 +30,4 @@ export const categoryNameStyle = {
     marginBottom: '8px',
     color: 'text.black',
     textAlign: 'center',
-}
-
-export const backdropStyle= {
-    position: 'absolute'
 }

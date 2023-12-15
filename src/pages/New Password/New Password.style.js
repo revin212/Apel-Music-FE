@@ -24,3 +24,26 @@ export const titleStyle = {
     color: 'text.gray1',
     margin: '0',
 }
+
+export const buttonStyle = {
+    maxWidth: '140px',
+    maxHeight: '43px',
+    width: '100%'
+}
+
+export const batalButtonStyle ={
+    maxWidth: '140px',
+    maxHeight: '43px',
+    width: '100%'
+}
+
+export const messageStyle ={
+    width : '100%',
+    marginBottom: '32px',
+    paddingBlock: '8px',
+    paddingInline: '16px',
+    border: '1px solid',
+    borderRadius: '4px',
+    borderColor: '#4dc050',
+    color: '#4dc050'
+}
