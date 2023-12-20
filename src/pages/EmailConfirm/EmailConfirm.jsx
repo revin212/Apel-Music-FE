@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
 import { useEffect } from 'react'
-import { SuccessHeader } from '../../components/successPage/successHeader'
-import { SuccessMessage } from '../../components/successPage/successMessage'
+import { SuccessHeader } from '../../components/SuccessPage/SuccessHeader'
+import { SuccessMessage } from '../../components/SuccessPage/SuccessMessage'
 import usePostData from '../../hooks/usePostData'
 
 export const EmailConfirm = () => {
