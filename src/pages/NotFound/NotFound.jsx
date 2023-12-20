@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material'
-import { SuccessHeader } from '../../components/successPage/successHeader'
-import { SuccessMessage } from '../../components/successPage/successMessage'
+import { SuccessHeader } from '../../components/SuccessPage/SuccessHeader'
+import { SuccessMessage } from '../../components/SuccessPage/SuccessMessage'
 import { Home } from '@mui/icons-material'
 
 export const NotFound = () => {
