@@ -8,6 +8,7 @@ import { Link, useParams } from 'react-router-dom'
 import { convertImageToBase64 } from '../../../utils/imageUtils'
 import usePatchData from '../../../hooks/usePatchData'
 import useGetData from '../../../hooks/useGetData'
+import { validateName } from '../../../utils/authUtils'
 
 
 export const AdminCategoryForm = () => {
@@ -48,7 +49,7 @@ export const AdminCategoryForm = () => {
     const getUrl = "/Admin/MsCategoryAdmin/GetById?id=" + id
     const postUrl = import.meta.env.VITE_API_URL + "/Admin/MsCategoryAdmin/Create"
     const patchUrl = import.meta.env.VITE_API_URL + "/Admin/MsCategoryAdmin/Update?id=" + id
-    const { postData, isLoading, error, msg } = usePostData();
+    const { postData, isLoading, error, msg, setError } = usePostData();
     const { patchData, isLoading: patchLoading, error: patchError, msg: patchMsg } = usePatchData();
     const { token } = useContext(AuthContext);
     const { getData, data: categoryData, loading: getDataLoading, error: getDataError } = useGetData();
@@ -61,7 +62,12 @@ export const AdminCategoryForm = () => {
     
     const handleSave = (e) => {
         e.preventDefault();
+        setError('')
         window.scrollTo(0, 0);
+        if(!validateName(data.name)){
+            setError("Name must not be only space characters")
+            return
+        }
         if(id){
             patchData(patchUrl, 'editCategory', false, data, { 'Authorization': `Bearer ${token}` })
         } else {

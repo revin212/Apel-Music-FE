@@ -9,10 +9,12 @@ import usePostData from '../../../hooks/usePostData'
 import { getCookie } from '../../../utils/authUtils'
 import { dateToStringJadwal } from '../../../utils/DateUtils'
 import { AuthContext } from '../../AuthContext/AuthContext'
+import { ModalNavigateLogin } from './ModalNavigateLogin'
 
 export const ClassDescription = ({id, setCategoryIdState}) => {
     const [userId, setUserId] = useState(getCookie('userId'))
     const [jadwal, setJadwal] = useState('');
+    const [modalNavigateOpen, setModalNavigateOpen] = useState(false);
     const url = `/MsCourse/GetDetail?id=${id}`
     const { data: classData, loading, errorState, getData } = useGetData()
     const { isLoading: postLoading, error: postError, setError: setPostError, postData, msg } = usePostData()
@@ -25,6 +27,7 @@ export const ClassDescription = ({id, setCategoryIdState}) => {
         }
         if(!token){
             setPostError("Anda belum login")
+            setModalNavigateOpen(true)
             return
         }
         setPostError("")
@@ -103,6 +106,7 @@ export const ClassDescription = ({id, setCategoryIdState}) => {
             </Typography>
             </>}
         </Stack></>}
+        <ModalNavigateLogin modalNavigateOpen={modalNavigateOpen} setModalNavigateOpen={setModalNavigateOpen} />
     </Stack>
   )
 }

@@ -8,7 +8,7 @@ import { Link, useParams } from 'react-router-dom'
 import { SelectRole } from './SelectRole'
 import usePatchData from '../../../hooks/usePatchData'
 import useGetData from '../../../hooks/useGetData'
-import { validatePassword } from '../../../utils/authUtils'
+import { validateName, validatePassword } from '../../../utils/authUtils'
 
 
 export const AdminUserForm = () => {
@@ -60,6 +60,14 @@ export const AdminUserForm = () => {
         window.scrollTo(0, 0);
         if( data.name == '' || data.email == '' ) {
             setError("Please fill name and email")
+            return
+        }
+        if(!validateName(data.name)){
+            setError("Name must not be only space characters")
+            return
+        }
+        if(!validateEmail(data.email)){
+            setError("Invalid email")
             return
         }
         if(data.password != ''){

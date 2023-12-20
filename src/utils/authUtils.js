@@ -50,3 +50,18 @@ export const doesHttpOnlyCookieExist =  (cookiename) => {
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_!@#$%^&*-]).{6,}$/
     return passwordRegex.test(password);
   }
+
+  export const validateName = (name)=>{
+    if (!name.replace(/\s/g, '').length) {
+      return false
+    }
+    return true
+  }
+
+  export const validateEmail = (email)=>{
+ if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+  {
+    return true
+  }
+    return false
+}
