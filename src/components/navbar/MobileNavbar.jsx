@@ -2,7 +2,7 @@ import { ArrowDropDown, ArrowDropUp, Class, Logout, Payment, Person, Piano, Rece
 import { Button, Collapse, Drawer, Stack, Typography } from '@mui/material'
 import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { drawerMenuWrapperStyle } from './NavbarStyles';
+import { drawerMenuWrapperStyle } from './navbarStyles';
 import usePostData from '../../hooks/usePostData';
 import { AuthContext } from '../AuthContext/AuthContext';
 

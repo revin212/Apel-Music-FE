@@ -3,7 +3,7 @@ import { Class, Logout, Menu as MenuIcon, Payment, Person, Piano, Receipt, Shopp
 import { useEffect, useContext, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AuthContext } from '../AuthContext/AuthContext';
-import { homeButtonStyle, loggedInMenuListStyle, loggedInMobileMenuListStyle, navbarMenuListStyle, navbarWrapperStyle, notLoginMenuListStyle } from './NavbarStyles';
+import { homeButtonStyle, loggedInMenuListStyle, loggedInMobileMenuListStyle, navbarMenuListStyle, navbarWrapperStyle, notLoginMenuListStyle } from './navbarStyles';
 import usePostData from '../../hooks/usePostData';
 import { MobileNavbar } from './MobileNavbar';
 
